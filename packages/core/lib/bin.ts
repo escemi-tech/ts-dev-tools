@@ -15,7 +15,7 @@ function version() {
 
 function help() {
   console.log(`Usage
-  js-dev-tools install [path from git root to package.json]
+  ts-dev-tools install [path from git root to package.json]
 `);
 }
 
