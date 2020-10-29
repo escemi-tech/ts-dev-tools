@@ -4,13 +4,8 @@
 <p>
 <a href="https://www.npmjs.com/search?q=%40ts-dev-tools" target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/@ts-dev-tools/core"></a>
 <a href="https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22" target="_blank"><img alt="Continuous integration" src="https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg"></a>
-  <a href="https://codecov.io/gh/escemi-tech/ts-dev-tools" target="_blank"><img alt="Coverage Status" src="https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/master/graph/badge.svg"></a>
-<a href="https://escemi-tech.github.io/ts-dev-tools/" target="_blank">
-<img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-</a>
-<a href="LICENSE" target="_blank">
-<img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-</a>
+<a href="https://codecov.io/gh/escemi-tech/ts-dev-tools" target="_blank"><img src="https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR"/></a>    
+<a href="LICENSE" target="_blank"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
 <a href="CONTRIBUTING" target="_blank"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
 <a href="https://github.com/sponsors/neilime"><img src="https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4" alt="Sponsor"></a>
 <a href="https://github.com/escemi-tech/ts-dev-tools"><img alt="GitHub stars" src="https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github">
@@ -20,25 +15,17 @@
 
 <h2 align="center">Opinionated package to configure proper tools to develop a Typescript project</h2>
 
-### 🏠 [Homepage](https://escemi-tech.github.io/ts-dev-tools/)
+---
 
-## Install
+## 🏠 [Homepage](https://escemi-tech.github.io/ts-dev-tools/)
 
-```sh
-yarn add --dev @ts-dev-tools/core
-```
+---
 
-Or
+## Packages
 
-```sh
-npm install --dev @ts-dev-tools/core
-```
-
-## Run tests
-
-```sh
-yarn run test
-```
+| Name                                                                                      | Description                 | Installation                                                                 |
+| ----------------------------------------------------------------------------------------- | --------------------------- | ---------------------------------------------------------------------------- |
+| [@ts-dev-tools/core](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/core) | Common Typescript dev tools | `yarn add --dev @ts-dev-tools/core` <br> `yarn add --dev @ts-dev-tools/core` |
 
 ## Author
 
