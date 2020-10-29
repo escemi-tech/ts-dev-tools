@@ -27,5 +27,5 @@ export function updatePackageJson(dirPath: string, data: any) {
   const originalData = JSON.parse(readFileSync(packageJsonPath, { encoding: "utf8" }));
   const newData = deepmerge(originalData, data);
 
-  writeFileSync(packageJsonPath, JSON.stringify(newData));
+  writeFileSync(packageJsonPath, JSON.stringify(newData, null, 2));
 }

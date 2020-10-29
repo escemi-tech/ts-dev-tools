@@ -1,9 +1,9 @@
 {
-  "name": "js-dev-tools",
+  "name": "ts-dev-tools",
   "version": "1.0.0",
   "description": "Opinionated package to configure proper tools to develop a JS project",
   "main": "index.js",
-  "repository": "git@github.com:escemi-tech/js-dev-tools.git",
+  "repository": "git@github.com:escemi-tech/ts-dev-tools.git",
   "author": "Emilien Escalle <emilien.escalle@escemi.com>",
   "private": true,
   "workspaces": [

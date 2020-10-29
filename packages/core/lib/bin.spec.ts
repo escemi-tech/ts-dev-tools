@@ -28,7 +28,7 @@ function cli(
 describe("bin", () => {
   it("should display version", async () => {
     let result = await cli(["--version"]);
-    expect(result.stdout).toBe("1.0.0");
+    expect(result.stdout).toMatch(/[0-9]{1}\.[0-9]{1}\.[0-9]{1}/);
     expect(result.code).toBe(0);
   });
 
