@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.2.0 (2020-11-09)
+
+
+### Features
+
+* prepare for plugin installation ([ab7d4e6](https://github.com/escemi-tech/ts-dev-tools/commit/ab7d4e6203631907c3a0e86255f6866a8a0c7c2a))
+
+
+
+
+
 ## 1.1.3 (2020-11-09)
 
 **Note:** Version bump only for package @ts-dev-tools/core
