@@ -10,7 +10,9 @@
   "author": "Emilien Escalle <emilien.escalle@escemi.com>",
   "homepage": "https://github.com/escemi-tech/ts-dev-tools",
   "license": "MIT",
-  "bin": "dist/bin.js",
+  "bin": {
+    "ts-dev-tools": "dist/bin.js"
+  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"

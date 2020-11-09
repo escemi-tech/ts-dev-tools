@@ -1,5 +1,10 @@
 import { createTestProjectDir, removeTestProjectDir, restorePackageJson } from "../tests/utils";
-import { getPackageJsonPath, readPackageJson, updatePackageJson } from "./packageJson";
+import {
+  getInstalledPlugins,
+  getPackageJsonPath,
+  readPackageJson,
+  updatePackageJson,
+} from "./packageJson";
 
 describe("PackageJson", () => {
   let testProjectDir: string;
@@ -53,6 +58,48 @@ describe("PackageJson", () => {
       const packageJson = readPackageJson(testProjectDir);
 
       expect(packageJson).toMatchObject({ version: "2.0.0" });
+    });
+
+    it("should merge array with unique values", () => {
+      updatePackageJson(testProjectDir, { testArray: ["test"] });
+      const firstUpdatePackageJson = readPackageJson(testProjectDir);
+      expect(firstUpdatePackageJson).toMatchObject({ version: "1.0.0", testArray: ["test"] });
+
+      updatePackageJson(testProjectDir, { testArray: ["test", "test1"] });
+      const secondUpdatePackageJson = readPackageJson(testProjectDir);
+      expect(secondUpdatePackageJson).toMatchObject({
+        version: "1.0.0",
+        testArray: ["test", "test1"],
+      });
+    });
+  });
+
+  describe("getInstalledPlugins", () => {
+    afterEach(() => {
+      restorePackageJson(__filename);
+    });
+
+    it("should return an empty array when only @ts-dev-tools/core is installed", () => {
+      updatePackageJson(testProjectDir, {
+        devDependencies: {
+          "@ts-dev-tools/core": "1.0.0",
+        },
+      });
+      const installedPlugins = getInstalledPlugins(testProjectDir);
+
+      expect(installedPlugins).toEqual([]);
+    });
+
+    it("should return an empty array when only @ts-dev-tools/react is installed", () => {
+      updatePackageJson(testProjectDir, {
+        devDependencies: {
+          "@ts-dev-tools/core": "1.0.0",
+          "@ts-dev-tools/react": "1.0.0",
+        },
+      });
+      const installedPlugins = getInstalledPlugins(testProjectDir);
+
+      expect(installedPlugins).toEqual(["@ts-dev-tools/react"]);
     });
   });
 });

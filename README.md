@@ -21,11 +21,41 @@
 
 ---
 
-## Packages
+## Usage
 
-| Name                                                                                      | Description                 | Installation                                                                 |
-| ----------------------------------------------------------------------------------------- | --------------------------- | ---------------------------------------------------------------------------- |
-| [@ts-dev-tools/core](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/core) | Common Typescript dev tools | `yarn add --dev @ts-dev-tools/core` <br> `yarn add --dev @ts-dev-tools/core` |
+### 1. Choose the plugin that fits with you need
+
+| Name                                                                                      | Description                                                                        |
+| ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [@ts-dev-tools/core](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/core) | Common Typescript tools (Eslint and prettier, Husky, lint-staged and pretty-quick) |
+
+### 2. Install
+
+_Example with plugin `@ts-dev-tools/core`, replace `@ts-dev-tools/core` by the plugin you want to use_
+
+```sh
+npm install --dev @ts-dev-tools/core
+```
+
+Or
+
+```sh
+yarn add --dev @ts-dev-tools/core
+```
+
+### 2. Enable ts-dev-tools
+
+```sh
+npx ts-dev-tools install
+```
+
+Or
+
+```sh
+yarn ts-dev-tools install
+```
+
+⚠️ If your package is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.
 
 ## Author
 

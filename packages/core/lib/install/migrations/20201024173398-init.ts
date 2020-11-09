@@ -45,6 +45,7 @@ export function up(absoluteProjectDir: string) {
 
   const scripts = {
     lint: 'eslint "lib/**/*.{ts,tsx}"',
+    postinstall: "ts-dev-tools install",
   };
 
   updatePackageJson(absoluteProjectDir, {

@@ -1,24 +1,36 @@
-import { copyFileSync, readdirSync, unlinkSync } from "fs";
-import { join } from "path";
+import { readdirSync, unlinkSync } from "fs";
+import { resolve } from "path";
 
-import { getPackageJsonPath, updatePackageJson } from "../services/packageJson";
+import {
+  backupPackageJson,
+  getInstalledPlugins,
+  revertPackageJson,
+  updatePackageJson,
+} from "../services/packageJson";
 
-export function executeMigrations(absoluteProjectDir: string, currentVersion: string | undefined) {
-  const migrationDir = join(__dirname, "./migrations");
-  const migrationFiles = readdirSync(migrationDir).filter((migrationFile) =>
-    migrationFile.match(/^[0-9]{14}-[a-z]+\.(js|ts)$/)
+export type Migration = { name: string; path: string };
+
+export function getAvailableMigrations(
+  tsDevToolsRootPath: string,
+  absoluteProjectDir: string,
+  currentVersion: string | undefined
+): Migration[] {
+  const installedPlugins = getInstalledPlugins(absoluteProjectDir);
+
+  const installedPluginsMigrations = installedPlugins.map((plugin) =>
+    resolve(tsDevToolsRootPath, "../../", plugin, "dist/install/migrations")
   );
-  migrationFiles.sort();
 
-  // Backup package.json
-  const packageJsonPath = getPackageJsonPath(absoluteProjectDir);
-  const packageJsonBackupPath = packageJsonPath + ".backup";
-  copyFileSync(packageJsonPath, packageJsonBackupPath);
-  try {
-    for (const key in migrationFiles) {
-      const migrationFile = migrationFiles[key];
+  const migrationDirs = [resolve(__dirname, "./migrations"), ...installedPluginsMigrations];
+
+  const migrationFiles: Migration[] = [];
+  for (const migrationDir of migrationDirs) {
+    for (const migrationFile of readdirSync(migrationDir)) {
+      if (!migrationFile.match(/^[0-9]{14}-[a-z]+\.(js|ts)$/)) {
+        continue;
+      }
+
       const migrationName = migrationFile.split(".").slice(0, -1).join(".");
-
       const shouldApplyMigration =
         !currentVersion || currentVersion.localeCompare(migrationName) < 0;
 
@@ -26,20 +38,33 @@ export function executeMigrations(absoluteProjectDir: string, currentVersion: st
         continue;
       }
 
-      console.info(`Apply migration "${migrationName}"`);
+      migrationFiles.push({ name: migrationName, path: resolve(migrationDir, migrationFile) });
+    }
+  }
 
-      const migrationFilePath = join(migrationDir, migrationFiles[key]);
-      const { up } = require(migrationFilePath);
+  migrationFiles.sort(({ name: nameA }, { name: nameB }) => nameA.localeCompare(nameB));
+
+  return migrationFiles;
+}
+
+export function executeMigrations(migrations: Migration[], absoluteProjectDir: string) {
+  const packageJsonBackupPath = backupPackageJson(absoluteProjectDir);
+
+  try {
+    for (const migration of migrations) {
+      console.info(`Apply migration "${migration.name}"`);
+
+      const { up } = require(migration.path);
 
       // Apply migration
       up(absoluteProjectDir);
 
       // Upgrade current version
-      updatePackageJson(absoluteProjectDir, { tsDevTools: { version: migrationName } });
+      updatePackageJson(absoluteProjectDir, { tsDevTools: { version: migration.name } });
     }
   } catch (error) {
     // Rollback package.json
-    copyFileSync(packageJsonBackupPath, packageJsonPath);
+    revertPackageJson(absoluteProjectDir, packageJsonBackupPath);
     throw error;
   }
 

@@ -1,10 +1,11 @@
-import { join, resolve } from "path";
+import { resolve } from "path";
 
 import { readPackageJson } from "../services/packageJson";
-import { executeMigrations } from "./migration";
+import { executeMigrations, getAvailableMigrations } from "./migration";
 
 export function install({ cwd, dir = "." }: { cwd: string; dir: string }): void {
-  const packageName = readPackageJson(join(__dirname, "../..")).name;
+  const tsDevToolsRootPath = resolve(__dirname, "../..");
+  const packageName = readPackageJson(tsDevToolsRootPath).name;
 
   // Ensure that we're not trying to install outside cwd
   const absoluteProjectDir = resolve(cwd, dir);
@@ -22,7 +23,9 @@ export function install({ cwd, dir = "." }: { cwd: string; dir: string }): void 
     console.info(`Installing ${packageName}...`);
   }
 
-  executeMigrations(absoluteProjectDir, currentVersion);
+  const migrations = getAvailableMigrations(tsDevToolsRootPath, absoluteProjectDir, currentVersion);
+
+  executeMigrations(migrations, absoluteProjectDir);
 
   console.info(`Installation done!`);
 }
