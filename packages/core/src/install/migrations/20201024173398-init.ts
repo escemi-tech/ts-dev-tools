@@ -1,7 +1,12 @@
 import { updatePackageJson } from "../../services/packageJson";
 
 export function up(absoluteProjectDir: string) {
-  // Eslint
+  const jest = {
+    preset: "ts-jest",
+    testEnvironment: "node",
+    testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).+(ts|tsx|js)"],
+  };
+
   const eslintConfig = {
     env: {
       browser: true,
@@ -61,5 +66,6 @@ export function up(absoluteProjectDir: string) {
     "lint-staged": lintStaged,
     importSort,
     scripts,
+    jest,
   });
 }
