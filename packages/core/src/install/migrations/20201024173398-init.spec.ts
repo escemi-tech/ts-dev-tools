@@ -61,7 +61,7 @@ describe("Migration 20201024173398-init", () => {
           },
         },
         scripts: {
-          lint: 'eslint "lib/**/*.{ts,tsx}"',
+          lint: 'eslint "src/**/*.{ts,tsx}"',
         },
       });
     });

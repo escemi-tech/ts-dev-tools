@@ -26,9 +26,14 @@ export function up(absoluteProjectDir: string) {
     trailingComma: "es5",
   };
 
+  const commitlint = {
+    extends: ["@commitlint/config-conventional"],
+  };
+
   const husky = {
     hooks: {
       "pre-commit": "tsc && lint-staged && pretty-quick --staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-push": "yarn lint && yarn test",
     },
   };
@@ -44,13 +49,14 @@ export function up(absoluteProjectDir: string) {
   };
 
   const scripts = {
-    lint: 'eslint "lib/**/*.{ts,tsx}"',
+    lint: 'eslint "src/**/*.{ts,tsx}"',
     postinstall: "ts-dev-tools install",
   };
 
   updatePackageJson(absoluteProjectDir, {
     eslintConfig,
     prettier,
+    commitlint,
     husky,
     "lint-staged": lintStaged,
     importSort,

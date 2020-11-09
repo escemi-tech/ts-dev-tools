@@ -33,7 +33,7 @@
     "build": "tsc",
     "test": "jest",
     "test:coverage": "yarn test --coverage",
-    "lint": "eslint \"lib/**/*.{ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "postinstall": "npm run build && node dist/bin install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
@@ -42,6 +42,9 @@
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
   },
   "dependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/jest": "^26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "deepmerge": "^4.2.2",
@@ -53,16 +56,15 @@
     "eslint-plugin-promise": "^4.2.1",
     "husky": "^4.3.0",
     "import-sort-style-module": "^6.0.0",
+    "jest": "^26.6.3",
     "lint-staged": "^10.5.1",
     "prettier": "^2.1.2",
     "prettier-plugin-import-sort": "^0.0.6",
-    "pretty-quick": "^3.1.0"
+    "pretty-quick": "^3.1.0",
+    "ts-jest": "^26.4.4"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.15",
-    "jest": "^26.6.3",
     "pinst": "^2.0.0",
-    "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5",
     "yarn": "^1.22.10"
@@ -90,5 +92,15 @@
       "@typescript-eslint"
     ],
     "rules": {}
+  },
+  "jest": {
+    "coverageDirectory": "coverage",
+    "coverageProvider": "v8",
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/src/**/?(*.)+(spec|test).[tj]s?(x)"
+    ]
   }
 }

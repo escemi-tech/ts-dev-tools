@@ -11,7 +11,7 @@ function cli(
 }> {
   return new Promise((resolve) => {
     exec(
-      `ts-node ${resolvePath("./lib/bin.ts")} ${args.join(" ")}`,
+      `ts-node ${resolvePath("./src/bin.ts")} ${args.join(" ")}`,
       { cwd: resolvePath("./__tests__/test-project") },
       (error, stdout, stderr) => {
         resolve({
