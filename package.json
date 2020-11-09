@@ -10,11 +10,14 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "lerna run --stream start --",
     "lint": "lerna run --stream lint --",
     "build": "lerna run --stream build",
     "test": "lerna run --stream test",
     "test:coverage": "lerna run --stream test:coverage",
-    "publish": "lerna publish --yes"
+    "publish": "lerna publish --yes",
+    "link": "lerna exec yarn link",
+    "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
