@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.3.0 (2020-11-09)
+
+
+### Features
+
+* add test tools ([a73a3fb](https://github.com/escemi-tech/ts-dev-tools/commit/a73a3fb1a1e7f1ed982356f8d02984d9a09d1f2b))
+
+
+
+
+
 # 1.2.0 (2020-11-09)
 
 
