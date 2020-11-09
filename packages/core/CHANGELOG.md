@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.3.1 (2020-11-09)
+
+
+### Bug Fixes
+
+* **core:** add missing jest config ([165685a](https://github.com/escemi-tech/ts-dev-tools/commit/165685ad653e814b6fae9065320e40efc46b53c2))
+
+
+
+
+
 # 1.3.0 (2020-11-09)
 
 
