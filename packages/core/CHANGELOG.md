@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.1.2 (2020-11-09)
+
+
+### Bug Fixes
+
+* install script ([7bf8a4e](https://github.com/escemi-tech/ts-dev-tools/commit/7bf8a4ed404ba4d18fd9fc75c9753dabe27fdd36))
+
+
+
+
+
 ## 1.1.1 (2020-10-29)
 
 **Note:** Version bump only for package @ts-dev-tools/core
