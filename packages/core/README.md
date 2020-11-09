@@ -20,17 +20,33 @@
 
 ---
 
-## Install
+## Usage
+
+### 1. Install
 
 ```sh
-yarn add --dev @ts-dev-tools/core
+npm install --dev @ts-dev-tools/core
 ```
 
 Or
 
 ```sh
-npm install --dev @ts-dev-tools/core
+yarn add --dev @ts-dev-tools/core
 ```
+
+### 2. Enable @ts-dev-tools/core
+
+```sh
+npx @ts-dev-tools/core install
+```
+
+Or
+
+```sh
+yarn @ts-dev-tools/core install
+```
+
+⚠️ If your package is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.
 
 ## What's included
 

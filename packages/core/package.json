@@ -32,7 +32,9 @@
     "test": "jest",
     "test:coverage": "yarn test --coverage",
     "lint": "eslint \"lib/**/*.{ts,tsx}\"",
-    "postinstall": "npm run build && node dist/bin install"
+    "postinstall": "npm run build && node dist/bin install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "bugs": {
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
@@ -57,6 +59,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "jest": "^26.6.3",
+    "pinst": "^2.0.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5",
