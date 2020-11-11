@@ -50,24 +50,7 @@ jobs:
           CI: true
 
       - name: 🔭 e2e
-        run: |
-          yarn run link
-          mkdir -p /tmp/e2e-project/src;
-          echo "export type Test = { test: string; };" > /tmp/e2e-project/src/index.ts;
-
-          cd /tmp/e2e-project;
-
-          yarn init --yes;
-          yarn add --dev typescript;
-          yarn tsc --init;
-          yarn add --dev @ts-dev-tools/core;
-          yarn link @ts-dev-tools/core;
-
-          sudo chmod +x node_modules/.bin/ts-dev-tools
-          yarn ts-dev-tools install;
-
-          yarn lint;
-          yarn tsc src/*.ts;
+        run: .github/workflows/e2e.sh
 
       - name: 📊 Code coverage
         uses: codecov/codecov-action@v1
