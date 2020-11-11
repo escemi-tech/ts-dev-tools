@@ -1579,33 +1579,6 @@
     "@babel/runtime" "^7.12.1"
     "@testing-library/dom" "^7.26.6"
 
-"@ts-dev-tools/core@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@ts-dev-tools/core/-/core-1.3.2.tgz#09c7d66d4c18b2a0fed70746e24fb80d09b018f5"
-  integrity sha512-IcehQWjm/aaS7TYHlD9IBMH1I8908SIIA8/x16cZ+xHN1tWsmgvpgKvVUI0RBjC2I4cGxjq+x3NZ5Duulb1gBA==
-  dependencies:
-    "@commitlint/cli" "^11.0.0"
-    "@commitlint/config-conventional" "^11.0.0"
-    "@types/jest" "^26.0.15"
-    "@types/node" "^14.14.7"
-    "@typescript-eslint/eslint-plugin" "^4.7.0"
-    "@typescript-eslint/parser" "^4.7.0"
-    deepmerge "^4.2.2"
-    eslint "^7.13.0"
-    eslint-config-prettier "^6.15.0"
-    eslint-plugin-import "^2.22.1"
-    eslint-plugin-jest "^24.1.0"
-    eslint-plugin-node "^11.1.0"
-    eslint-plugin-promise "^4.2.1"
-    husky "^4.3.0"
-    import-sort-style-module "^6.0.0"
-    jest "^26.6.3"
-    lint-staged "^10.5.1"
-    prettier "^2.1.2"
-    prettier-plugin-import-sort "^0.0.6"
-    pretty-quick "^3.1.0"
-    ts-jest "^26.4.4"
-
 "@types/aria-query@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.0.tgz#14264692a9d6e2fa4db3df5e56e94b5e25647ac0"
