@@ -5,17 +5,18 @@ on:
     types: [started]
 
 jobs:
-  🛡️ authorize:
+  authorize:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: octokit/request-action@v2.0.17
+      - name: 🛡️ Check authorizations
+        uses: octokit/request-action@v2.0.17
         with:
           route: GET /repos/${{ github.repository }}/collaborators/${{ github.actor }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  🚀 publish:
+  publish:
     needs: [authorize]
     runs-on: ubuntu-latest
 
@@ -50,12 +51,6 @@ jobs:
 
       - name: 🏗️ Build
         run: yarn build
-
-      - name: 🔖 Commit changes
-        run: |
-          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
-          git config --local user.name "${{ github.actor }}"
-          echo `git add -A && git commit -m "chore: prepare release"`
 
       - name: 🚀 Publish
         env:
