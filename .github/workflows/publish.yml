@@ -5,7 +5,7 @@ on:
     types: [started]
 
 jobs:
-  authorize:
+  🛡️ authorize:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +15,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  publish:
+  🚀 publish:
     needs: [authorize]
     runs-on: ubuntu-latest
 

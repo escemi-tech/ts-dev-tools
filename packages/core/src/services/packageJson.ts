@@ -14,7 +14,7 @@ export function getPackageJsonPath(dirPath: string): string {
   return packageJsonPath;
 }
 
-export type JsonArray = boolean[] | number[] | string[] | JsonFileData[] | Date[];
+type JsonArray = boolean[] | number[] | string[] | JsonFileData[] | Date[];
 type AnyJson = boolean | number | string | JsonFileData | Date | JsonArray | JsonArray[];
 
 export type JsonFileData = {
