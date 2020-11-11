@@ -45,19 +45,19 @@ jobs:
             */*/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install Dependencies
+      - name: ⚙️ Install Dependencies
         run: yarn
 
-      - name: Build
+      - name: 🏗️ Build
         run: yarn build
 
-      - name: Commit changes
+      - name: 🔖 Commit changes
         run: |
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
           echo `git add -A && git commit -m "chore: prepare release"`
 
-      - name: Publish
+      - name: 🚀 Publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
         run: yarn run publish

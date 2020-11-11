@@ -8,12 +8,18 @@ export function up(absoluteProjectDir: string) {
   };
 
   const eslintConfig = {
+    root: true,
+    parser: "@typescript-eslint/parser",
+    plugins: ["@typescript-eslint", "jest"],
+    extends: [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "prettier",
+    ],
     env: {
-      browser: true,
       es2021: true,
     },
-    extends: ["eslint:recommended", "prettier"],
-    parser: "@typescript-eslint/parser",
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
@@ -21,8 +27,6 @@ export function up(absoluteProjectDir: string) {
       ecmaVersion: 12,
       sourceType: "module",
     },
-    plugins: ["jest", "@typescript-eslint"],
-    rules: {},
   };
 
   const prettier = {
