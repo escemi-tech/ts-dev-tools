@@ -44,7 +44,7 @@ Within the dozen of existing packages, **ts-dev-tools** uses a short list of con
 
 <br>
 
-### _2_. One package to rule them all one dependeny to update
+### _2_. One package to rule them all, one dependency to keep up to date
 
 <br>
 
