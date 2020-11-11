@@ -1,6 +1,6 @@
 import { resolve } from "path";
 
-import { readPackageJson } from "../services/packageJson";
+import { JsonFileData, readPackageJson } from "../services/packageJson";
 import { executeMigrations, getAvailableMigrations } from "./migration";
 
 export function install({ cwd, dir = "." }: { cwd: string; dir: string }): void {
@@ -15,7 +15,9 @@ export function install({ cwd, dir = "." }: { cwd: string; dir: string }): void 
 
   // Run installation migration
   const packageJson = readPackageJson(absoluteProjectDir);
-  const currentVersion = packageJson.tsDevTools?.version;
+  const currentVersion = (packageJson?.tsDevTools as JsonFileData | undefined)?.version as
+    | string
+    | undefined;
 
   if (currentVersion) {
     console.info(`Updating ${packageName} installation...`);

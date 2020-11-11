@@ -47,13 +47,14 @@ export function getAvailableMigrations(
   return migrationFiles;
 }
 
-export function executeMigrations(migrations: Migration[], absoluteProjectDir: string) {
+export function executeMigrations(migrations: Migration[], absoluteProjectDir: string): void {
   const packageJsonBackupPath = backupPackageJson(absoluteProjectDir);
 
   try {
     for (const migration of migrations) {
       console.info(`Apply migration "${migration.name}"`);
 
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { up } = require(migration.path);
 
       // Apply migration

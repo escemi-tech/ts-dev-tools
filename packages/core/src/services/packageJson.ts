@@ -4,7 +4,7 @@ import { join } from "path";
 import deepmerge from "deepmerge";
 import { PackageJson as PackageJsonType } from "type-fest";
 
-export function getPackageJsonPath(dirPath: string) {
+export function getPackageJsonPath(dirPath: string): string {
   const packageJsonPath = join(dirPath, "package.json");
 
   if (!existsSync(packageJsonPath)) {
@@ -14,15 +14,19 @@ export function getPackageJsonPath(dirPath: string) {
   return packageJsonPath;
 }
 
-export type PackageJson = PackageJsonType & {
-  [key: string]: any;
+export type JsonArray = boolean[] | number[] | string[] | JsonFileData[] | Date[];
+type AnyJson = boolean | number | string | JsonFileData | Date | JsonArray | JsonArray[];
+
+export type JsonFileData = {
+  [key: string]: AnyJson | undefined;
 };
+export type PackageJson = JsonFileData & PackageJsonType;
 
 export function readPackageJson(dirPath: string): PackageJson {
   return JSON.parse(readFileSync(getPackageJsonPath(dirPath), "utf-8")) as PackageJson;
 }
 
-export function updatePackageJson(dirPath: string, data: any) {
+export function updatePackageJson(dirPath: string, data: Partial<PackageJson>): void {
   const packageJsonPath = getPackageJsonPath(dirPath);
   const originalData = JSON.parse(readFileSync(packageJsonPath, { encoding: "utf8" }));
   const newData = deepmerge(originalData, data, {
@@ -56,7 +60,7 @@ export function getInstalledPlugins(dirPath: string): string[] {
   );
 }
 
-export function backupPackageJson(absoluteProjectDir: string) {
+export function backupPackageJson(absoluteProjectDir: string): string {
   // Backup package.json
   const packageJsonPath = getPackageJsonPath(absoluteProjectDir);
   const packageJsonBackupPath = packageJsonPath + ".backup";
@@ -64,7 +68,7 @@ export function backupPackageJson(absoluteProjectDir: string) {
   return packageJsonBackupPath;
 }
 
-export function revertPackageJson(absoluteProjectDir: string, packageJsonBackupPath: string) {
+export function revertPackageJson(absoluteProjectDir: string, packageJsonBackupPath: string): void {
   const packageJsonPath = getPackageJsonPath(absoluteProjectDir);
   copyFileSync(packageJsonBackupPath, packageJsonPath);
 }

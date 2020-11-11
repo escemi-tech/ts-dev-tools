@@ -45,7 +45,8 @@ describe("Migration", () => {
     });
 
     it("should execute given migrations", () => {
-      executeMigrations([], testProjectDir);
+      const executeMigrationsOperation = () => executeMigrations([], testProjectDir);
+      expect(executeMigrationsOperation).not.toThrow();
     });
   });
 });

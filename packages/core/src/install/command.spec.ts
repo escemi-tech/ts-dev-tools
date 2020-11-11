@@ -13,6 +13,7 @@ describe("Install command", () => {
   });
 
   it("should run installation", () => {
-    install({ cwd: testProjectDir, dir: "." });
+    const installOperation = () => install({ cwd: testProjectDir, dir: "." });
+    expect(installOperation).not.toThrow();
   });
 });

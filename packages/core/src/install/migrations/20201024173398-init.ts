@@ -1,6 +1,6 @@
 import { updatePackageJson } from "../../services/packageJson";
 
-export function up(absoluteProjectDir: string) {
+export function up(absoluteProjectDir: string): void {
   const jest = {
     preset: "ts-jest",
     testEnvironment: "node",

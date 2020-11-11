@@ -27,13 +27,15 @@ function cli(
 
 describe("bin", () => {
   it("should display version", async () => {
-    let result = await cli(["--version"]);
+    const result = await cli(["--version"]);
+    expect(result.stderr).toBeFalsy();
     expect(result.stdout).toMatch(/[0-9]{1}\.[0-9]{1}\.[0-9]{1}/);
     expect(result.code).toBe(0);
   });
 
   it("should display help", async () => {
-    let result = await cli([]);
+    const result = await cli([]);
+    expect(result.stderr).toBeFalsy();
     expect(result.stdout).toContain(`Usage`);
     expect(result.code).toBe(0);
   });

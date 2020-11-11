@@ -17,7 +17,7 @@ const getTestProjectDirPath = (filename: string) =>
 
 const defaultPackageJsonPath = join(testProjectDir, "package.json");
 
-export function createTestProjectDir(filename: string) {
+export function createTestProjectDir(filename: string): string {
   const testProjectDirPath = getTestProjectDirPath(filename);
   if (existsSync(testProjectDirPath)) {
     deleteFolderRecursive(testProjectDirPath);
@@ -31,7 +31,7 @@ export function createTestProjectDir(filename: string) {
   return testProjectDirPath;
 }
 
-export function restorePackageJson(filename: string) {
+export function restorePackageJson(filename: string): void {
   const testProjectDirPath = getTestProjectDirPath(filename);
   if (!existsSync(testProjectDirPath)) {
     throw new Error(`Test project dir "${testProjectDirPath}" does not exist`);
@@ -39,7 +39,7 @@ export function restorePackageJson(filename: string) {
   copyFileSync(defaultPackageJsonPath, join(testProjectDirPath, "package.json"));
 }
 
-export function removeTestProjectDir(filename: string) {
+export function removeTestProjectDir(filename: string): void {
   const testProjectDirPath = getTestProjectDirPath(filename);
   if (!existsSync(testProjectDirPath)) {
     throw new Error(`Test project dir "${testProjectDirPath}" does not exist`);
