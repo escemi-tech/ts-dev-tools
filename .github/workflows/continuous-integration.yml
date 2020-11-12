@@ -104,8 +104,16 @@ jobs:
         run: |
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
+          mkdir -p /tmp/publish
+          mv README.md /tmp/publish/index.md
 
-      - name: 🚀 Publish
+      - name: 🌐 Publish Github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /tmp/publish
+
+      - name: 📦 Publish NPM packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
         run: yarn run publish
