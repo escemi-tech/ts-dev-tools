@@ -8,6 +8,8 @@ on:
     paths-ignore:
       - "**.md"
   workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   continuous-integration:
@@ -65,7 +67,7 @@ jobs:
 
   publish:
     needs: continuous-integration
-    if: github.event.type == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     strategy:
@@ -105,13 +107,14 @@ jobs:
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
           mkdir -p /tmp/publish
-          mv README.md /tmp/publish/index.md
+          cp README.md /tmp/publish/index.md
 
       - name: 🌐 Publish Github pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: /tmp/publish
+          enable_jekyll: true
 
       - name: 📦 Publish NPM packages
         env:
