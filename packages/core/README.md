@@ -1,31 +1,14 @@
-<p align="center">
-  <a href="https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/core" target="_blank"><img src="https://repository-images.githubusercontent.com/306680259/8d077b80-19cd-11eb-8625-f2b1a474d4a9" width="600"></a>
-</p>
-<p align="center">
-  <a href="https://www.npmjs.com/package/@ts-dev-tools/core" target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/@ts-dev-tools/core"></a>
-  <a href="https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22" target="_blank"><img alt="Continuous integration" src="https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg"></a>
-  <a href="https://codecov.io/gh/escemi-tech/ts-dev-tools" target="_blank"><img src="https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR"/></a>    
-  <a href="CONTRIBUTING" target="_blank"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
-  <a href="https://github.com/sponsors/neilime"><img src="https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4" alt="Sponsor"></a>
-  <a href="https://github.com/escemi-tech/ts-dev-tools"><img alt="GitHub stars" src="https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github"></a>
-</p>
-<h1 align="center">Welcome to @ts-dev-tools/core 💎</h1>
+[![Homepage](https://repository-images.githubusercontent.com/306680259/8d077b80-19cd-11eb-8625-f2b1a474d4a9)](https://escemi-tech.github.io/ts-dev-tools/)
 
-<h2 align="center">Common Typescript dev tools</h2>
+[![npm](https://img.shields.io/npm/v/@ts-dev-tools/core)](https://www.npmjs.com/package/@ts-dev-tools/core) [![Continuous integration](https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg)](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22) [![](https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR)](https://codecov.io/gh/escemi-tech/ts-dev-tools) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING) [![Sponsor](https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4)](https://github.com/sponsors/neilime) [![GitHub stars](https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github)](https://github.com/escemi-tech/ts-dev-tools)
+
+# Welcome to @ts-dev-tools/core 💎
+
+## Common Typescript dev tools
 
 ---
-
-## 🏠 [Homepage](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/core)
-
-<br>
-
----
-
-<br>
 
 ## What's included
-
-<br>
 
 ### 📦 Package scripts
 
@@ -80,11 +63,7 @@
 - [@types/node](https://www.npmjs.com/package/@types/node)
 - [@types/jest](https://www.npmjs.com/package/@types/jest)
 
-<br>
-
 ---
-
-<br>
 
 ## Usage
 
@@ -116,11 +95,7 @@ yarn ts-dev-tools install
 
 ---
 
-<br>
-
 ## Author
-
-<br>
 
 👤 **Escemi <contact@escemi.com>**
 
