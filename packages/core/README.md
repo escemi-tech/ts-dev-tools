@@ -9,7 +9,7 @@
 <a href="https://github.com/sponsors/neilime"><img src="https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4" alt="Sponsor"></a>
 <a href="https://github.com/escemi-tech/ts-dev-tools"><img alt="GitHub stars" src="https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github">
 </p>
-<h1 align="center">Welcome to @ts-dev-tools/core 👋</h1>
+<h1 align="center">Welcome to @ts-dev-tools/core 💎</h1>
 
 <h2 align="center">Common Typescript dev tools</h2>
 
@@ -26,6 +26,12 @@
 ## What's included
 
 <br>
+
+### 📦 Package scripts
+
+- `test`: Run tests with [jest](https://jestjs.io/)
+- `lint`: Run linter with [eslint](https://eslint.org/)
+- `postinstall`: Self update
 
 ### ⚡ Git hooks
 
@@ -55,7 +61,6 @@
   - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import): ES2015+ (ES6+) import/export syntax
   - [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest#readme): Rules for Jest
   - [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node#readme): Additional ESLint's rules for Node.js
-
   - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise#readme): Enforce best practices for JavaScript promises.
 
 ### 💄 Prettier
@@ -74,7 +79,40 @@
 
 - [@types/node](https://www.npmjs.com/package/@types/node)
 - [@types/jest](https://www.npmjs.com/package/@types/jest)
-  <br>
+
+<br>
+
+---
+
+<br>
+
+## Usage
+
+### _1_. Install
+
+```sh
+npm install --dev @ts-dev-tools/core
+```
+
+Or
+
+```sh
+yarn add --dev @ts-dev-tools/core
+```
+
+### _2_. Enable ts-dev-tools
+
+```sh
+npx ts-dev-tools install
+```
+
+Or
+
+```sh
+yarn ts-dev-tools install
+```
+
+⚠️ If your package is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.
 
 ---
 
