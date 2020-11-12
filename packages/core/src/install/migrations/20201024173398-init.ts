@@ -58,6 +58,7 @@ export function up(absoluteProjectDir: string): void {
   };
 
   const scripts = {
+    test: "jest",
     lint: 'eslint "src/**/*.{ts,tsx}"',
     postinstall: "ts-dev-tools install",
   };
