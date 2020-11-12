@@ -5,13 +5,14 @@
 <p align="center">
 <a href="https://www.npmjs.com/search?q=%40ts-dev-tools" target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/@ts-dev-tools/core"></a>
 <a href="https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22" target="_blank"><img alt="Continuous integration" src="https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg"></a>
+<a href="https://snyk.io/test/github/escemi-tech/ts-dev-tools" target="_blank"><img alt="Known Vulnerabilities" src="https://snyk.io/test/github/escemi-tech/ts-dev-tools/badge.svg"></a>
 <a href="https://codecov.io/gh/escemi-tech/ts-dev-tools" target="_blank"><img src="https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR"/></a>    
 <a href="LICENSE" target="_blank"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
 <a href="CONTRIBUTING" target="_blank"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
 <a href="https://github.com/sponsors/neilime"><img src="https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4" alt="Sponsor"></a>
 <a href="https://github.com/escemi-tech/ts-dev-tools"><img alt="GitHub stars" src="https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github">
 </p>
-<h1 align="center">Welcome to ts-dev-tools 👋</h1>
+<h1 align="center">Welcome to ts-dev-tools 🛠️</h1>
 <br>
 
 <h2 align="center">Opinionated package to configure proper tools to develop a Typescript project</h2>
@@ -35,7 +36,15 @@
 
 <br>
 
-### _1_. A fine tuned collection of tools and configuration ready for a realworld project
+### _1_. Aims to provide a first-class developper experience
+
+<br>
+
+Install **ts-dev-tools** and your project is dev ready, no more installation or setup, it just works
+
+<br>
+
+### _2_. A fine tuned collection of tools and configuration ready for a realworld project
 
 <br>
 
@@ -44,11 +53,22 @@ Within the dozen of existing packages, **ts-dev-tools** uses a short list of con
 
 <br>
 
-### _2_. One package to rule them all, one dependency to keep up to date
+### _3_. Stable and secure
 
 <br>
 
-**ts-dev-tools** is [well tested](https://github.com/escemi-tech/ts-dev-tools/blob/ab7d4e6203631907c3a0e86255f6866a8a0c7c2a/README.md#L6), for each changes or dependency update. Dependencies are updated all weeks in order to keep dev tools up to date agains security issues and to give access to the latest available feature.
+For every changes and dependency update, **ts-dev-tools** is:
+
+- [Unit & E2E tested](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22): [coverage report](https://codecov.io/gh/escemi-tech/ts-dev-tools)
+- Audited for known vulnerabilities with [snyk](https://snyk.io/)
+
+<br>
+
+### _3_. One package to rule them all, one dependency to keep up to date
+
+<br>
+
+Dependencies are updated all weeks in order to keep dev tools up to date agains security issues and to give access to the latest available feature.
 
 Using **ts-dev-tools** you should just have to update it and you'll have all the dev dependencies used by **ts-dev-tools**, up to date !
 
