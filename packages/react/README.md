@@ -42,8 +42,9 @@
 ### 🧪 Tests
 
 - Install react tests libraries:
-  - [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/)
-  - [@testing-library/react-hooks](https://react-hooks-testing-library.com/)
+  - [@testing-library/jest-dom](https://testing-library.com/docs/ecosystem-jest-dom): Custom jest matchers to test the state of the DOM
+  - [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/): Simple and complete React DOM testing utilities
+  - [@testing-library/react-hooks](https://react-hooks-testing-library.com/): Simple and complete React hooks testing utilities
 
 ### 📖 Types
 
@@ -51,6 +52,38 @@
 - [@types/react-dom](https://www.npmjs.com/package/@types/react-dom)
 
 <br>
+
+---
+
+<br>
+
+## Usage
+
+### _1_. Install
+
+```sh
+npm install --dev @ts-dev-tools/react
+```
+
+Or
+
+```sh
+yarn add --dev @ts-dev-tools/react
+```
+
+### _2_. Enable ts-dev-tools
+
+```sh
+npx ts-dev-tools install
+```
+
+Or
+
+```sh
+yarn ts-dev-tools install
+```
+
+⚠️ If your package is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.
 
 ---
 
