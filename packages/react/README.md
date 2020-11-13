@@ -23,6 +23,7 @@
   - [@testing-library/jest-dom](https://testing-library.com/docs/ecosystem-jest-dom): Custom jest matchers to test the state of the DOM
   - [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/): Simple and complete React DOM testing utilities
   - [@testing-library/react-hooks](https://react-hooks-testing-library.com/): Simple and complete React hooks testing utilities
+  - [react-test-renderer](https://www.npmjs.com/package/react-test-renderer/): React renderer required by `@testing-library/react-hooks`
 
 ### 📖 Types
 
