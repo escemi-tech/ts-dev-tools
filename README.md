@@ -78,7 +78,7 @@ yarn ts-dev-tools install
 👤 **Escemi <contact@escemi.com>**
 
 - Website: https://www.escemi.com
-- LinkedIn: [@https:\/\/www.linkedin.com\/company\/escemi](https://linkedin.com/in/https://www.linkedin.com/company/escemi)
+- LinkedIn: [@escemi](https://www.linkedin.com/company/escemi)
 
 ## 🤝 Contributing
 
