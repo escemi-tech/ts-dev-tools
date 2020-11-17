@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.4.0 (2020-11-17)
+
+
+### Features
+
+* **desp:** upgrade eslint deps ([8c730f5](https://github.com/escemi-tech/ts-dev-tools/commit/8c730f5baa8944a2eb2c542a3b02253c989cce61))
+
+
+
+
+
 ## 1.3.7 (2020-11-13)
 
 **Note:** Version bump only for package @ts-dev-tools/core
