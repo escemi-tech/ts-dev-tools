@@ -41,7 +41,7 @@ export function up(absoluteProjectDir: string): void {
 
   const husky = {
     hooks: {
-      "pre-commit": "tsc && lint-staged && pretty-quick --staged",
+      "pre-commit": "tsc --noEmit && lint-staged && pretty-quick --staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-push": "yarn lint && yarn test",
     },
