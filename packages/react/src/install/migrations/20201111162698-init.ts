@@ -8,7 +8,12 @@ export function up(absoluteProjectDir: string): void {
     extends: ["plugin:react/recommended"],
   };
 
+  const jest = {
+    testEnvironment: "jsdom",
+  };
+
   updatePackageJson(absoluteProjectDir, {
     eslintConfig,
+    jest,
   });
 }

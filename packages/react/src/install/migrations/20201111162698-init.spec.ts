@@ -30,6 +30,7 @@ describe("Migration 20201111162698-init", () => {
 
       expect(packageJson).toMatchObject({
         eslintConfig: {},
+        jest: {},
       });
     });
   });
