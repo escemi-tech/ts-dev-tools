@@ -5,7 +5,12 @@ export function up(absoluteProjectDir: string): void {
     env: {
       browser: true,
     },
-    extends: ["plugin:react/recommended"],
+    extends: ["plugin:react/recommended", "prettier/react"],
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   };
 
   const jest = {
