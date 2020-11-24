@@ -54,6 +54,7 @@ export function up(absoluteProjectDir: string): void {
   const importSort = {
     ".js, .jsx, .ts, .tsx": {
       style: "module",
+      parser: "typescript",
     },
   };
 
