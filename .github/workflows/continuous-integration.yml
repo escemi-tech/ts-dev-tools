@@ -46,6 +46,9 @@ jobs:
         with:
           args: --all-projects
 
+      - name: 🛡️ Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
       - name: 🧪 Test
         run: |
           yarn lint
