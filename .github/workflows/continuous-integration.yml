@@ -46,8 +46,11 @@ jobs:
         with:
           args: --all-projects
 
-      - name: 🛡️ Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+      - name: 🔬 CodeQL Analysis
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ("typescript"]
+      - uses: github/codeql-action/analyze@v1
 
       - name: 🧪 Test
         run: |
