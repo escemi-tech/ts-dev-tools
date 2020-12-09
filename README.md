@@ -26,7 +26,7 @@ Within the dozen of existing packages, **ts-dev-tools** uses a short list of con
 For every changes and dependency update, **ts-dev-tools** is:
 
 - [Unit & E2E tested](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22): [coverage report](https://codecov.io/gh/escemi-tech/ts-dev-tools)
-- Audited for known vulnerabilities with [snyk](https://snyk.io/)
+- Audited for known vulnerabilities with [Snyk](https://snyk.io/) and [CodeQL](https://github.com/escemi-tech/ts-dev-tools/security/code-scanning)
 
 ### _3_. One package to rule them all, one dependency to keep up to date
 
