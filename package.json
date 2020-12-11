@@ -15,7 +15,6 @@
     "build": "lerna run --stream build",
     "test": "lerna run --stream test",
     "test:coverage": "lerna run --stream test:coverage",
-    "publish": "lerna publish --yes",
     "link": "lerna exec yarn link",
     "unlink": "lerna exec yarn unlink"
   },
