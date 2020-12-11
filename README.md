@@ -1,6 +1,12 @@
 [![Homepage](https://repository-images.githubusercontent.com/306680259/8d077b80-19cd-11eb-8625-f2b1a474d4a9)](https://github.com/escemi-tech/ts-dev-tools)
 
-[![npm](https://img.shields.io/npm/v/@ts-dev-tools/core)](https://www.npmjs.com/search?q=%40ts-dev-tools) [![Continuous integration](https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg)](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22) [![Known Vulnerabilities](https://snyk.io/test/github/escemi-tech/ts-dev-tools/badge.svg)](https://snyk.io/test/github/escemi-tech/ts-dev-tools) [![](https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR)](https://codecov.io/gh/escemi-tech/ts-dev-tools) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING) [![Sponsor](https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4)](https://github.com/sponsors/neilime) [![GitHub stars](https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github)](https://github.com/escemi-tech/ts-dev-tools)
+[![npm](https://img.shields.io/npm/v/@ts-dev-tools/core)](https://www.npmjs.com/search?q=%40ts-dev-tools)
+[![Continuous integration](https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg)](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22)
+[![Code coverage](https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR)](https://codecov.io/gh/escemi-tech/ts-dev-tools)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING)
+[![Sponsor](https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4)](https://github.com/sponsors/neilime)
+[![GitHub stars](https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github)](https://github.com/escemi-tech/ts-dev-tools)
 
 ---
 
@@ -26,7 +32,7 @@ Within the dozen of existing packages, **ts-dev-tools** uses a short list of con
 For every changes and dependency update, **ts-dev-tools** is:
 
 - [Unit & E2E tested](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22): [coverage report](https://codecov.io/gh/escemi-tech/ts-dev-tools)
-- Audited for known vulnerabilities with [Snyk](https://snyk.io/) and [CodeQL](https://github.com/escemi-tech/ts-dev-tools/security/code-scanning)
+- Audited for known vulnerabilities with [CodeQL](https://github.com/escemi-tech/ts-dev-tools/security/code-scanning)
 
 ### _3_. One package to rule them all, one dependency to keep up to date
 

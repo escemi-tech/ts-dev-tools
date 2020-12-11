@@ -39,14 +39,7 @@ jobs:
       - name: 🏗️ Build
         run: yarn build
 
-      - name: 🛡️ Vulnerabilities
-        uses: snyk/actions/node@0.3.0
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --all-projects
-
-      - name: 🔬 CodeQL Analysis
+      - name: 🛡️ CodeQL Analysis
         uses: github/codeql-action/init@v1
         with:
           languages: typescript
