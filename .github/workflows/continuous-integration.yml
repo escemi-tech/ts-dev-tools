@@ -52,8 +52,8 @@ jobs:
         env:
           CI: true
 
-      # - name: 🔭 e2e
-      # run: .github/workflows/e2e.sh
+      - name: 🔭 e2e
+        run: .github/workflows/e2e.sh
 
       - name: 📊 Code coverage
         uses: codecov/codecov-action@v1
