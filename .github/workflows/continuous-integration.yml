@@ -52,8 +52,8 @@ jobs:
         env:
           CI: true
 
-      - name: 🔭 e2e
-        run: .github/workflows/e2e.sh
+      # - name: 🔭 e2e
+      # run: .github/workflows/e2e.sh
 
       - name: 📊 Code coverage
         uses: codecov/codecov-action@v1
@@ -107,4 +107,5 @@ jobs:
       - name: 📦 Publish NPM packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn lerna publish --conventional-commits --create-release github --yes
