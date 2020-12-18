@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.4.6 (2020-12-18)
+
+**Note:** Version bump only for package @ts-dev-tools/core
+
+
+
+
+
 ## 1.4.5 (2020-12-11)
 
 **Note:** Version bump only for package @ts-dev-tools/core

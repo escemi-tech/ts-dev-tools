@@ -1,6 +1,6 @@
 {
   "name": "@ts-dev-tools/core",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "TS dev tools Core",
   "keywords": [
     "linter",
