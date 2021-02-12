@@ -40,7 +40,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^5.0.3",
     "@ts-dev-tools/core": "^1.4.8",
-    "@types/react": "^17.0.0",
+    "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
     "eslint-plugin-react": "^7.22.0",
     "react-test-renderer": "^17.0.1"
