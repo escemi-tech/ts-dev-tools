@@ -3,7 +3,7 @@
 import { dirname, join } from "path";
 
 import { install } from "./install/command";
-import { readPackageJson } from "./services/packageJson";
+import { PackageJson } from "./services/PackageJson";
 
 const [, , arg, ...params] = process.argv;
 
@@ -21,7 +21,7 @@ switch (true) {
     });
     break;
   case ["--version", "-v"].includes(arg):
-    console.info(readPackageJson(join(__dirname, "..")).version);
+    console.info(PackageJson.fromDirPath(join(__dirname, "..")).getPackageVersion());
     break;
   default:
     console.info(`Usage

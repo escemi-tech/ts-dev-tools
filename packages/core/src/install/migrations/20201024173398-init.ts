@@ -1,6 +1,7 @@
-import { updatePackageJson } from "../../services/packageJson";
+import { PackageJson } from "../../services/PackageJson";
+import { MigrationUpFunction } from "../MigrationsService";
 
-export function up(absoluteProjectDir: string): void {
+export const up: MigrationUpFunction = (absoluteProjectDir: string): void => {
   const jest = {
     preset: "ts-jest",
     testEnvironment: "node",
@@ -64,7 +65,7 @@ export function up(absoluteProjectDir: string): void {
     postinstall: "ts-dev-tools install",
   };
 
-  updatePackageJson(absoluteProjectDir, {
+  PackageJson.fromDirPath(absoluteProjectDir).merge({
     eslintConfig,
     prettier,
     commitlint,
@@ -74,4 +75,4 @@ export function up(absoluteProjectDir: string): void {
     scripts,
     jest,
   });
-}
+};
