@@ -31,13 +31,6 @@ Object {
     ],
     "root": true,
   },
-  "husky": Object {
-    "hooks": Object {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "tsc --noEmit && lint-staged && pretty-quick --staged",
-      "pre-push": "yarn lint && yarn test",
-    },
-  },
   "importSort": Object {
     ".js, .jsx, .ts, .tsx": Object {
       "parser": "typescript",
@@ -63,6 +56,7 @@ Object {
     "trailingComma": "es5",
   },
   "scripts": Object {
+    "build": "tsc --noEmit",
     "lint": "eslint \\"src/**/*.{ts,tsx}\\"",
     "postinstall": "ts-dev-tools install",
     "test": "jest",

@@ -40,10 +40,14 @@ export class PackageJson {
     return this.getContent().version;
   }
 
+  isPrivate(): boolean {
+    return this.getContent().private === true;
+  }
+
   getTsDevToolsVersion(): string | undefined {
-    return (this.getContent()?.tsDevTools as JsonFileData | undefined)?.version as
-      | string
-      | undefined;
+    const tsDevToolsConfig = this.getContent().tsDevTools as JsonFileData | undefined;
+    const version = tsDevToolsConfig?.version as string | undefined;
+    return version;
   }
 
   getInstalledPlugins(): string[] {

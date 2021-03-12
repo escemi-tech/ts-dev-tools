@@ -12,8 +12,8 @@ describe("Install command", () => {
     removeTestProjectDir(__filename);
   });
 
-  it("should run installation", () => {
-    const installOperation = () => install({ cwd: testProjectDir, dir: "." });
-    expect(installOperation).not.toThrow();
+  it("should run installation without error", async () => {
+    const result = await install({ cwd: testProjectDir, dir: "." });
+    expect(result).toBeUndefined();
   });
 });

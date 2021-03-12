@@ -48,10 +48,9 @@ describe("MigrationsService", () => {
       restorePackageJson(__filename);
     });
 
-    it("should execute given migrations", () => {
-      const executeMigrationsOperation = () =>
-        MigrationsService.executeMigrations([], testProjectDir);
-      expect(executeMigrationsOperation).not.toThrow();
+    it("should execute given migrations without error", async () => {
+      const result = await MigrationsService.executeMigrations([], testProjectDir);
+      expect(result).toBeUndefined();
     });
   });
 });

@@ -86,8 +86,17 @@
     "plugins": [
       "@typescript-eslint",
       "jest"
-    ],
-    "rules": {}
+    ]
+  },
+  "prettier": {
+    "semi": true,
+    "printWidth": 100,
+    "trailingComma": "es5"
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module"
+    }
   },
   "jest": {
     "preset": "ts-jest",

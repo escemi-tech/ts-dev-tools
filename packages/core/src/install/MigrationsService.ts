@@ -5,7 +5,7 @@ import { PackageJson } from "../services/PackageJson";
 
 export type Migration = { name: string; path: string };
 
-export type MigrationUpFunction = (absoluteProjectDir: string) => void;
+export type MigrationUpFunction = (absoluteProjectDir: string) => Promise<void>;
 
 export class MigrationsService {
   static getAvailableMigrations(
@@ -46,7 +46,10 @@ export class MigrationsService {
     return migrationFiles;
   }
 
-  static executeMigrations(migrations: Migration[], absoluteProjectDir: string): void {
+  static async executeMigrations(
+    migrations: Migration[],
+    absoluteProjectDir: string
+  ): Promise<void> {
     const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
     const packageJsonBackupPath = packageJson.backup();
 
@@ -58,7 +61,7 @@ export class MigrationsService {
         const { up } = require(migration.path);
 
         // Apply migration
-        up(absoluteProjectDir);
+        await up(absoluteProjectDir);
 
         // Upgrade current version
         packageJson.merge({

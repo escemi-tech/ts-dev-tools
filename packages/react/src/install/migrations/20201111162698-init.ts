@@ -1,6 +1,6 @@
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
 
-export function up(absoluteProjectDir: string): void {
+export async function up(absoluteProjectDir: string): Promise<void> {
   const eslintConfig = {
     env: {
       browser: true,

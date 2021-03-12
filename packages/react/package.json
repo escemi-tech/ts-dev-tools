@@ -30,7 +30,9 @@
     "build": "rimraf dist && tsc",
     "test": "jest",
     "test:coverage": "yarn test --coverage",
-    "lint": "eslint \"src/**/*.{ts,tsx}\""
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "bugs": {
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
@@ -45,51 +47,36 @@
     "eslint-plugin-react": "^7.22.0",
     "react-test-renderer": "^17.0.1"
   },
+  "devDependencies": {
+    "pinst": "^2.1.6"
+  },
   "eslintConfig": {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint",
-      "jest"
-    ],
+    "env": {
+      "es2021": true
+    },
     "extends": [
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:jest/recommended",
       "prettier"
     ],
-    "env": {
-      "es2021": true
-    },
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaFeatures": {
         "jsx": true
       },
       "ecmaVersion": 12,
       "sourceType": "module"
-    }
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "jest"
+    ]
   },
   "prettier": {
     "semi": true,
     "printWidth": 100,
     "trailingComma": "es5"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsc && lint-staged && pretty-quick --staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "yarn lint && yarn test"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
-    ]
   },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
@@ -103,8 +90,5 @@
       "**/__tests__/**/*.[jt]s?(x)",
       "**/?(*.)+(spec|test).+(ts|tsx|js)"
     ]
-  },
-  "tsDevTools": {
-    "version": "20201024173398-init"
   }
 }

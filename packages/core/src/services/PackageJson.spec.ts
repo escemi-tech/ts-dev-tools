@@ -67,31 +67,43 @@ describe("PackageJson", () => {
     it("should retrieve the package.json version", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
 
-      const packageVersion = "1.0.0";
+      const expectedPackageVersion = "1.0.0";
       packageJson.merge({
-        version: packageVersion,
+        version: expectedPackageVersion,
       });
 
-      const packageJsonName = packageJson.getPackageVersion();
+      const packageVersion = packageJson.getPackageVersion();
 
-      expect(packageJsonName).toEqual(packageVersion);
+      expect(packageVersion).toEqual(expectedPackageVersion);
     });
   });
 
   describe("getTsDevToolsVersion", () => {
+    afterEach(() => {
+      restorePackageJson(__filename);
+    });
+
     it("should retrieve the package.json TsDevTools version", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
 
-      const tsDevToolsVersion = "1.0.0";
+      const expectedTsDevToolsVersion = "1.0.0";
       packageJson.merge({
         tsDevTools: {
-          version: tsDevToolsVersion,
+          version: expectedTsDevToolsVersion,
         },
       });
 
-      const packageJsonName = packageJson.getPackageVersion();
+      const tsDevToolsVersion = packageJson.getTsDevToolsVersion();
 
-      expect(packageJsonName).toEqual(tsDevToolsVersion);
+      expect(tsDevToolsVersion).toEqual(expectedTsDevToolsVersion);
+    });
+
+    it("should retrieve undefined the package.json TsDevTools version when none found", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+
+      const tsDevToolsVersion = packageJson.getTsDevToolsVersion();
+
+      expect(tsDevToolsVersion).toBeUndefined();
     });
   });
 
