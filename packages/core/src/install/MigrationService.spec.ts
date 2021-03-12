@@ -1,9 +1,9 @@
 import { resolve } from "path";
 
 import { createTestProjectDir, removeTestProjectDir, restorePackageJson } from "../tests/utils";
-import { executeMigrations, getAvailableMigrations } from "./migration";
+import { MigrationsService } from "./MigrationsService";
 
-describe("Migration", () => {
+describe("MigrationsService", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
@@ -20,7 +20,11 @@ describe("Migration", () => {
     });
 
     it("should retrieve available migrations when no version is provided", () => {
-      const availableMigrations = getAvailableMigrations(testProjectDir, testProjectDir, undefined);
+      const availableMigrations = MigrationsService.getAvailableMigrations(
+        testProjectDir,
+        testProjectDir,
+        undefined
+      );
       expect(availableMigrations).toEqual([
         {
           name: "20201024173398-init",
@@ -30,7 +34,7 @@ describe("Migration", () => {
     });
 
     it("should retrieve an empty array when no available migrations exist after given version", () => {
-      const availableMigrations = getAvailableMigrations(
+      const availableMigrations = MigrationsService.getAvailableMigrations(
         testProjectDir,
         testProjectDir,
         "20201024173398-init"
@@ -44,9 +48,9 @@ describe("Migration", () => {
       restorePackageJson(__filename);
     });
 
-    it("should execute given migrations", () => {
-      const executeMigrationsOperation = () => executeMigrations([], testProjectDir);
-      expect(executeMigrationsOperation).not.toThrow();
+    it("should execute given migrations without error", async () => {
+      const result = await MigrationsService.executeMigrations([], testProjectDir);
+      expect(result).toBeUndefined();
     });
   });
 });

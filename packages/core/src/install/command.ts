@@ -1,11 +1,11 @@
 import { resolve } from "path";
 
-import { JsonFileData, readPackageJson } from "../services/packageJson";
-import { executeMigrations, getAvailableMigrations } from "./migration";
+import { PackageJson } from "../services/PackageJson";
+import { MigrationsService } from "./MigrationsService";
 
-export function install({ cwd, dir = "." }: { cwd: string; dir: string }): void {
+export async function install({ cwd, dir = "." }: { cwd: string; dir: string }): Promise<void> {
   const tsDevToolsRootPath = resolve(__dirname, "../..");
-  const packageName = readPackageJson(tsDevToolsRootPath).name;
+  const packageName = PackageJson.fromDirPath(tsDevToolsRootPath).getPackageName();
 
   // Ensure that we're not trying to install outside cwd
   const absoluteProjectDir = resolve(cwd, dir);
@@ -14,10 +14,7 @@ export function install({ cwd, dir = "." }: { cwd: string; dir: string }): void 
   }
 
   // Run installation migration
-  const packageJson = readPackageJson(absoluteProjectDir);
-  const currentVersion = (packageJson?.tsDevTools as JsonFileData | undefined)?.version as
-    | string
-    | undefined;
+  const currentVersion = PackageJson.fromDirPath(absoluteProjectDir).getTsDevToolsVersion();
 
   if (currentVersion) {
     console.info(`Updating ${packageName} installation...`);
@@ -25,9 +22,13 @@ export function install({ cwd, dir = "." }: { cwd: string; dir: string }): void 
     console.info(`Installing ${packageName}...`);
   }
 
-  const migrations = getAvailableMigrations(tsDevToolsRootPath, absoluteProjectDir, currentVersion);
+  const migrations = MigrationsService.getAvailableMigrations(
+    tsDevToolsRootPath,
+    absoluteProjectDir,
+    currentVersion
+  );
 
-  executeMigrations(migrations, absoluteProjectDir);
+  await MigrationsService.executeMigrations(migrations, absoluteProjectDir);
 
   console.info(`Installation done!`);
 }

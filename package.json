@@ -12,57 +12,26 @@
   "scripts": {
     "start": "lerna run --stream start --",
     "lint": "lerna run --stream lint --",
-    "build": "lerna run --stream build",
-    "test": "lerna run --stream test",
+    "build": "lerna run --stream build --scope @ts-dev-tools/core && lerna run --stream build --ignore @ts-dev-tools/core",
+    "test": "lerna run --stream test --",
     "test:coverage": "lerna run --stream test:coverage",
     "link": "lerna exec yarn link",
     "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.2"
   },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es2021": true
-    },
+  "commitlint": {
     "extends": [
-      "eslint:recommended",
-      "prettier"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 12,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "jest",
-      "@typescript-eslint"
-    ],
-    "rules": {}
-  },
-  "prettier": {
-    "semi": true,
-    "printWidth": 100,
-    "trailingComma": "es5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn build && lint-staged && pretty-quick --staged",
-      "pre-push": "yarn lint && yarn test"
-    }
+      "@commitlint/config-conventional"
+    ]
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --fix"
     ]
-  },
-  "importSort": {
-    ".js, .jsx, .ts, .tsx": {
-      "style": "module"
-    }
   }
 }

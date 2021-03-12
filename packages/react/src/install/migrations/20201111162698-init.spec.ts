@@ -1,4 +1,4 @@
-import { readPackageJson } from "@ts-dev-tools/core/dist/services/packageJson";
+import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
 import {
   createTestProjectDir,
   removeTestProjectDir,
@@ -26,12 +26,9 @@ describe("Migration 20201111162698-init", () => {
     it("should apply migration", () => {
       up(testProjectDir);
 
-      const packageJson = readPackageJson(testProjectDir);
+      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
 
-      expect(packageJson).toMatchObject({
-        eslintConfig: {},
-        jest: {},
-      });
+      expect(packageJsonContent).toMatchSnapshot();
     });
   });
 });

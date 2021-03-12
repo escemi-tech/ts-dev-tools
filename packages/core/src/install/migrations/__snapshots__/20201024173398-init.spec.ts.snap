@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Migration 20201024173398-init Up should apply migration 1`] = `
+Object {
+  "commitlint": Object {
+    "extends": Array [
+      "@commitlint/config-conventional",
+    ],
+  },
+  "eslintConfig": Object {
+    "env": Object {
+      "es2021": true,
+    },
+    "extends": Array [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "prettier",
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": Object {
+      "ecmaFeatures": Object {
+        "jsx": true,
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module",
+    },
+    "plugins": Array [
+      "@typescript-eslint",
+      "jest",
+    ],
+    "root": true,
+  },
+  "importSort": Object {
+    ".js, .jsx, .ts, .tsx": Object {
+      "parser": "typescript",
+      "style": "module",
+    },
+  },
+  "jest": Object {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": Array [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)",
+    ],
+  },
+  "lint-staged": Object {
+    "*.{js,ts,tsx}": Array [
+      "eslint --fix",
+    ],
+  },
+  "prettier": Object {
+    "printWidth": 100,
+    "semi": true,
+    "trailingComma": "es5",
+  },
+  "scripts": Object {
+    "build": "tsc --noEmit",
+    "lint": "eslint \\"src/**/*.{ts,tsx}\\"",
+    "postinstall": "ts-dev-tools install",
+    "test": "jest",
+  },
+  "version": "1.0.0",
+}
+`;

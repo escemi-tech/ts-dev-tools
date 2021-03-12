@@ -1,4 +1,4 @@
-import { readPackageJson } from "../../services/packageJson";
+import { PackageJson } from "../../services/PackageJson";
 import { createTestProjectDir, removeTestProjectDir, restorePackageJson } from "../../tests/utils";
 import { up } from "./20201024173398-init";
 
@@ -18,19 +18,12 @@ describe("Migration 20201024173398-init", () => {
       restorePackageJson(__filename);
     });
 
-    it("should apply migration", () => {
-      up(testProjectDir);
+    it("should apply migration", async () => {
+      await up(testProjectDir);
 
-      const packageJson = readPackageJson(testProjectDir);
+      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
 
-      expect(packageJson).toMatchObject({
-        eslintConfig: {},
-        prettier: {},
-        husky: {},
-        "lint-staged": {},
-        importSort: {},
-        scripts: {},
-      });
+      expect(packageJsonContent).toMatchSnapshot();
     });
   });
 });

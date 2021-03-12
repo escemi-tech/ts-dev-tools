@@ -1,6 +1,8 @@
-import { updatePackageJson } from "../../services/packageJson";
+import { CmdService } from "../../services/CliService";
+import { PackageJson } from "../../services/PackageJson";
+import { MigrationUpFunction } from "../MigrationsService";
 
-export function up(absoluteProjectDir: string): void {
+export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
   const jest = {
     preset: "ts-jest",
     testEnvironment: "node",
@@ -39,14 +41,6 @@ export function up(absoluteProjectDir: string): void {
     extends: ["@commitlint/config-conventional"],
   };
 
-  const husky = {
-    hooks: {
-      "pre-commit": "tsc --noEmit && lint-staged && pretty-quick --staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "yarn lint && yarn test",
-    },
-  };
-
   const lintStaged = {
     "*.{js,ts,tsx}": ["eslint --fix"],
   };
@@ -59,19 +53,45 @@ export function up(absoluteProjectDir: string): void {
   };
 
   const scripts = {
+    build: "tsc --noEmit",
     test: "jest",
     lint: 'eslint "src/**/*.{ts,tsx}"',
     postinstall: "ts-dev-tools install",
   };
 
-  updatePackageJson(absoluteProjectDir, {
+  const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
+  packageJson.merge({
     eslintConfig,
     prettier,
     commitlint,
-    husky,
     "lint-staged": lintStaged,
     importSort,
     scripts,
     jest,
   });
-}
+
+  // If package is not private
+  if (packageJson.isPrivate()) {
+    CmdService.execCmd("yarn add pinst --dev");
+  }
+
+  // Install Husky
+  await CmdService.execCmd("npx husky install", absoluteProjectDir);
+
+  // Install Husky hooks (only if we are in a git repository)
+  const isGitRepository = await CmdService.execCmd("git rev-parse", absoluteProjectDir, true)
+    .then(() => true)
+    .catch(() => false);
+
+  if (isGitRepository) {
+    const installHuskyCommands = [
+      'npx husky add .husky/pre-commit "yarn build && npx --no-install lint-staged && npx --no-install pretty-quick --staged"',
+      'npx husky add .husky/commit-msg "npx --no-install commitlint --edit $1',
+      'npx husky add .husky/pre-push "yarn lint && yarn test"',
+    ];
+
+    for (const cmd of installHuskyCommands) {
+      await CmdService.execCmd(cmd, absoluteProjectDir);
+    }
+  }
+};

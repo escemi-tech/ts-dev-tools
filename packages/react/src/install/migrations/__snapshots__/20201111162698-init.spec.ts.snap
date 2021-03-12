@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Migration 20201111162698-init Up should apply migration 1`] = `
+Object {
+  "eslintConfig": Object {
+    "env": Object {
+      "browser": true,
+    },
+    "extends": Array [
+      "plugin:react/recommended",
+      "prettier/react",
+    ],
+    "rules": Object {
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off",
+    },
+    "settings": Object {
+      "react": Object {
+        "version": "detect",
+      },
+    },
+  },
+  "jest": Object {
+    "testEnvironment": "jsdom",
+  },
+  "version": "1.0.0",
+}
+`;

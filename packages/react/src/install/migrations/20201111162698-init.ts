@@ -1,6 +1,6 @@
-import { updatePackageJson } from "@ts-dev-tools/core/dist/services/packageJson";
+import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
 
-export function up(absoluteProjectDir: string): void {
+export async function up(absoluteProjectDir: string): Promise<void> {
   const eslintConfig = {
     env: {
       browser: true,
@@ -21,7 +21,7 @@ export function up(absoluteProjectDir: string): void {
     testEnvironment: "jsdom",
   };
 
-  updatePackageJson(absoluteProjectDir, {
+  PackageJson.fromDirPath(absoluteProjectDir).merge({
     eslintConfig,
     jest,
   });
