@@ -8,7 +8,6 @@ Object {
     },
     "extends": Array [
       "plugin:react/recommended",
-      "prettier/react",
     ],
     "rules": Object {
       "react/jsx-uses-react": "off",

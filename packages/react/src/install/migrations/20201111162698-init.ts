@@ -5,7 +5,7 @@ export async function up(absoluteProjectDir: string): Promise<void> {
     env: {
       browser: true,
     },
-    extends: ["plugin:react/recommended", "prettier/react"],
+    extends: ["plugin:react/recommended"],
     settings: {
       react: {
         version: "detect",
