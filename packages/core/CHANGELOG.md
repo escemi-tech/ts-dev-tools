@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.4.10 (2021-03-17)
+
+
+### Bug Fixes
+
+* **react:** various issues for first migration ([0d09c44](https://github.com/escemi-tech/ts-dev-tools/commit/0d09c44a8dc144c1ffc2bed7290faf365c34e6a0))
+
+
+
+
+
 ## 1.4.9 (2021-03-12)
 
 **Note:** Version bump only for package @ts-dev-tools/core

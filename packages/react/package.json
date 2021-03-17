@@ -1,6 +1,6 @@
 {
   "name": "@ts-dev-tools/react",
-  "version": "1.4.9",
+  "version": "1.4.10",
   "description": "TS dev tools for React",
   "keywords": [
     "linter",
@@ -41,7 +41,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^5.1.0",
-    "@ts-dev-tools/core": "^1.4.9",
+    "@ts-dev-tools/core": "^1.4.10",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
     "eslint-plugin-react": "^7.22.0",
