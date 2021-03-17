@@ -25,3 +25,35 @@ Object {
   "version": "1.0.0",
 }
 `;
+
+exports[`Migration 20201111162698-init Up should apply migration after core 1`] = `
+Object {
+  "eslintConfig": Object {
+    "env": Object {
+      "browser": true,
+      "es2021": true,
+    },
+    "extends": Array [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "plugin:react/recommended",
+      "prettier",
+    ],
+    "rules": Object {
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off",
+    },
+    "settings": Object {
+      "react": Object {
+        "version": "detect",
+      },
+    },
+  },
+  "jest": Object {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+  },
+  "version": "1.0.0",
+}
+`;

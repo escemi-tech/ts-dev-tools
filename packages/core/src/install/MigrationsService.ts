@@ -64,7 +64,7 @@ export class MigrationsService {
         await up(absoluteProjectDir);
 
         // Upgrade current version
-        packageJson.merge({
+        PackageJson.fromDirPath(absoluteProjectDir).merge({
           tsDevTools: { version: migration.name },
         });
       }

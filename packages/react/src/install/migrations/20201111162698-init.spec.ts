@@ -30,5 +30,31 @@ describe("Migration 20201111162698-init", () => {
 
       expect(packageJsonContent).toMatchSnapshot();
     });
+
+    it("should apply migration after core", () => {
+      PackageJson.fromDirPath(testProjectDir).merge({
+        eslintConfig: {
+          env: {
+            es2021: true,
+          },
+          extends: [
+            "eslint:recommended",
+            "plugin:@typescript-eslint/recommended",
+            "plugin:jest/recommended",
+            "prettier",
+          ],
+        },
+        jest: {
+          preset: "ts-jest",
+          testEnvironment: "node",
+        },
+      });
+
+      up(testProjectDir);
+
+      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
+
+      expect(packageJsonContent).toMatchSnapshot();
+    });
   });
 });

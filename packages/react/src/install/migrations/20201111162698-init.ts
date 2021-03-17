@@ -1,11 +1,12 @@
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
+import { PackageJsonMerge } from "@ts-dev-tools/core/dist/services/PackageJsonMerge";
 
 export async function up(absoluteProjectDir: string): Promise<void> {
   const eslintConfig = {
     env: {
       browser: true,
     },
-    extends: ["plugin:react/recommended"],
+    extends: [],
     settings: {
       react: {
         version: "detect",
@@ -21,8 +22,22 @@ export async function up(absoluteProjectDir: string): Promise<void> {
     testEnvironment: "jsdom",
   };
 
-  PackageJson.fromDirPath(absoluteProjectDir).merge({
+  const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
+  const content = PackageJsonMerge.merge(packageJson.getContent(), {
     eslintConfig,
     jest,
   });
+
+  const extendsPlugin = "plugin:react/recommended";
+  const eslintConfigExtends = (content?.eslintConfig as { extends: string[] }).extends;
+
+  const prettierIndex = eslintConfigExtends.indexOf("prettier");
+
+  if (prettierIndex >= 0) {
+    eslintConfigExtends.splice(prettierIndex, 0, extendsPlugin);
+  } else {
+    eslintConfigExtends.push(extendsPlugin);
+  }
+
+  packageJson.setContent(content);
 }

@@ -1,3 +1,6 @@
+import { existsSync } from "fs";
+import { join } from "path";
+
 import { CmdService } from "../../services/CliService";
 import { PackageJson } from "../../services/PackageJson";
 import { MigrationUpFunction } from "../MigrationsService";
@@ -71,7 +74,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
   });
 
   // If package is not private
-  if (packageJson.isPrivate()) {
+  if (!packageJson.isPrivate()) {
     CmdService.execCmd("yarn add pinst --dev");
   }
 
@@ -84,11 +87,18 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     .catch(() => false);
 
   if (isGitRepository) {
-    const installHuskyCommands = [
-      'npx husky add .husky/pre-commit "yarn build && npx --no-install lint-staged && npx --no-install pretty-quick --staged"',
-      'npx husky add .husky/commit-msg "npx --no-install commitlint --edit $1',
-      'npx husky add .husky/pre-push "yarn lint && yarn test"',
-    ];
+    const huskyHooks = {
+      "pre-commit":
+        "yarn build && npx --no-install lint-staged && npx --no-install pretty-quick --staged",
+      "commit-msg": "npx --no-install commitlint --edit $1",
+      "pre-push": "yarn lint && yarn test",
+    };
+    const installHuskyCommands = Object.keys(huskyHooks)
+      .filter((key) => !existsSync(join(absoluteProjectDir, ".husky", key)))
+      .map((key) => {
+        const hookCommand = huskyHooks[key as keyof typeof huskyHooks];
+        return `npx husky add .husky/${key} "${hookCommand}"`;
+      });
 
     for (const cmd of installHuskyCommands) {
       await CmdService.execCmd(cmd, absoluteProjectDir);

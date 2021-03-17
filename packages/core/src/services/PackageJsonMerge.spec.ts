@@ -1,4 +1,3 @@
-import { PackageJson } from "./PackageJson";
 import { PackageJsonMerge } from "./PackageJsonMerge";
 
 describe("PackageJsonMerge", () => {

@@ -32,6 +32,11 @@ export class PackageJson {
     return (this.content = JSON.parse(readFileSync(this.path, "utf-8")) as PackageJsonContent);
   }
 
+  setContent(content: PackageJsonContent): void {
+    this.content = content;
+    this.write();
+  }
+
   getPackageName(): string | undefined {
     return this.getContent().name;
   }
