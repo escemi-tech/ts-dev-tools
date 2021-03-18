@@ -30,13 +30,14 @@ export async function up(absoluteProjectDir: string): Promise<void> {
 
   const extendsPlugin = "plugin:react/recommended";
   const eslintConfigExtends = (content?.eslintConfig as { extends: string[] }).extends;
+  if (!eslintConfigExtends.includes(extendsPlugin)) {
+    const prettierIndex = eslintConfigExtends.indexOf("prettier");
 
-  const prettierIndex = eslintConfigExtends.indexOf("prettier");
-
-  if (prettierIndex >= 0) {
-    eslintConfigExtends.splice(prettierIndex, 0, extendsPlugin);
-  } else {
-    eslintConfigExtends.push(extendsPlugin);
+    if (prettierIndex >= 0) {
+      eslintConfigExtends.splice(prettierIndex, 0, extendsPlugin);
+    } else {
+      eslintConfigExtends.push(extendsPlugin);
+    }
   }
 
   packageJson.setContent(content);
