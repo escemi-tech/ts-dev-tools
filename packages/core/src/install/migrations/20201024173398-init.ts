@@ -59,7 +59,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     build: "tsc --noEmit",
     test: "jest",
     lint: 'eslint "src/**/*.{ts,tsx}"',
-    postinstall: "ts-dev-tools install",
+    prepare: "ts-dev-tools install && husky install",
   };
 
   const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
@@ -88,10 +88,9 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
 
   if (isGitRepository) {
     const huskyHooks = {
-      "pre-commit":
-        "yarn build && npx --no-install lint-staged && npx --no-install pretty-quick --staged",
-      "commit-msg": "npx --no-install commitlint --edit $1",
-      "pre-push": "yarn lint && yarn test",
+      "pre-commit": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
+      "commit-msg": "npx --no-install commitlint --edit \\$1",
+      "pre-push": "yarn lint && yarn build && yarn test",
     };
     const installHuskyCommands = Object.keys(huskyHooks)
       .filter((key) => !existsSync(join(absoluteProjectDir, ".husky", key)))
