@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.5.0 (2021-03-23)
+
+
+### Features
+
+* **core:** remove husky dependency ([00d47b4](https://github.com/escemi-tech/ts-dev-tools/commit/00d47b461f0a0f4e69ce14c5f08ad8fbaeee8896))
+
+
+
+
+
 ## 1.4.10 (2021-03-17)
 
 
