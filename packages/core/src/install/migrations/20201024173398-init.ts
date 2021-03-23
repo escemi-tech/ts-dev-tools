@@ -81,7 +81,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
   if (isGitRepository) {
     const gitHooks = {
       "pre-commit": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
-      "commit-msg": "npx --no-install commitlint --edit \\$1",
+      "commit-msg": "npx --no-install commitlint --edit $1",
       "pre-push": "yarn lint && yarn build && yarn test",
     };
 
