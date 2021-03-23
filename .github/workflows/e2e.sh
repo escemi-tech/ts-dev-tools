@@ -19,15 +19,13 @@ testSimpleProject() {
     yarn add --dev "file:/$PACKAGE_DIR/$PACKAGE";
 
     # Force core dist
-    if [ "$PACKAGE" != "core" ]; then
-        CORE_DIST_DIR_PATH="$TEST_DIR/node_modules/@ts-dev-tools/core/dist"
-        TS_DEV_TOOLS_BIN_PATH="$TEST_DIR/node_modules/.bin/ts-dev-tools"
+    CORE_DIST_DIR_PATH="$TEST_DIR/node_modules/@ts-dev-tools/core/dist"
+    TS_DEV_TOOLS_BIN_PATH="$TEST_DIR/node_modules/.bin/ts-dev-tools"
 
-        rm -fr "$CORE_DIST_DIR_PATH"
-        
-        cp -R "$PACKAGE_DIR/core/dist" "$CORE_DIST_DIR_PATH"
-        ln -sf "$CORE_DIST_DIR_PATH/bin.js" "$TS_DEV_TOOLS_BIN_PATH"
-    fi;
+    rm -fr "$CORE_DIST_DIR_PATH"
+    
+    cp -R "$PACKAGE_DIR/core/dist" "$CORE_DIST_DIR_PATH"
+    ln -sf "$CORE_DIST_DIR_PATH/bin.js" "$TS_DEV_TOOLS_BIN_PATH"
     sudo chmod +x node_modules/.bin/ts-dev-tools
 
     echo "\n - Run tests...\n";

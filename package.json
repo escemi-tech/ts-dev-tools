@@ -14,10 +14,10 @@
     "lint": "lerna run --stream lint --",
     "build": "lerna run --stream build --scope @ts-dev-tools/core && lerna run --stream build --ignore @ts-dev-tools/core",
     "test": "lerna run --stream test --",
+    "test:e2e": ".github/workflows/e2e.sh",
     "test:coverage": "lerna run --stream test:coverage",
     "link": "lerna exec yarn link",
-    "unlink": "lerna exec yarn unlink",
-    "prepare": "husky install"
+    "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
     "lerna": "^4.0.0",

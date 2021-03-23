@@ -58,7 +58,7 @@ Object {
   "scripts": Object {
     "build": "tsc --noEmit",
     "lint": "eslint \\"src/**/*.{ts,tsx}\\"",
-    "prepare": "ts-dev-tools install && husky install",
+    "prepare": "ts-dev-tools install",
     "test": "jest",
   },
   "version": "1.0.0",

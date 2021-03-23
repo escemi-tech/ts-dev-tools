@@ -14,15 +14,12 @@
 
 - `test`: Run tests with [jest](https://jestjs.io/)
 - `lint`: Run linter with [eslint](https://eslint.org/)
-- `postinstall`: Self update
+- `prepare`: Self install / update
 
 ### ⚡ Git hooks
 
-- Install and configure [husky](https://typicode.github.io/husky)
-
 #### `pre-commit`
 
-- Execute Typescript compiler with [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 - Run linter against staged git files with [lint-staged](https://github.com/okonet/lint-staged)
 - Run prettier against changed files with [pretty-quick](https://github.com/azz/pretty-quick#readme)
 
@@ -33,6 +30,7 @@
 #### `pre-push`
 
 - Run linter
+- Execute Typescript compiler with [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 - Run tests
 
 ### 👕 Linter

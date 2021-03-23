@@ -1,4 +1,4 @@
-import { existsSync } from "fs";
+import { writeFileSync } from "fs";
 import { join } from "path";
 
 import { CmdService } from "../../services/CliService";
@@ -59,7 +59,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     build: "tsc --noEmit",
     test: "jest",
     lint: 'eslint "src/**/*.{ts,tsx}"',
-    prepare: "ts-dev-tools install && husky install",
+    prepare: "ts-dev-tools install",
   };
 
   const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
@@ -73,34 +73,29 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     jest,
   });
 
-  // If package is not private
-  if (!packageJson.isPrivate()) {
-    CmdService.execCmd("yarn add pinst --dev");
-  }
-
-  // Install Husky
-  await CmdService.execCmd("npx husky install", absoluteProjectDir);
-
-  // Install Husky hooks (only if we are in a git repository)
+  // Install Git hooks (only if we are in a git repository)
   const isGitRepository = await CmdService.execCmd("git rev-parse", absoluteProjectDir, true)
     .then(() => true)
     .catch(() => false);
 
   if (isGitRepository) {
-    const huskyHooks = {
+    const gitHooks = {
       "pre-commit": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
       "commit-msg": "npx --no-install commitlint --edit \\$1",
       "pre-push": "yarn lint && yarn build && yarn test",
     };
-    const installHuskyCommands = Object.keys(huskyHooks)
-      .filter((key) => !existsSync(join(absoluteProjectDir, ".husky", key)))
-      .map((key) => {
-        const hookCommand = huskyHooks[key as keyof typeof huskyHooks];
-        return `npx husky add .husky/${key} "${hookCommand}"`;
-      });
 
-    for (const cmd of installHuskyCommands) {
-      await CmdService.execCmd(cmd, absoluteProjectDir);
+    const gitHookDirPath = join(absoluteProjectDir, ".git/hooks");
+
+    for (const gitHookFileName of Object.keys(gitHooks)) {
+      const gitHookFilePath = join(gitHookDirPath, gitHookFileName);
+      const gitHookCommand = gitHooks[gitHookFileName as keyof typeof gitHooks];
+      writeFileSync(
+        gitHookFilePath,
+        `#!/bin/sh
+# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
+${gitHookCommand}`
+      );
     }
   }
 };

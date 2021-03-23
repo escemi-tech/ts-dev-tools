@@ -74,7 +74,7 @@ jobs:
           CI: true
 
       - name: 🔭 e2e
-        run: .github/workflows/e2e.sh
+        run: yarn test:e2e
 
       - name: 📊 Code coverage
         uses: codecov/codecov-action@v1
