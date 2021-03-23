@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.5.1 (2021-03-23)
+
+
+### Bug Fixes
+
+* **core:** commit-msg hooks wrongly escaped argument ([4e648a8](https://github.com/escemi-tech/ts-dev-tools/commit/4e648a8aaa858b67130871e10f8db2fda345cdc6))
+
+
+
+
+
 # 1.5.0 (2021-03-23)
 
 
