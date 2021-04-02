@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.5",
+    "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "^5.1.0",
     "@ts-dev-tools/core": "^1.5.2",
     "@types/react": "^17.0.3",
