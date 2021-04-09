@@ -1,8 +1,9 @@
 import { writeFileSync } from "fs";
 import { join } from "path";
 
-import { CmdService } from "../../services/CliService";
+import { CmdService } from "../../services/CmdService";
 import { PackageJson } from "../../services/PackageJson";
+import { PackageManagerService } from "../../services/PackageManagerService";
 import { MigrationUpFunction } from "../MigrationsService";
 
 export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
@@ -79,10 +80,12 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     .catch(() => false);
 
   if (isGitRepository) {
+    const packageManager = PackageManagerService.detectPackageManager(absoluteProjectDir);
+
     const gitHooks = {
       "pre-commit": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
       "commit-msg": "npx --no-install commitlint --edit $1",
-      "pre-push": "yarn lint && yarn build && yarn test",
+      "pre-push": `${packageManager} run lint && ${packageManager} run build && ${packageManager} run test"`,
     };
 
     const gitHookDirPath = join(absoluteProjectDir, ".git/hooks");
