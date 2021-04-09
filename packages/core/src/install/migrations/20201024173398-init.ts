@@ -2,9 +2,9 @@ import { writeFileSync } from "fs";
 import { join } from "path";
 
 import { CmdService } from "../../services/CmdService";
+import { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
 import { PackageManagerService } from "../../services/PackageManagerService";
-import { MigrationUpFunction } from "../MigrationsService";
 
 export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
   const jest = {

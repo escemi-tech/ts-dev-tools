@@ -1,3 +1,4 @@
+import { readFileSync } from "fs";
 import { join } from "path";
 
 import { createTestProjectDir, removeTestProjectDir, restorePackageJson } from "../tests/utils";
@@ -48,6 +49,23 @@ describe("PackageJson", () => {
     });
   });
 
+  describe("setContent", () => {
+    it("should override the package.json content", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+
+      const newContent = {
+        name: "new-content",
+      };
+      packageJson.setContent(newContent);
+
+      const packageJsonContent = packageJson.getContent();
+      expect(packageJsonContent).toEqual(newContent);
+
+      const realPackageJsonContent = readFileSync(packageJson.getPath()).toString();
+      expect(realPackageJsonContent).toEqual(JSON.stringify(newContent, null, 2));
+    });
+  });
+
   describe("getPackageName", () => {
     it("should retrieve the package.json name", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
@@ -75,6 +93,31 @@ describe("PackageJson", () => {
       const packageVersion = packageJson.getPackageVersion();
 
       expect(packageVersion).toEqual(expectedPackageVersion);
+    });
+  });
+
+  describe("isPrivate", () => {
+    it("should retrieve true if the package is private", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+
+      packageJson.merge({
+        private: true,
+      });
+
+      const isPrivate = packageJson.isPrivate();
+
+      expect(isPrivate).toBe(true);
+    });
+
+    it("should retrieve false if the package is not private", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      packageJson.merge({
+        private: false,
+      });
+
+      const isPrivate = packageJson.isPrivate();
+
+      expect(isPrivate).toBe(false);
     });
   });
 
@@ -112,7 +155,14 @@ describe("PackageJson", () => {
       restorePackageJson(__filename);
     });
 
-    it("should return an empty array when only @ts-dev-tools/core is installed", () => {
+    it("should return an empty array if no plugin is installed", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      const installedPlugins = packageJson.getInstalledPlugins();
+
+      expect(installedPlugins).toEqual([]);
+    });
+
+    it("should return @ts-dev-tools/core when only @ts-dev-tools/core is installed", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
       packageJson.merge({
         devDependencies: {
@@ -121,14 +171,13 @@ describe("PackageJson", () => {
       });
       const installedPlugins = packageJson.getInstalledPlugins();
 
-      expect(installedPlugins).toEqual([]);
+      expect(installedPlugins).toEqual(["@ts-dev-tools/core"]);
     });
 
-    it("should return an empty array when only @ts-dev-tools/react is installed", () => {
+    it("should return @ts-dev-tools/react when @ts-dev-tools/react is installed", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
       packageJson.merge({
         devDependencies: {
-          "@ts-dev-tools/core": "1.0.0",
           "@ts-dev-tools/react": "1.0.0",
         },
       });
@@ -136,6 +185,63 @@ describe("PackageJson", () => {
       const installedPlugins = packageJson.getInstalledPlugins();
 
       expect(installedPlugins).toEqual(["@ts-dev-tools/react"]);
+    });
+
+    it("should return installed plugins sorted by name ascending", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      packageJson.merge({
+        devDependencies: {
+          "@ts-dev-tools/react": "1.0.0",
+          "@ts-dev-tools/core": "1.0.0",
+        },
+      });
+      const installedPlugins = packageJson.getInstalledPlugins();
+
+      expect(installedPlugins).toEqual(["@ts-dev-tools/core", "@ts-dev-tools/react"]);
+    });
+  });
+
+  describe("getDependenciesPackageNames", () => {
+    afterEach(() => {
+      restorePackageJson(__filename);
+    });
+
+    it("should return installed dependencies package names", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      packageJson.merge({
+        dependencies: {
+          "test-dependency": "1.0.0",
+        },
+      });
+      const dependenciesPackageNames = packageJson.getDependenciesPackageNames();
+
+      expect(dependenciesPackageNames).toEqual(["test-dependency"]);
+    });
+
+    it("should return an empty array when no dependencies are installed", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      const dependenciesPackageNames = packageJson.getDependenciesPackageNames();
+
+      expect(dependenciesPackageNames).toEqual([]);
+    });
+
+    it("should return installed dev dependencies package names", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      packageJson.merge({
+        devDependencies: {
+          "test-dependency": "1.0.0",
+        },
+      });
+      const devDependenciesPackageNames = packageJson.getDevDependenciesPackageNames();
+
+      expect(devDependenciesPackageNames).toEqual(["test-dependency"]);
+    });
+
+    it("should return an empty array when no dev dependencies are installed", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      const devDependenciesPackageNames = packageJson.getDevDependenciesPackageNames();
+
+      expect(devDependenciesPackageNames).toEqual([]);
     });
   });
 

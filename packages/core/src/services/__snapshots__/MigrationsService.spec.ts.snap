@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MigrationsService executeMigrations should execute migrations when no available migrations exist after given version 1`] = `""`;
+
+exports[`MigrationsService executeMigrations should execute migrations when no version is provided 1`] = `
+"Applying migration \\"@ts-dev-tools/core - 20201024173398-init\\"...
+Migration \\"@ts-dev-tools/core - 20201024173398-init\\" applied!"
+`;

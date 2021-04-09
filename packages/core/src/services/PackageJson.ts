@@ -15,6 +15,7 @@ export type PackageJsonContent = JsonFileData & PackageJsonType;
 
 export class PackageJson {
   private content?: PackageJsonContent = undefined;
+
   constructor(private path: string) {
     if (!existsSync(this.path)) {
       throw new Error(`Package.json "${this.path}" does not exist`);
@@ -56,14 +57,34 @@ export class PackageJson {
   }
 
   getInstalledPlugins(): string[] {
-    const devDependencies = this.getContent().devDependencies;
-    if (!devDependencies) {
+    const allDependenciesPackageNames = this.getAllDependenciesPackageNames();
+    if (!allDependenciesPackageNames.length) {
       return [];
     }
 
-    return Object.keys(devDependencies).filter(
-      (devDependency) =>
-        devDependency.match(/^@ts-dev-tools\/.*$/) && devDependency !== "@ts-dev-tools/core"
+    const plugins = allDependenciesPackageNames.filter((packageName) =>
+      packageName.match(/^@ts-dev-tools\/.*$/)
+    );
+
+    const sortPlugins = (pluginA: string, pluginB: string) => pluginA.localeCompare(pluginB);
+    plugins.sort(sortPlugins);
+
+    return plugins;
+  }
+
+  getDependenciesPackageNames(): string[] {
+    const dependencies = this.getContent().dependencies;
+    return dependencies ? Object.keys(dependencies) : [];
+  }
+
+  getDevDependenciesPackageNames(): string[] {
+    const devDependencies = this.getContent().devDependencies;
+    return devDependencies ? Object.keys(devDependencies) : [];
+  }
+
+  getAllDependenciesPackageNames(): string[] {
+    return Array.from(
+      new Set([...this.getDependenciesPackageNames(), ...this.getDevDependenciesPackageNames()])
     );
   }
 

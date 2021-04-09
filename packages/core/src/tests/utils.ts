@@ -5,6 +5,7 @@ import {
   mkdirSync,
   readdirSync,
   rmdirSync,
+  symlinkSync,
   unlinkSync,
 } from "fs";
 import { tmpdir } from "os";
@@ -26,9 +27,27 @@ export function createTestProjectDir(filename: string): string {
   mkdirSync(testProjectDirPath);
   mkdirSync(join(testProjectDirPath, ".git"));
 
+  // Fake node_modules
+  const tsDevToolsRootPath = getTsDevToolsRootPath(filename);
+  mkdirSync(tsDevToolsRootPath, { recursive: true });
+  copyFileSync(resolve(__dirname, "../../package.json"), join(tsDevToolsRootPath, "package.json"));
+
+  // Fake migrations
+  const tsDevToolsDistPath = join(tsDevToolsRootPath, "dist");
+  symlinkSync(resolve(__dirname, ".."), tsDevToolsDistPath);
+
   restorePackageJson(filename);
 
   return testProjectDirPath;
+}
+
+export function getTsDevToolsRootPath(filename: string): string {
+  const testProjectDirPath = getTestProjectDirPath(filename);
+  if (!existsSync(testProjectDirPath)) {
+    throw new Error(`Test project dir "${testProjectDirPath}" does not exist`);
+  }
+
+  return join(testProjectDirPath, "node_modules/@ts-dev-tools/core");
 }
 
 export function restorePackageJson(filename: string): void {

@@ -1,10 +1,12 @@
 import { resolve } from "path";
 
+import { DuplicateDependenciesService } from "../services/DuplicateDependenciesService";
+import { MigrationsService } from "../services/MigrationsService";
 import { PackageJson } from "../services/PackageJson";
-import { MigrationsService } from "./MigrationsService";
 
 export async function install({ cwd, dir = "." }: { cwd: string; dir: string }): Promise<void> {
   const tsDevToolsRootPath = resolve(__dirname, "../..");
+
   const packageName = PackageJson.fromDirPath(tsDevToolsRootPath).getPackageName();
 
   // Ensure that we're not trying to install outside cwd
@@ -22,13 +24,9 @@ export async function install({ cwd, dir = "." }: { cwd: string; dir: string }):
     console.info(`Installing ${packageName}...`);
   }
 
-  const migrations = MigrationsService.getAvailableMigrations(
-    tsDevToolsRootPath,
-    absoluteProjectDir,
-    currentVersion
-  );
+  await MigrationsService.executeMigrations(tsDevToolsRootPath, absoluteProjectDir, currentVersion);
 
-  await MigrationsService.executeMigrations(migrations, absoluteProjectDir);
+  DuplicateDependenciesService.duplicateDependencies(tsDevToolsRootPath, absoluteProjectDir);
 
   console.info(`Installation done!`);
 }
