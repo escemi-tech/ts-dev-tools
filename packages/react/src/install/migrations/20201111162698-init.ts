@@ -1,7 +1,8 @@
+import { MigrationUpFunction } from "@ts-dev-tools/core/dist/services/MigrationsService";
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
 import { PackageJsonMerge } from "@ts-dev-tools/core/dist/services/PackageJsonMerge";
 
-export async function up(absoluteProjectDir: string): Promise<void> {
+export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
   const eslintConfig = {
     env: {
       browser: true,
@@ -41,4 +42,4 @@ export async function up(absoluteProjectDir: string): Promise<void> {
   }
 
   packageJson.setContent(content);
-}
+};

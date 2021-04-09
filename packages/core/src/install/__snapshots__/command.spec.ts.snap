@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Install command should run fresh installation without error 1`] = `
+"Installing @ts-dev-tools/core...
+Checking for duplicate dev dependencies...
+Check for duplicate dev dependencies done!
+Installation done!"
+`;
+
+exports[`Install command should run update without error 1`] = `
+"Updating @ts-dev-tools/core installation...
+Checking for duplicate dev dependencies...
+Check for duplicate dev dependencies done!
+Installation done!"
+`;
