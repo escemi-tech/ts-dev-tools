@@ -27,7 +27,7 @@ jobs:
 
       - name: ♻️ Yarn packages cache
         id: yarn-cache
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2.1.5
         with:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -60,7 +60,7 @@ jobs:
           echo "::set-output name=dir::$JEST_CACHE_DIR"
 
       - name: ♻️ Test cache
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2.1.5
         with:
           path: |
             ${{ steps.jest-cache-dir-path.outputs.dir }}
@@ -98,7 +98,7 @@ jobs:
 
       - name: ♻️ Yarn packages cache
         id: yarn-cache
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2.1.5
         with:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
