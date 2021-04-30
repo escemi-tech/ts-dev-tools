@@ -1,7 +1,4 @@
-import { writeFileSync } from "fs";
-import { join } from "path";
-
-import { CmdService } from "../../services/CmdService";
+import { GitService } from "../../services/GitService";
 import { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
 import { PackageManagerService } from "../../services/PackageManagerService";
@@ -75,9 +72,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
   });
 
   // Install Git hooks (only if we are in a git repository)
-  const isGitRepository = await CmdService.execCmd("git rev-parse", absoluteProjectDir, true)
-    .then(() => true)
-    .catch(() => false);
+  const isGitRepository = await GitService.isGitRepository(absoluteProjectDir);
 
   if (isGitRepository) {
     const packageManager = PackageManagerService.detectPackageManager(absoluteProjectDir);
@@ -88,17 +83,9 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
       "pre-push": `${packageManager} run lint && ${packageManager} run build && ${packageManager} run test"`,
     };
 
-    const gitHookDirPath = join(absoluteProjectDir, ".git/hooks");
-
-    for (const gitHookFileName of Object.keys(gitHooks)) {
-      const gitHookFilePath = join(gitHookDirPath, gitHookFileName);
-      const gitHookCommand = gitHooks[gitHookFileName as keyof typeof gitHooks];
-      writeFileSync(
-        gitHookFilePath,
-        `#!/bin/sh
-# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
-${gitHookCommand}`
-      );
+    for (const gitHookName of Object.keys(gitHooks)) {
+      const gitHookCommand = gitHooks[gitHookName as keyof typeof gitHooks];
+      await GitService.addGitHook(absoluteProjectDir, gitHookName, gitHookCommand);
     }
   }
 };

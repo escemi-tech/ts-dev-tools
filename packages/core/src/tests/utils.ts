@@ -25,7 +25,7 @@ export function createTestProjectDir(filename: string): string {
   }
 
   mkdirSync(testProjectDirPath);
-  mkdirSync(join(testProjectDirPath, ".git"));
+  mkdirSync(join(testProjectDirPath, ".git/hooks"), { recursive: true });
 
   // Fake node_modules
   const tsDevToolsRootPath = getTsDevToolsRootPath(filename);

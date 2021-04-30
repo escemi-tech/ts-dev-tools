@@ -102,7 +102,7 @@ export class MigrationsService {
       }
 
       migrationFiles.push({
-        name: `${plugin} - ${migrationName}`,
+        name: migrationName,
         path: resolve(pluginMigrationsDirPath, migrationFile),
       });
     }
