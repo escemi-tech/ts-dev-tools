@@ -41,7 +41,7 @@
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
   },
   "dependencies": {
-    "@commitlint/cli": "^12.1.1",
+    "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.1",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.3",
