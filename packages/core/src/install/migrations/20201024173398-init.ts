@@ -80,7 +80,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     const gitHooks = {
       "pre-commit": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
       "commit-msg": "npx --no-install commitlint --edit $1",
-      "pre-push": `${packageManager} run lint && ${packageManager} run build && ${packageManager} run test"`,
+      "pre-push": `${packageManager} run lint && ${packageManager} run build && ${packageManager} run test`,
     };
 
     for (const gitHookName of Object.keys(gitHooks)) {
