@@ -17,9 +17,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
+      - run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+      - uses: actions/setup-node@v2.2.0
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
       - name: ♻️ Get yarn cache directory path
         id: yarn-cache-dir-path
