@@ -79,7 +79,7 @@ jobs:
         run: yarn test:e2e
 
       - name: 📊 Code coverage
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2.0.2
 
   publish:
     needs: continuous-integration
