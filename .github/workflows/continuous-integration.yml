@@ -17,30 +17,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - run: echo ::set-output name=NVMRC::$(cat .nvmrc)
         id: nvm
-      - uses: actions/setup-node@v2.3.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.4.0
         with:
           node-version: "${{ steps.nvm.outputs.NVMRC }}"
-
-      - name: ♻️ Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: ♻️ Yarn packages cache
-        id: yarn-cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          cache: "yarn"
+          cache-dependency-path: "**/yarn.lock"
 
       - name: ⚙️ Install Dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: 🏗️ Build
@@ -89,29 +77,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
       - name: Setup Node.js
-        uses: actions/setup-node@v2.3.0
+        uses: actions/setup-node@v2.4.0
         with:
-          registry-url: https://registry.npmjs.org/
-
-      - name: ♻️ Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: ♻️ Yarn packages cache
-        id: yarn-cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          cache: "yarn"
+          cache-dependency-path: "**/yarn.lock"
 
       - name: ⚙️ Install Dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: 🏗️ Build
