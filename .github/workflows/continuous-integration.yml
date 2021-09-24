@@ -99,7 +99,6 @@ jobs:
         run: |
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
-          git remote set-url origin https://x-access-token:${GH_PERSONAL_ACCESS_TOKEN}@github.com/$GITHUB_REPOSITORY
           mkdir -p /tmp/publish
           cp README.md /tmp/publish/index.md
 
@@ -113,5 +112,5 @@ jobs:
       - name: 📦 Publish NPM packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
         run: yarn lerna publish --conventional-commits --create-release github --yes
