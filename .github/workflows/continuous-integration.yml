@@ -99,7 +99,7 @@ jobs:
         run: |
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+          git remote set-url origin https://x-access-token:${GH_PERSONAL_ACCESS_TOKEN}@github.com/$GITHUB_REPOSITORY
           mkdir -p /tmp/publish
           cp README.md /tmp/publish/index.md
 
