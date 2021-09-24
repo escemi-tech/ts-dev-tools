@@ -73,7 +73,7 @@ jobs:
     needs: continuous-integration
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
+    environment: github-pages
     steps:
       - uses: actions/checkout@v2
         with:
@@ -112,5 +112,5 @@ jobs:
       - name: 📦 Publish NPM packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
         run: yarn lerna publish --conventional-commits --create-release github --yes
