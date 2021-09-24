@@ -1,14 +1,16 @@
 version: 2
 updates:
-- package-ecosystem: npm
-  open-pull-requests-limit: 20
-  versioning-strategy: increase
-  directory: "/"
-  schedule:
-    interval: weekly
-    day: friday
-- package-ecosystem: github-actions
-  directory: "/"
-  schedule:
-    interval: weekly
-    day: friday
+  - package-ecosystem: npm
+    open-pull-requests-limit: 20
+    versioning-strategy: increase
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: friday
+      time: "04:00"
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: friday
+      time: "04:00"
