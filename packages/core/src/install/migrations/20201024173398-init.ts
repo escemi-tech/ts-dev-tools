@@ -30,6 +30,11 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
       ecmaVersion: 12,
       sourceType: "module",
     },
+    settings: {
+      jest: {
+        version: "detect",
+      },
+    },
   };
 
   const prettier = {
