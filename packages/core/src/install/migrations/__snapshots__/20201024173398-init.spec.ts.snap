@@ -30,6 +30,11 @@ Object {
       "jest",
     ],
     "root": true,
+    "settings": Object {
+      "jest": Object {
+        "version": "detect",
+      },
+    },
   },
   "importSort": Object {
     ".js, .jsx, .ts, .tsx": Object {
