@@ -16,23 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - run: echo ::set-output name=NVMRC::$(cat .nvmrc)
-        id: nvm
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2.4.0
+      - uses: escemi-tech/actions-node@main
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
-          cache: "yarn"
-          cache-dependency-path: "**/yarn.lock"
-
-      - name: ⚙️ Install Dependencies
-        run: yarn
-
-      - name: 🏗️ Build
-        run: yarn build
+          test: true
 
       - name: 🛡️ CodeQL Analysis
         uses: github/codeql-action/init@v1
@@ -40,34 +26,8 @@ jobs:
           languages: typescript
       - uses: github/codeql-action/analyze@v1
 
-      - name: 👕 Lint
-        run: yarn lint
-
-      - name: ♻️ Get Jest cache dir
-        id: jest-cache-dir-path
-        run: |
-          JEST_CACHE_DIR=$(yarn jest --showConfig | grep -oP '(?<="cacheDirectory": ")[^"]+(?=")')
-          echo "::set-output name=dir::$JEST_CACHE_DIR"
-
-      - name: ♻️ Test cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: |
-            ${{ steps.jest-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-test-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-test-
-
-      - name: 🧪 Test
-        run: yarn test:coverage
-        env:
-          CI: true
-
       - name: 🔭 e2e
         run: yarn test:e2e
-
-      - name: 📊 Code coverage
-        uses: codecov/codecov-action@v2.1.0
 
   publish:
     needs: continuous-integration
@@ -75,31 +35,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages
     steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-
-      - run: echo ::set-output name=NVMRC::$(cat .nvmrc)
-        id: nvm
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
-          cache: "yarn"
-          cache-dependency-path: "**/yarn.lock"
-
-      - name: ⚙️ Install Dependencies
-        run: yarn
-
-      - name: 🏗️ Build
-        run: yarn build
+      - uses: escemi-tech/actions-node@main
 
       - name: 🔖 Configure publish
         run: |
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
-          git remote set-url origin https://x-access-token:${GH_PERSONAL_ACCESS_TOKEN}@github.com/$GITHUB_REPOSITORY
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
           mkdir -p /tmp/publish
           cp README.md /tmp/publish/index.md
 
@@ -113,5 +55,5 @@ jobs:
       - name: 📦 Publish NPM packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-          GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn lerna publish --conventional-commits --create-release github --yes
