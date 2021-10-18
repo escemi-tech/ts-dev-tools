@@ -62,9 +62,14 @@ Object {
   },
   "scripts": Object {
     "build": "tsc --noEmit",
+    "format": "prettier --write '**/*.js'",
+    "jest": "jest --detectOpenHandles --forceExit",
     "lint": "eslint \\"src/**/*.{ts,tsx}\\"",
     "prepare": "ts-dev-tools install",
-    "test": "jest",
+    "test": "yarn jest --maxWorkers=50%",
+    "test:ci": "yarn test:cov --runInBand",
+    "test:cov": "yarn jest --coverage",
+    "test:watch": "yarn jest --watch --maxWorkers=25%",
   },
   "version": "1.0.0",
 }

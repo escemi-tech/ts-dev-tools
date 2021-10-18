@@ -60,8 +60,13 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
 
   const scripts = {
     build: "tsc --noEmit",
-    test: "jest",
+    format: "prettier --write '**/*.js'",
     lint: 'eslint "src/**/*.{ts,tsx}"',
+    jest: "jest --detectOpenHandles --forceExit",
+    test: "yarn jest --maxWorkers=50%",
+    "test:watch": "yarn jest --watch --maxWorkers=25%",
+    "test:cov": "yarn jest --coverage",
+    "test:ci": "yarn test:cov --runInBand",
     prepare: "ts-dev-tools install",
   };
 
