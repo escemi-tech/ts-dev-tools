@@ -16,15 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: escemi-tech/actions-node@main
+      - uses: escemi-tech/actions-node@v1.1.0
         with:
           test: true
-
-      - name: 🛡️ CodeQL Analysis
-        uses: github/codeql-action/init@v1
-        with:
-          languages: typescript
-      - uses: github/codeql-action/analyze@v1
 
       - name: 🔭 e2e
         run: yarn test:e2e
