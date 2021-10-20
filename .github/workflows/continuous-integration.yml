@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: escemi-tech/actions-node@v1.1.0
+      - uses: escemi-tech/actions-node@v1.2.0
         with:
-          test: true
+          checks: true
 
       - name: 🔭 e2e
         run: yarn test:e2e
