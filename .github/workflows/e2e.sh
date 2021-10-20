@@ -1,9 +1,13 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
-testSimpleProject() {
+declare -A PACKAGES_TO_INSTALL;
+PACKAGES_TO_INSTALL[react]=react
+
+testProject() {
     PACKAGE="$1"
+    INSTALL_PACKAGES="${PACKAGES_TO_INSTALL[$PACKAGE]}"
     TEST_DIR="/tmp/e2e-project-$PACKAGE";
     rm -fr "$TEST_DIR"
     mkdir -p "$TEST_DIR/src";
@@ -12,7 +16,7 @@ testSimpleProject() {
 
     cd "$TEST_DIR";
 
-    echo "\n - Prepare test dir...\n";
+    echo -e "- Prepare test dir...\n";
     yarn init --yes;
     yarn add --dev typescript;
     yarn tsc --init;
@@ -28,7 +32,11 @@ testSimpleProject() {
     ln -sf "$CORE_DIST_DIR_PATH/bin.js" "$TS_DEV_TOOLS_BIN_PATH"
     sudo chmod +x node_modules/.bin/ts-dev-tools
 
-    echo "\n - Run tests...\n";
+    if [ -n "$INSTALL_PACKAGES" ]; then
+        yarn add $INSTALL_PACKAGES;
+    fi
+
+    echo -e "\n - Run tests...\n";
 
     yarn ts-dev-tools install;
     yarn lint;
@@ -41,9 +49,9 @@ testSimpleProject() {
 PACKAGE_DIR="$(pwd)/packages"
 for PACKAGE in $(ls $PACKAGE_DIR/)
 do
-    echo "\nTest @ts-dev-tool/$PACKAGE:\n-----------------------------\n";
+    echo -e "\nTest @ts-dev-tool/$PACKAGE:\n-----------------------------\n";
 
-    testSimpleProject $PACKAGE
+    testProject $PACKAGE
 
-    echo "\nTest of @ts-dev-tool/$PACKAGE succeed!\n";
+    echo -e "\nTest of @ts-dev-tool/$PACKAGE succeed!\n";
 done
