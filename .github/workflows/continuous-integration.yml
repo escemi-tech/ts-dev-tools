@@ -31,20 +31,19 @@ jobs:
     steps:
       - uses: escemi-tech/actions-node@main
 
-      - name: 🔖 Configure publish
+      - name: 🏗️ Build Github pages
         run: |
-          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
-          git config --local user.name "${{ github.actor }}"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
           mkdir -p /tmp/publish
           cp README.md /tmp/publish/index.md
 
       - name: 🌐 Publish Github pages
-        uses: peaceiris/actions-gh-pages@v3.8.0
+        uses: peaceiris/actions-gh-pages@v3
         with:
+          enable_jekyll: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: /tmp/publish
-          enable_jekyll: true
+          user_name: ${{ github.actor }}
+          user_email: ${{ github.actor }}@users.noreply.github.com
 
       - name: 📦 Publish NPM packages
         env:
