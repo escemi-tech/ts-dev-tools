@@ -49,5 +49,5 @@ jobs:
       - name: 📦 Publish NPM packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
         run: yarn lerna publish --conventional-commits --create-release github --yes
