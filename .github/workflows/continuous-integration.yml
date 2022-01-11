@@ -55,4 +55,4 @@ jobs:
         run: |
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
-          yarn lerna publish --conventional-commits --create-release github --yes
+          yarn lerna publish --conventional-commits --create-release github --yes --no-verify-access
