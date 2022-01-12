@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: escemi-tech/actions-node@v1.2.0
+      - uses: escemi-tech/actions-node@main
         with:
           checks: true
 
