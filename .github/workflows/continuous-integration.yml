@@ -8,15 +8,13 @@ on:
     branches:
       - main
   workflow_dispatch:
-    branches:
-      - main
 
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: escemi-tech/actions-node@main
+      - uses: escemi-tech/actions-node@1.4.0
         with:
           checks: true
 
@@ -29,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages
     steps:
-      - uses: escemi-tech/actions-node@main
+      - uses: escemi-tech/actions-node@1.4.0
         with:
           checkout-token: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
 
