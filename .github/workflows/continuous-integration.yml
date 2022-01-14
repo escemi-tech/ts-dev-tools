@@ -36,6 +36,7 @@ jobs:
       - name: 🏗️ Build Github pages
         run: |
           mkdir -p /tmp/publish
+          echo "theme: jekyll-theme-cayman" > /tmp/publish/_config.yml
           cp README.md /tmp/publish/index.md
 
       - name: 🌐 Publish Github pages
