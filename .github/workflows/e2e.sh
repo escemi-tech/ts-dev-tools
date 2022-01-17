@@ -35,16 +35,34 @@ preparePackages() {
 
 testProject() {
     PACKAGE="$1"
-    INSTALL_PACKAGES="${PACKAGES_TO_INSTALL[$PACKAGE]}"
     TEST_PROJECT_DIR="$TEST_DIR/$PACKAGE";
     rm -fr "$TEST_PROJECT_DIR"
-    mkdir -p "$TEST_PROJECT_DIR/src";
+    
+    TEST_SIMPLE_PROJECT_DIR="$TEST_PROJECT_DIR/simple";
+    mkdir -p $TEST_SIMPLE_PROJECT_DIR;
+    cd "$TEST_SIMPLE_PROJECT_DIR";
+    
+    testSimpleProject $PACKAGE;
 
-    echo "export type Test = { test: string; };" > "$TEST_PROJECT_DIR/src/index.ts";
+    TEST_MONOREPO_PROJECT_DIR="$TEST_PROJECT_DIR/monorepo";
+    mkdir -p $TEST_MONOREPO_PROJECT_DIR;
+    cd "$TEST_MONOREPO_PROJECT_DIR";
 
-    cd "$TEST_PROJECT_DIR";
+    testMonorepoProject $PACKAGE;
 
-    echo -e "- Prepare test dir...\n";
+    # Clean
+    rm -fr "$TEST_PROJECT_DIR"
+}
+
+testSimpleProject() {
+    INSTALL_PACKAGES="${PACKAGES_TO_INSTALL[$PACKAGE]}"
+    PACKAGE="$1"
+
+    echo -e "- Prepare test dir for simple project...\n";
+
+    mkdir -p "./src";
+    echo "export type Test = { test: string; };" > "./src/index.ts";
+
     yarn init --yes;
     yarn add --dev typescript;
     yarn tsc --init;
@@ -60,8 +78,25 @@ testProject() {
     yarn lint;
     yarn tsc src/*.ts;
 
-    # Clean
-    rm -fr "$TEST_PROJECT_DIR"
+}
+
+testMonorepoProject() {
+    INSTALL_PACKAGES="${PACKAGES_TO_INSTALL[$PACKAGE]}"
+    PACKAGE="$1"
+
+    echo -e "- Prepare test dir for monorepo project...\n";
+
+    mkdir ./packages;
+    echo '{ "private": true, "workspaces": ["packages/*"] }' > package.json;
+
+    yarn init --yes;
+    yarn add -W --dev typescript;
+    yarn tsc --init;
+    yarn add -W --dev "file:/$TEST_PACKAGES_PATH/$PACKAGE";
+
+    echo -e "\n - Run tests...\n";
+
+    yarn ts-dev-tools install;
 }
 
 preparePackages;
