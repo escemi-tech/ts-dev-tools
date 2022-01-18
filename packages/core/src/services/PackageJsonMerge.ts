@@ -34,8 +34,7 @@ export class PackageJsonMerge {
   }
 
   private static mergeObjects(source: JsonFileData, update: JsonFileData): JsonFileData {
-    const updateKeys = Object.keys(update);
-    for (const updateKey of updateKeys) {
+    for (const updateKey in update) {
       source[updateKey] = PackageJsonMerge.mergeValues(source[updateKey], update[updateKey]);
     }
     return source;
