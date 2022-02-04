@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: escemi-tech/actions-node@v1.4.1
+      - uses: escemi-tech/actions-node@v1.4.2
         with:
           checks: true
 
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages
     steps:
-      - uses: escemi-tech/actions-node@v1.4.1
+      - uses: escemi-tech/actions-node@v1.4.2
         with:
           checkout-token: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
 
