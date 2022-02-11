@@ -54,7 +54,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "import-sort-style-module": "^6.0.0",
-    "jest": "^27.4.7",
+    "jest": "^27.5.1",
     "lint-staged": "^12.3.3",
     "prettier": "^2.5.1",
     "prettier-plugin-import-sort": "^0.0.7",
