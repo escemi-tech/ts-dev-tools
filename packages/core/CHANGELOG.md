@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.5.16 (2022-02-13)
+
+**Note:** Version bump only for package @ts-dev-tools/core
+
+
+
+
+
 ## 1.5.15 (2022-02-05)
 
 **Note:** Version bump only for package @ts-dev-tools/core
