@@ -20,9 +20,12 @@
     "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
+    "@swc/core": "^1.2.139",
+    "@swc/helpers": "^0.3.3",
     "lerna": "^4.0.0",
+    "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   },
   "commitlint": {
