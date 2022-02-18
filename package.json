@@ -20,7 +20,7 @@
     "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.139",
+    "@swc/core": "^1.2.141",
     "@swc/helpers": "^0.3.3",
     "lerna": "^4.0.0",
     "regenerator-runtime": "^0.13.9",
