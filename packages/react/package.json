@@ -48,7 +48,7 @@
     "react-test-renderer": "^17.0.2"
   },
   "devDependencies": {
-    "pinst": "^2.1.6"
+    "pinst": "^3.0.0"
   },
   "eslintConfig": {
     "env": {
