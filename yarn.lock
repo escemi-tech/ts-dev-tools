@@ -1653,10 +1653,10 @@
     "@swc/core-win32-ia32-msvc" "1.2.141"
     "@swc/core-win32-x64-msvc" "1.2.141"
 
-"@swc/helpers@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.3.3.tgz#8ea0e4a96ba18c2d33463aa4dbc7b0ef46232cd6"
-  integrity sha512-NdRQSjcceaXsQDNYyK0wWyRvrn5rsvugK8vnTiRB2i0UCaD2slUFUq28tmojILW5A04oF+sZRMxd0Cy7xS/y0A==
+"@swc/helpers@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.3.4.tgz#c2e9acff6f62e0237da7e4d3cf571dc781ea62c9"
+  integrity sha512-qSsgbLmYbdU2qBdPEBsxPJB0PoIlvHrypfp7lo8IytxDdlYz53KUOtZckpMhJYVLjvlxBzLid1J07yvvwxEY1g==
 
 "@testing-library/dom@^8.0.0":
   version "8.11.1"
