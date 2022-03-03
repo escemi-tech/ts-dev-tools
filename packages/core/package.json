@@ -31,7 +31,10 @@
     "start": "yarn link && tsc -w",
     "stop": "yarn unlink",
     "build": "rimraf dist && tsc",
-    "test": "jest",
+    "jest": "jest --detectOpenHandles --forceExit",
+    "test": "yarn jest --maxWorkers=50%",
+    "test:unit": "yarn test --testPathPattern \".+spec\\.ts\"",
+    "test:e2e": "yarn test --testPathPattern \".+spec\\.e2e\\.ts\"",
     "test:coverage": "yarn test --coverage",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "prepublishOnly": "pinst --disable",
@@ -103,7 +106,7 @@
     "testEnvironment": "node",
     "testMatch": [
       "**/__tests__/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+      "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)"
     ]
   }
 }

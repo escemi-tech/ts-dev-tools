@@ -2,6 +2,7 @@
 
 import { dirname, join } from "path";
 
+import { PROJECT_NAME } from "./constants";
 import { install } from "./install/command";
 import { PackageJson } from "./services/PackageJson";
 
@@ -25,7 +26,7 @@ async function bin() {
       break;
     default:
       console.info(`Usage
-    ts-dev-tools install [path from project root]
+    ${PROJECT_NAME} install [path from project root]
   `);
   }
 }

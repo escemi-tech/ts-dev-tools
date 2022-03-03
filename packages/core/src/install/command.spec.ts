@@ -1,13 +1,17 @@
 import { PackageJson } from "../services/PackageJson";
 import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
-import { createTestProjectDir, removeTestProjectDir, restorePackageJson } from "../tests/utils";
+import {
+  createTestProjectDirWithFixtures,
+  removeTestProjectDir,
+  restorePackageJson,
+} from "../tests/project";
 import { install } from "./command";
 
 describe("Install command", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
-    testProjectDir = createTestProjectDir(__filename);
+    testProjectDir = createTestProjectDirWithFixtures(__filename);
   });
 
   afterAll(() => {
@@ -46,6 +50,8 @@ describe("Install command", () => {
   it("should throws an error if project dir path is not a child of current working directory", async () => {
     const installAction = () => install({ cwd: testProjectDir, dir: ".." });
 
-    await expect(installAction()).rejects.toThrowError(".. not allowed");
+    await expect(installAction()).rejects.toThrowError(
+      "Unable to install @ts-dev-tools/core in a different folder than current process"
+    );
   });
 });

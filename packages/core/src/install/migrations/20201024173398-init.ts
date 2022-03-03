@@ -1,3 +1,4 @@
+import { PROJECT_NAME } from "../../constants";
 import { GitService } from "../../services/GitService";
 import { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
@@ -7,7 +8,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
   const jest = {
     preset: "ts-jest",
     testEnvironment: "node",
-    testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).+(ts|tsx|js)"],
+    testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)"],
   };
 
   const eslintConfig = {
@@ -67,7 +68,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     "test:watch": "yarn jest --watch --maxWorkers=25%",
     "test:cov": "yarn jest --coverage",
     "test:ci": "yarn test:cov --runInBand",
-    prepare: "ts-dev-tools install",
+    prepare: `${PROJECT_NAME} install`,
   };
 
   const packageJson = PackageJson.fromDirPath(absoluteProjectDir);

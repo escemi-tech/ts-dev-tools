@@ -1,18 +1,23 @@
-import { resolve } from "path";
+import { existsSync } from "fs";
+import { join, resolve } from "path";
 
+import { CorePackageService } from "../services/CorePackageService";
 import { DuplicateDependenciesService } from "../services/DuplicateDependenciesService";
 import { MigrationsService } from "../services/MigrationsService";
 import { PackageJson } from "../services/PackageJson";
 
 export async function install({ cwd, dir = "." }: { cwd: string; dir: string }): Promise<void> {
-  const tsDevToolsRootPath = resolve(__dirname, "../..");
-
-  const packageName = PackageJson.fromDirPath(tsDevToolsRootPath).getPackageName();
+  const packageName = CorePackageService.getPackageName();
 
   // Ensure that we're not trying to install outside cwd
   const absoluteProjectDir = resolve(cwd, dir);
+
+  if (!existsSync(absoluteProjectDir)) {
+    throw new Error(`Unable to install ${packageName} in given directory ${join(cwd, dir)}`);
+  }
+
   if (!absoluteProjectDir.startsWith(cwd)) {
-    throw new Error(".. not allowed");
+    throw new Error(`Unable to install ${packageName} in a different folder than current process`);
   }
 
   // Run installation migration
@@ -24,9 +29,9 @@ export async function install({ cwd, dir = "." }: { cwd: string; dir: string }):
     console.info(`Installing ${packageName}...`);
   }
 
-  await MigrationsService.executeMigrations(tsDevToolsRootPath, absoluteProjectDir, currentVersion);
+  await MigrationsService.executeMigrations(absoluteProjectDir, currentVersion);
 
-  DuplicateDependenciesService.duplicateDependencies(tsDevToolsRootPath, absoluteProjectDir);
+  DuplicateDependenciesService.duplicateDependencies(absoluteProjectDir);
 
   console.info(`Installation done!`);
 }
