@@ -1,7 +1,6 @@
 {
   "name": "ts-dev-tools",
-  "version": "1.0.0",
-  "description": "Opinionated package to configure proper tools to develop a JS project",
+  "description": "Opinionated and advisable packages to configure tools to develop a Typescript project",
   "main": "index.js",
   "repository": "git@github.com:escemi-tech/ts-dev-tools.git",
   "author": "Emilien Escalle <emilien.escalle@escemi.com>",
@@ -20,12 +19,8 @@
     "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.152",
-    "@swc/helpers": "^0.3.6",
     "lerna": "^4.0.0",
-    "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
   },
   "commitlint": {

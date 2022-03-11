@@ -12,7 +12,7 @@
 
 # Welcome to ts-dev-tools 🛠️
 
-## Opinionated package to configure proper tools to develop a Typescript project
+## Opinionated and advisable packages to configure tools to develop a Typescript project
 
 ---
 
@@ -24,8 +24,8 @@ Install **ts-dev-tools** and your project is dev ready, no more installation or 
 
 ### _2_. A fine tuned collection of tools and configuration ready for a realworld project
 
-Within the dozen of existing packages, **ts-dev-tools** uses a short list of consistent libraries and theit recommanded configuration.
-**ts-dev-tools** is used by various real world projects to be run in production, so its toolset is effective and meet industry standards.
+Within the dozen of existing packages, **ts-dev-tools** uses a short list of consistent libraries and their recommanded configuration.
+**ts-dev-tools** is used by various real world projects to be run in production, so its toolset is effective and meets industry standards.
 
 ### _3_. Stable and secure
 
