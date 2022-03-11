@@ -47,7 +47,7 @@ Object {
     "testEnvironment": "node",
     "testMatch": Array [
       "**/__tests__/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).+(ts|tsx|js)",
+      "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)",
     ],
   },
   "lint-staged": Object {

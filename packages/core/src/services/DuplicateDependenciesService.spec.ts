@@ -1,10 +1,9 @@
 import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
 import {
-  createTestProjectDir,
-  getTsDevToolsRootPath,
+  createTestProjectDirWithFixtures,
   removeTestProjectDir,
   restorePackageJson,
-} from "../tests/utils";
+} from "../tests/project";
 import { DuplicateDependenciesService } from "./DuplicateDependenciesService";
 import { PackageJson } from "./PackageJson";
 
@@ -12,7 +11,7 @@ describe("DuplicateDependenciesService", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
-    testProjectDir = createTestProjectDir(__filename);
+    testProjectDir = createTestProjectDirWithFixtures(__filename);
   });
 
   afterAll(() => {
@@ -38,10 +37,7 @@ describe("DuplicateDependenciesService", () => {
       });
 
       const duplicateDependenciesAction = () =>
-        DuplicateDependenciesService.duplicateDependencies(
-          getTsDevToolsRootPath(__filename),
-          testProjectDir
-        );
+        DuplicateDependenciesService.duplicateDependencies(testProjectDir);
 
       expect(duplicateDependenciesAction).not.toThrowError();
       expect(getConsoleInfoContent()).toMatchSnapshot();

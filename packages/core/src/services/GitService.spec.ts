@@ -1,14 +1,14 @@
 import { existsSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join } from "path";
 
-import { createTestProjectDir, removeTestProjectDir } from "../tests/utils";
+import { createTestProjectDirWithFixtures, removeTestProjectDir } from "../tests/project";
 import { GitService } from "./GitService";
 
 describe("GitService", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
-    testProjectDir = createTestProjectDir(__filename);
+    testProjectDir = createTestProjectDirWithFixtures(__filename);
   });
 
   afterAll(() => {

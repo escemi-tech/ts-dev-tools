@@ -1,9 +1,9 @@
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
 import {
-  createTestProjectDir,
+  createTestProjectDirWithFixtures,
   removeTestProjectDir,
   restorePackageJson,
-} from "@ts-dev-tools/core/dist/tests/utils";
+} from "@ts-dev-tools/core/dist/tests/project";
 
 import { up } from "./20201111162698-init";
 
@@ -11,7 +11,7 @@ describe("Migration 20201111162698-init", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
-    testProjectDir = createTestProjectDir(__filename);
+    testProjectDir = createTestProjectDirWithFixtures(__filename);
   });
 
   afterAll(() => {

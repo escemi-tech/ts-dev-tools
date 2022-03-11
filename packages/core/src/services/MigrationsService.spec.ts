@@ -1,10 +1,9 @@
 import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
 import {
-  createTestProjectDir,
-  getTsDevToolsRootPath,
+  createTestProjectDirWithFixtures,
   removeTestProjectDir,
   restorePackageJson,
-} from "../tests/utils";
+} from "../tests/project";
 import { MigrationsService } from "./MigrationsService";
 import { PackageJson } from "./PackageJson";
 
@@ -12,7 +11,7 @@ describe("MigrationsService", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
-    testProjectDir = createTestProjectDir(__filename);
+    testProjectDir = createTestProjectDirWithFixtures(__filename);
   });
 
   afterAll(() => {
@@ -37,11 +36,7 @@ describe("MigrationsService", () => {
       });
 
       const executeMigrationsAction = () =>
-        MigrationsService.executeMigrations(
-          getTsDevToolsRootPath(__filename),
-          testProjectDir,
-          undefined
-        );
+        MigrationsService.executeMigrations(testProjectDir, undefined);
 
       await expect(executeMigrationsAction()).resolves.toBeUndefined();
 
@@ -56,11 +51,7 @@ describe("MigrationsService", () => {
       });
 
       const executeMigrationsAction = () =>
-        MigrationsService.executeMigrations(
-          getTsDevToolsRootPath(__filename),
-          testProjectDir,
-          "20201024173398-init"
-        );
+        MigrationsService.executeMigrations(testProjectDir, "20201024173398-init");
 
       await expect(executeMigrationsAction()).resolves.toBeUndefined();
       expect(getConsoleInfoContent()).toMatchSnapshot();

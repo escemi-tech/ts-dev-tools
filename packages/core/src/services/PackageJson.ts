@@ -56,22 +56,6 @@ export class PackageJson {
     return version;
   }
 
-  getInstalledPlugins(): string[] {
-    const allDependenciesPackageNames = this.getAllDependenciesPackageNames();
-    if (!allDependenciesPackageNames.length) {
-      return [];
-    }
-
-    const plugins = allDependenciesPackageNames.filter((packageName) =>
-      packageName.match(/^@ts-dev-tools\/.*$/)
-    );
-
-    const sortPlugins = (pluginA: string, pluginB: string) => pluginA.localeCompare(pluginB);
-    plugins.sort(sortPlugins);
-
-    return plugins;
-  }
-
   getDependenciesPackageNames(): string[] {
     const dependencies = this.getContent().dependencies;
     return dependencies ? Object.keys(dependencies) : [];

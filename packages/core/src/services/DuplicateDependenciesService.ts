@@ -1,16 +1,14 @@
-import { resolve } from "path";
-
 import { PackageJson } from "./PackageJson";
+import { Plugin, PluginService } from "./PluginService";
 
 type DuplicateDependencies = Map<string, Set<string>>;
 
 export class DuplicateDependenciesService {
-  static duplicateDependencies(tsDevToolsRootPath: string, absoluteProjectDir: string): void {
+  static duplicateDependencies(absoluteProjectDir: string): void {
     console.info(`Checking for duplicate dev dependencies...`);
 
     const duplicateDependencies: DuplicateDependencies = new Map();
     DuplicateDependenciesService.getProjectDuplicateDependencies(
-      tsDevToolsRootPath,
       absoluteProjectDir,
       duplicateDependencies
     );
@@ -21,17 +19,16 @@ export class DuplicateDependenciesService {
   }
 
   private static getProjectDuplicateDependencies(
-    tsDevToolsRootPath: string,
     absoluteProjectDir: string,
     duplicateDependencies: DuplicateDependencies
   ) {
+    const installedPlugins = PluginService.getInstalledPlugins(absoluteProjectDir);
+
     const projectPackageJson = PackageJson.fromDirPath(absoluteProjectDir);
-    const installedPlugins = projectPackageJson.getInstalledPlugins();
     const projectDevDependencies = projectPackageJson.getDevDependenciesPackageNames();
 
     for (const plugin of installedPlugins) {
       DuplicateDependenciesService.getPluginDuplicateDependencies(
-        tsDevToolsRootPath,
         plugin,
         projectDevDependencies,
         duplicateDependencies
@@ -42,27 +39,23 @@ export class DuplicateDependenciesService {
   }
 
   private static getPluginDuplicateDependencies(
-    tsDevToolsRootPath: string,
-    plugin: string,
+    plugin: Plugin,
     projectDevDependencies: string[],
     duplicateDependencies: DuplicateDependencies
   ) {
-    const absolutePluginDir = resolve(tsDevToolsRootPath, "../../", plugin);
-
     // First check for duplicate of inherited plugins
     DuplicateDependenciesService.getProjectDuplicateDependencies(
-      tsDevToolsRootPath,
-      absolutePluginDir,
+      plugin.path,
       duplicateDependencies
     );
 
-    const pluginPackageJson = PackageJson.fromDirPath(absolutePluginDir);
+    const pluginPackageJson = PackageJson.fromDirPath(plugin.path);
     const pluginDependencies = pluginPackageJson.getDependenciesPackageNames();
 
-    let pluginDuplicateDependencies = duplicateDependencies.get(plugin);
+    let pluginDuplicateDependencies = duplicateDependencies.get(plugin.fullname);
     if (!pluginDuplicateDependencies) {
       pluginDuplicateDependencies = new Set();
-      duplicateDependencies.set(plugin, pluginDuplicateDependencies);
+      duplicateDependencies.set(plugin.fullname, pluginDuplicateDependencies);
     }
 
     for (const projectDevDependency of projectDevDependencies) {

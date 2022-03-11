@@ -2,6 +2,7 @@ import { readdirSync, unlinkSync } from "fs";
 import { resolve } from "path";
 
 import { PackageJson } from "../services/PackageJson";
+import { Plugin, PluginService } from "./PluginService";
 
 export type Migration = { name: string; path: string };
 
@@ -9,15 +10,10 @@ export type MigrationUpFunction = (absoluteProjectDir: string) => Promise<void>;
 
 export class MigrationsService {
   static async executeMigrations(
-    tsDevToolsRootPath: string,
     absoluteProjectDir: string,
     currentVersion: string | undefined
   ): Promise<void> {
-    const migrations = MigrationsService.getAvailableMigrations(
-      tsDevToolsRootPath,
-      absoluteProjectDir,
-      currentVersion
-    );
+    const migrations = MigrationsService.getAvailableMigrations(absoluteProjectDir, currentVersion);
 
     const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
     const packageJsonBackupPath = packageJson.backup();
@@ -49,21 +45,15 @@ export class MigrationsService {
   }
 
   private static getAvailableMigrations(
-    tsDevToolsRootPath: string,
     absoluteProjectDir: string,
     currentVersion: string | undefined
   ): Migration[] {
-    const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
-    const installedPlugins = packageJson.getInstalledPlugins();
+    const installedPlugins = PluginService.getInstalledPlugins(absoluteProjectDir);
 
     const migrationFiles: Migration[] = [];
     for (const installedPlugin of installedPlugins) {
       migrationFiles.push(
-        ...MigrationsService.getPluginMigrations(
-          tsDevToolsRootPath,
-          installedPlugin,
-          currentVersion
-        )
+        ...MigrationsService.getPluginMigrations(installedPlugin, currentVersion)
       );
     }
 
@@ -73,21 +63,14 @@ export class MigrationsService {
   }
 
   private static getPluginMigrations(
-    tsDevToolsRootPath: string,
-    plugin: string,
+    plugin: Plugin,
     currentVersion: string | undefined
   ): Migration[] {
-    const pluginDirPath = resolve(tsDevToolsRootPath, "../../", plugin);
-
     // First retrieve migration of inherited plugins
-    const migrationFiles = MigrationsService.getAvailableMigrations(
-      tsDevToolsRootPath,
-      pluginDirPath,
-      currentVersion
-    );
+    const migrationFiles = MigrationsService.getAvailableMigrations(plugin.path, currentVersion);
 
     // Then retrieve
-    const pluginMigrationsDirPath = resolve(pluginDirPath, "dist/install/migrations");
+    const pluginMigrationsDirPath = resolve(plugin.path, "dist/install/migrations");
     for (const migrationFile of readdirSync(pluginMigrationsDirPath)) {
       if (!migrationFile.match(/^[0-9]{14}-[a-z]+\.(js|ts)$/)) {
         continue;

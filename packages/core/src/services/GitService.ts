@@ -1,13 +1,14 @@
 import { chmodSync, createWriteStream, existsSync, statSync } from "fs";
 import { join } from "path";
 
+import { PROJECT_NAME, PROJECT_URL } from "../constants";
 import { CmdService } from "./CmdService";
 
 export class GitService {
   static GIT_HOOK_MODE = 0o755;
   static GIT_HOOK_TEMPLATE = `#!/bin/sh
 
-# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
+# Created by ${PROJECT_NAME} (${PROJECT_URL})
 
 %gitHookCommand%`;
 

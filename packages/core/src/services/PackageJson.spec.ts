@@ -1,14 +1,18 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
-import { createTestProjectDir, removeTestProjectDir, restorePackageJson } from "../tests/utils";
+import {
+  createTestProjectDirWithFixtures,
+  removeTestProjectDir,
+  restorePackageJson,
+} from "../tests/project";
 import { PackageJson, PackageJsonContent } from "./PackageJson";
 
 describe("PackageJson", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
-    testProjectDir = createTestProjectDir(__filename);
+    testProjectDir = createTestProjectDirWithFixtures(__filename);
   });
 
   afterAll(() => {
@@ -147,57 +151,6 @@ describe("PackageJson", () => {
       const tsDevToolsVersion = packageJson.getTsDevToolsVersion();
 
       expect(tsDevToolsVersion).toBeUndefined();
-    });
-  });
-
-  describe("getInstalledPlugins", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
-    it("should return an empty array if no plugin is installed", () => {
-      const packageJson = PackageJson.fromDirPath(testProjectDir);
-      const installedPlugins = packageJson.getInstalledPlugins();
-
-      expect(installedPlugins).toEqual([]);
-    });
-
-    it("should return @ts-dev-tools/core when only @ts-dev-tools/core is installed", () => {
-      const packageJson = PackageJson.fromDirPath(testProjectDir);
-      packageJson.merge({
-        devDependencies: {
-          "@ts-dev-tools/core": "1.0.0",
-        },
-      });
-      const installedPlugins = packageJson.getInstalledPlugins();
-
-      expect(installedPlugins).toEqual(["@ts-dev-tools/core"]);
-    });
-
-    it("should return @ts-dev-tools/react when @ts-dev-tools/react is installed", () => {
-      const packageJson = PackageJson.fromDirPath(testProjectDir);
-      packageJson.merge({
-        devDependencies: {
-          "@ts-dev-tools/react": "1.0.0",
-        },
-      });
-
-      const installedPlugins = packageJson.getInstalledPlugins();
-
-      expect(installedPlugins).toEqual(["@ts-dev-tools/react"]);
-    });
-
-    it("should return installed plugins sorted by name ascending", () => {
-      const packageJson = PackageJson.fromDirPath(testProjectDir);
-      packageJson.merge({
-        devDependencies: {
-          "@ts-dev-tools/react": "1.0.0",
-          "@ts-dev-tools/core": "1.0.0",
-        },
-      });
-      const installedPlugins = packageJson.getInstalledPlugins();
-
-      expect(installedPlugins).toEqual(["@ts-dev-tools/core", "@ts-dev-tools/react"]);
     });
   });
 
