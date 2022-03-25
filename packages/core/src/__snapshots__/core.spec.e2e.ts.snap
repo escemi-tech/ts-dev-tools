@@ -22,7 +22,7 @@ Object {
   },
   "devDependencies": Object {
     "@ts-dev-tools/core": "file:/tmp/test-core/tmp-packages/packages/core",
-    "typescript": "^4.6.2",
+    "typescript": "^4.6.3",
   },
   "eslintConfig": Object {
     "env": Object {

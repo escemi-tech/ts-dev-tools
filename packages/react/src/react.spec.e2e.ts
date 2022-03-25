@@ -36,7 +36,7 @@ describe(`E2E - ${packageToTest}`, () => {
       testSimpleProjectDir = join(testProjectDir, "simple-project");
       mkdirSync(testSimpleProjectDir);
       await createTestReactProjectDir(testSimpleProjectDir);
-    }, 100000);
+    }, 200000);
 
     afterEach(() => deleteFolderRecursive(testSimpleProjectDir));
 
@@ -79,7 +79,7 @@ describe(`E2E - ${packageToTest}`, () => {
 
       expect(buildStderr).toBeFalsy();
       expect(buildCode).toBe(0);
-    }, 100000);
+    }, 200000);
   });
 
   describe("Monorepo project", () => {
@@ -90,7 +90,7 @@ describe(`E2E - ${packageToTest}`, () => {
       mkdirSync(testMonorepoProjectDir);
 
       await createTestMonorepoProjectDir(testMonorepoProjectDir, createTestReactProjectDir);
-    }, 150000);
+    }, 200000);
 
     afterEach(() => deleteFolderRecursive(testMonorepoProjectDir));
 
@@ -116,6 +116,6 @@ describe(`E2E - ${packageToTest}`, () => {
 
       const packageJson = PackageJson.fromDirPath(testMonorepoProjectDir);
       expect(packageJson.getContent()).toMatchSnapshot();
-    }, 100000);
+    }, 200000);
   });
 });
