@@ -35,6 +35,9 @@ export class PackageJsonMerge {
 
   private static mergeObjects(source: JsonFileData, update: JsonFileData): JsonFileData {
     for (const updateKey in update) {
+      if (!Object.prototype.hasOwnProperty.call(update, updateKey)) {
+        continue;
+      }
       source[updateKey] = PackageJsonMerge.mergeValues(source[updateKey], update[updateKey]);
     }
     return source;
