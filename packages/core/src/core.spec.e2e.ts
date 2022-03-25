@@ -41,7 +41,7 @@ describe(`E2E - ${packageToTest}`, () => {
       mkdirSync(testSimpleProjectDir);
       await createTestTypescriptProjectDir(testSimpleProjectDir);
       await safeExec(testSimpleProjectDir, "yarn install");
-    }, 100000);
+    }, 200000);
 
     afterEach(() => deleteFolderRecursive(testSimpleProjectDir));
 
@@ -78,7 +78,7 @@ describe(`E2E - ${packageToTest}`, () => {
 
       expect(buildStderr).toBeFalsy();
       expect(buildCode).toBe(0);
-    }, 100000);
+    }, 200000);
   });
 
   describe("Monorepo project", () => {
@@ -89,7 +89,7 @@ describe(`E2E - ${packageToTest}`, () => {
       mkdirSync(testMonorepoProjectDir);
 
       await createTestMonorepoProjectDir(testMonorepoProjectDir, createTestTypescriptProjectDir);
-    }, 100000);
+    }, 200000);
 
     afterEach(() => deleteFolderRecursive(testMonorepoProjectDir));
 
@@ -113,6 +113,6 @@ describe(`E2E - ${packageToTest}`, () => {
 
       const packageJson = PackageJson.fromDirPath(testMonorepoProjectDir);
       expect(packageJson.getContent()).toMatchSnapshot();
-    }, 100000);
+    }, 200000);
   });
 });
