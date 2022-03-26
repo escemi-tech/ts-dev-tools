@@ -38,7 +38,14 @@ export class PackageJsonMerge {
       if (!Object.prototype.hasOwnProperty.call(update, updateKey)) {
         continue;
       }
-      source[updateKey] = PackageJsonMerge.mergeValues(source[updateKey], update[updateKey]);
+
+      const updateValue = update[updateKey];
+
+      const sourceValue = Object.prototype.hasOwnProperty.call(source, updateKey)
+        ? source[updateKey]
+        : undefined;
+
+      source[updateKey] = PackageJsonMerge.mergeValues(sourceValue, updateValue);
     }
     return source;
   }
