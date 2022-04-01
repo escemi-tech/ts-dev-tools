@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.5.23 (2022-04-01)
+
+**Note:** Version bump only for package @ts-dev-tools/react
+
+
+
+
+
 ## 1.5.22 (2022-03-26)
 
 **Note:** Version bump only for package @ts-dev-tools/react
