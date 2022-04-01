@@ -61,7 +61,7 @@ describe(`E2E - ${packageToTest}`, () => {
       expect(installCode).toBe(0);
 
       const packageJson = PackageJson.fromDirPath(testSimpleProjectDir);
-      expect(packageJson.getContent()).toMatchSnapshot();
+      expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
 
       const {
         code: lintCode,
@@ -115,7 +115,7 @@ describe(`E2E - ${packageToTest}`, () => {
       expect(installCode).toBe(0);
 
       const packageJson = PackageJson.fromDirPath(testMonorepoProjectDir);
-      expect(packageJson.getContent()).toMatchSnapshot();
+      expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
     }, 200000);
   });
 });
