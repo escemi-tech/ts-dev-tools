@@ -45,13 +45,12 @@
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.0.1",
-    "@testing-library/react-hooks": "^8.0.0",
+    "@testing-library/react": "^13.1.1",
     "@ts-dev-tools/core": "^1.5.24",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
     "eslint-plugin-react": "^7.29.4",
-    "react-test-renderer": "^17.0.2"
+    "react-test-renderer": "^18.0.0"
   },
   "devDependencies": {
     "pinst": "^3.0.0"
