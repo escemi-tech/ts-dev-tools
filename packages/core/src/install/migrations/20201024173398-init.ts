@@ -9,6 +9,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     preset: "ts-jest",
     testEnvironment: "node",
     testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)"],
+    collectCoverageFrom: ["**/src/**/*.[jt]s?(x)"],
   };
 
   const eslintConfig = {
