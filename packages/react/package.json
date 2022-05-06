@@ -97,6 +97,10 @@
     ],
     "collectCoverageFrom": [
       "**/src/**/*.[jt]s?(x)"
+    ],
+    "reporters": [
+      "default",
+      "github-actions"
     ]
   }
 }

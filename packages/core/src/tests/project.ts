@@ -1,27 +1,18 @@
 import { copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync, symlinkSync } from "fs";
-import { tmpdir } from "os";
-import { basename, join, resolve } from "path";
+import { join, resolve } from "path";
 
 import { PackageJson } from "../services/PackageJson";
 import { PluginService } from "../services/PluginService";
 import { safeExec } from "./cli";
-import { deleteFolderRecursive } from "./file-system";
+import { createTestDir, getTestDirPath, removeTestDir } from "./test-dir";
 
 export const testProjectDir = resolve("__tests__/test-project");
-
-const getTestProjectDirPath = (filename: string) =>
-  join(tmpdir(), "test-" + basename(filename).split(".")[0]);
-
 const defaultPackageJsonPath = join(testProjectDir, "package.json");
+const getTestProjectDirPath = (filename: string) => getTestDirPath("test", filename);
 
 export function createTestProjectDir(filename: string): string {
-  const testProjectDirPath = getTestProjectDirPath(filename);
-  if (existsSync(testProjectDirPath)) {
-    deleteFolderRecursive(testProjectDirPath);
-  }
-
-  mkdirSync(testProjectDirPath);
-  return testProjectDirPath;
+  const testDirPath = getTestProjectDirPath(filename);
+  return createTestDir(testDirPath, true);
 }
 
 export function createTestProjectDirWithFixtures(filename: string) {
@@ -61,10 +52,7 @@ export function restorePackageJson(filename: string): void {
 
 export function removeTestProjectDir(filename: string): void {
   const testProjectDirPath = getTestProjectDirPath(filename);
-  if (!existsSync(testProjectDirPath)) {
-    throw new Error(`Test project dir "${testProjectDirPath}" does not exist`);
-  }
-  deleteFolderRecursive(testProjectDirPath);
+  removeTestDir(testProjectDirPath);
 }
 
 export const createTestMonorepoProjectDir = async (
