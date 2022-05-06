@@ -43,6 +43,9 @@ Object {
     },
   },
   "jest": Object {
+    "collectCoverageFrom": Array [
+      "**/src/**/*.[jt]s?(x)",
+    ],
     "preset": "ts-jest",
     "testEnvironment": "node",
     "testMatch": Array [
