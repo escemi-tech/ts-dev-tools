@@ -50,6 +50,8 @@ describe(`E2E - ${packageToTest}`, () => {
       // expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
+      await safeExec(testSimpleProjectDir, "yarn install");
+
       const {
         code: installCode,
         stderr: stderrCode,
@@ -63,13 +65,9 @@ describe(`E2E - ${packageToTest}`, () => {
       const packageJson = PackageJson.fromDirPath(testSimpleProjectDir);
       expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
 
-      const {
-        code: lintCode,
-        // stderr: lintStderr
-      } = await exec(testSimpleProjectDir, "yarn lint");
+      const { code: lintCode, stderr: lintStderr } = await exec(testSimpleProjectDir, "yarn lint");
 
-      // FIXME: eslint fails to check installed react package
-      // expect(lintStderr).toBeFalsy();
+      expect(lintStderr).toBeFalsy();
       expect(lintCode).toBe(0);
 
       const { code: buildCode, stderr: buildStderr } = await exec(
