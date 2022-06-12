@@ -2,33 +2,15 @@
 
 [![npm](https://img.shields.io/npm/v/@ts-dev-tools/core)](https://www.npmjs.com/package/@ts-dev-tools/core) [![Continuous integration](https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg)](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22) [![](https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR)](https://codecov.io/gh/escemi-tech/ts-dev-tools) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING) [![Sponsor](https://img.shields.io/badge/%E2%9D%A4-Sponsor-ff69b4)](https://github.com/sponsors/neilime) [![GitHub stars](https://img.shields.io/github/stars/escemi-tech/ts-dev-tools?logo=github)](https://github.com/escemi-tech/ts-dev-tools)
 
-# Welcome to @ts-dev-tools/react ⚛️
+# Welcome to @ts-dev-tools/gatsby ⚛️
 
-## Typescript dev tools for a [ReactJS](https://reactjs.org/) project
+## Typescript dev tools for a [Gatsby](https://www.gatsbyjs.com/) project
 
 ---
 
 ## What's included
 
-### Inherit from [`@ts-dev-tools/core`](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/core)
-
-### 👕 Linter
-
-- Enable `browser` env for [eslint](https://eslint.org/docs/user-guide/configuring#specifying-environments)
-- Install and configure [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
-
-### 🧪 Tests
-
-- Install react tests libraries:
-  - [@testing-library/jest-dom](https://testing-library.com/docs/ecosystem-jest-dom): Custom jest matchers to test the state of the DOM
-  - [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/): Simple and complete React DOM testing utilities
-  - [@testing-library/react-hooks](https://react-hooks-testing-library.com/): Simple and complete React hooks testing utilities
-  - [react-test-renderer](https://www.npmjs.com/package/react-test-renderer/): React renderer required by `@testing-library/react-hooks`
-
-### 📖 Types
-
-- [@types/react](https://www.npmjs.com/package/@types/react)
-- [@types/react-dom](https://www.npmjs.com/package/@types/react-dom)
+### Inherit from [`@ts-dev-tools/react`](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/react)
 
 ---
 
@@ -37,13 +19,13 @@
 ### _1_. Install
 
 ```sh
-npm install --dev @ts-dev-tools/react
+npm install --dev @ts-dev-tools/gatsby
 ```
 
 Or
 
 ```sh
-yarn add --dev @ts-dev-tools/react
+yarn add --dev @ts-dev-tools/gatsby
 ```
 
 ### _2_. Enable ts-dev-tools
