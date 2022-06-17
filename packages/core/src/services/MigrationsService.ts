@@ -72,7 +72,7 @@ export class MigrationsService {
     // Then retrieve
     const pluginMigrationsDirPath = resolve(plugin.path, "dist/install/migrations");
     for (const migrationFile of readdirSync(pluginMigrationsDirPath)) {
-      if (!migrationFile.match(/^[0-9]{14}-[a-z]+\.(js|ts)$/)) {
+      if (!migrationFile.match(/^[0-9]{14}-[-a-z]+\.(js|ts)$/)) {
         continue;
       }
 
