@@ -6,8 +6,8 @@ Installing @ts-dev-tools/core...
 Applying migration \\"20201024173398-init\\"...
 Migration \\"20201024173398-init\\" applied!
 Checking for duplicate dev dependencies...
-Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":\\"
-  - \\"typescript
+Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":
+  - typescript
 
 Check for duplicate dev dependencies done!
 Installation done!"
@@ -19,8 +19,8 @@ Installing @ts-dev-tools/core...
 Applying migration \\"20201024173398-init\\"...
 Migration \\"20201024173398-init\\" applied!
 Checking for duplicate dev dependencies...
-Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":\\"
-  - \\"@types/jest
+Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":
+  - @types/jest
   - @types/node
   - @typescript-eslint/eslint-plugin
   - @typescript-eslint/parser

@@ -70,7 +70,7 @@ export class DuplicateDependenciesService {
       if (pluginDuplicateDependencies.size) {
         const pluginDuplicateDependenciesValue = Array.from(pluginDuplicateDependencies);
         console.info(
-          `Some dev dependencies are unnecessarily installed as their are already required by "${plugin}":"\n  - "${pluginDuplicateDependenciesValue.join(
+          `Some dev dependencies are unnecessarily installed as their are already required by "${plugin}":\n  - ${pluginDuplicateDependenciesValue.join(
             "\n  - "
           )}\n`
         );
