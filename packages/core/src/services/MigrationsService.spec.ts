@@ -57,4 +57,45 @@ describe("MigrationsService", () => {
       expect(getConsoleInfoContent()).toMatchSnapshot();
     });
   });
+
+  describe("getMigrationNameFromFile", () => {
+    it("should retrieve migration name from given file name", async () => {
+      const migrationFile = "20201024173398-test.ts";
+      const migrationName = MigrationsService.getMigrationNameFromFile(migrationFile);
+
+      expect(migrationName).toEqual("20201024173398-test");
+    });
+  });
+
+  describe("migrationIsAfterCurrentVersion", () => {
+    it("should retrieve true when migration name is after current version", async () => {
+      const migrationName = "20210130173398-other-test";
+      const currentVersion = "20201024173398-test";
+
+      const migrationIsAfterCurrentVersion = MigrationsService.migrationIsAfterCurrentVersion(
+        migrationName,
+        currentVersion
+      );
+      expect(migrationIsAfterCurrentVersion).toBe(true);
+    });
+
+    it("should retrieve false when migration name is before current version", async () => {
+      const migrationName = "20201024173398-test";
+      const currentVersion = "20210130173398-other-test";
+
+      const migrationIsAfterCurrentVersion = MigrationsService.migrationIsAfterCurrentVersion(
+        migrationName,
+        currentVersion
+      );
+      expect(migrationIsAfterCurrentVersion).toBe(false);
+    });
+
+    it("should retrieve true when current version is undefined", async () => {
+      const migrationName = "20201024173398-test";
+
+      const migrationIsAfterCurrentVersion =
+        MigrationsService.migrationIsAfterCurrentVersion(migrationName);
+      expect(migrationIsAfterCurrentVersion).toBe(true);
+    });
+  });
 });

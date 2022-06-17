@@ -5,9 +5,11 @@ exports[`E2E - core Monorepo project Installs core package 1`] = `
 Installing @ts-dev-tools/core...
 Applying migration \\"20201024173398-init\\"...
 Migration \\"20201024173398-init\\" applied!
+Applying migration \\"20220617100200-prettier-cache\\"...
+Migration \\"20220617100200-prettier-cache\\" applied!
 Checking for duplicate dev dependencies...
-Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":\\"
-  - \\"typescript
+Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":
+  - typescript
 
 Check for duplicate dev dependencies done!
 Installation done!"
@@ -18,9 +20,11 @@ exports[`E2E - core Simple project Installs core package 1`] = `
 Installing @ts-dev-tools/core...
 Applying migration \\"20201024173398-init\\"...
 Migration \\"20201024173398-init\\" applied!
+Applying migration \\"20220617100200-prettier-cache\\"...
+Migration \\"20220617100200-prettier-cache\\" applied!
 Checking for duplicate dev dependencies...
-Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":\\"
-  - \\"@types/jest
+Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":
+  - @types/jest
   - @types/node
   - @typescript-eslint/eslint-plugin
   - @typescript-eslint/parser
