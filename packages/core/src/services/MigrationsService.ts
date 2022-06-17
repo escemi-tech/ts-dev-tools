@@ -76,9 +76,11 @@ export class MigrationsService {
         continue;
       }
 
-      const migrationName = migrationFile.split(".").slice(0, -1).join(".");
-      const shouldApplyMigration =
-        !currentVersion || currentVersion.localeCompare(migrationName) < 0;
+      const migrationName = MigrationsService.getMigrationNameFromFile(migrationFile);
+      const shouldApplyMigration = MigrationsService.migrationIsAfterCurrentVersion(
+        migrationName,
+        currentVersion
+      );
 
       if (!shouldApplyMigration) {
         continue;
@@ -90,5 +92,14 @@ export class MigrationsService {
       });
     }
     return migrationFiles;
+  }
+
+  public static getMigrationNameFromFile(migrationFile: string): string {
+    const migrationName = migrationFile.split(".").slice(0, -1).join(".");
+    return migrationName;
+  }
+
+  public static migrationIsAfterCurrentVersion(migrationName: string, currentVersion?: string) {
+    return !currentVersion || currentVersion.localeCompare(migrationName) < 0;
   }
 }
