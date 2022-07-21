@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SymlinkDependenciesService executeSymlinking should symlink dependencies 1`] = `
+"Symlinking dev dependencies...
+Symlinking dev dependencies done!"
+`;

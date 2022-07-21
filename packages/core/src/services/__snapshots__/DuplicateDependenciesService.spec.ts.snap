@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DuplicateDependenciesService duplicateDependencies should duplicate dependencies when project has duplicates dev dependencies 1`] = `
+exports[`DuplicateDependenciesService executeDeduplication should duplicate dependencies when project has duplicates dev dependencies 1`] = `
 "Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":
   - typescript

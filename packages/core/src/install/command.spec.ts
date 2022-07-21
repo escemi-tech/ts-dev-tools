@@ -51,7 +51,7 @@ describe("Install command", () => {
     const installAction = () => install({ cwd: testProjectDir, dir: ".." });
 
     await expect(installAction()).rejects.toThrowError(
-      "Unable to install @ts-dev-tools/core in a different folder than current process"
+      "Unable to install ts-dev-tools in a different folder than current process"
     );
   });
 });

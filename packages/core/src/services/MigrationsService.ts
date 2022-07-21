@@ -4,11 +4,13 @@ import { resolve } from "path";
 import { PackageJson } from "../services/PackageJson";
 import { Plugin, PluginService } from "./PluginService";
 
-export type Migration = { name: string; path: string };
+export type Migration = { fullname: string; shortname: string; path: string };
 
 export type MigrationUpFunction = (absoluteProjectDir: string) => Promise<void>;
 
 export class MigrationsService {
+  static MIGRATION_BUILT_PATH = "dist/install/migrations";
+
   static async executeMigrations(
     absoluteProjectDir: string,
     currentVersion: string | undefined
@@ -20,7 +22,7 @@ export class MigrationsService {
 
     try {
       for (const migration of migrations) {
-        console.info(`Applying migration "${migration.name}"...`);
+        console.info(`Applying migration "${migration.fullname}"...`);
 
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { up } = require(migration.path);
@@ -30,10 +32,10 @@ export class MigrationsService {
 
         // Upgrade current version
         PackageJson.fromDirPath(absoluteProjectDir).merge({
-          tsDevTools: { version: migration.name },
+          tsDevTools: { version: migration.shortname },
         });
 
-        console.info(`Migration "${migration.name}" applied!`);
+        console.info(`Migration "${migration.fullname}" applied!`);
       }
     } catch (error) {
       // Rollback package.json
@@ -57,7 +59,7 @@ export class MigrationsService {
       );
     }
 
-    migrationFiles.sort(({ name: nameA }, { name: nameB }) => nameA.localeCompare(nameB));
+    migrationFiles.sort(({ shortname: nameA }, { shortname: nameB }) => nameA.localeCompare(nameB));
 
     return Array.from(new Set(migrationFiles));
   }
@@ -66,11 +68,9 @@ export class MigrationsService {
     plugin: Plugin,
     currentVersion: string | undefined
   ): Migration[] {
-    // First retrieve migration of inherited plugins
-    const migrationFiles = MigrationsService.getAvailableMigrations(plugin.path, currentVersion);
+    const migrationFiles = [];
 
-    // Then retrieve
-    const pluginMigrationsDirPath = resolve(plugin.path, "dist/install/migrations");
+    const pluginMigrationsDirPath = resolve(plugin.path, MigrationsService.MIGRATION_BUILT_PATH);
     for (const migrationFile of readdirSync(pluginMigrationsDirPath)) {
       if (!migrationFile.match(/^[0-9]{14}-[-a-z]+\.(js|ts)$/)) {
         continue;
@@ -87,7 +87,8 @@ export class MigrationsService {
       }
 
       migrationFiles.push({
-        name: migrationName,
+        shortname: migrationName,
+        fullname: `${plugin.shortname} - ${migrationName}`,
         path: resolve(pluginMigrationsDirPath, migrationFile),
       });
     }

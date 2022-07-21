@@ -4,10 +4,10 @@ import {
   removeTestProjectDir,
   restorePackageJson,
 } from "../tests/project";
-import { DuplicateDependenciesService } from "./DuplicateDependenciesService";
+import { SymlinkDependenciesService } from "./SymlinkDependenciesService";
 import { PackageJson } from "./PackageJson";
 
-describe("DuplicateDependenciesService", () => {
+describe("SymlinkDependenciesService", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
@@ -18,7 +18,7 @@ describe("DuplicateDependenciesService", () => {
     removeTestProjectDir(__filename);
   });
 
-  describe("executeDeduplication", () => {
+  describe("executeSymlinking", () => {
     beforeEach(() => {
       mockConsoleInfo();
     });
@@ -28,18 +28,17 @@ describe("DuplicateDependenciesService", () => {
       restorePackageJson(__filename);
     });
 
-    it("should duplicate dependencies when project has duplicates dev dependencies", () => {
+    it("should symlink dependencies", () => {
       PackageJson.fromDirPath(testProjectDir).merge({
         devDependencies: {
           "@ts-dev-tools/core": "1.0.0",
-          typescript: "1.0.0",
         },
       });
 
-      const executeDeduplicationAction = () =>
-        DuplicateDependenciesService.executeDeduplication(testProjectDir);
+      const executeSymlinkingAction = () =>
+      SymlinkDependenciesService.executeSymlinking(testProjectDir);
 
-      expect(executeDeduplicationAction).not.toThrowError();
+      expect(executeSymlinkingAction).not.toThrowError();
       expect(getConsoleInfoContent()).toMatchSnapshot();
     });
   });

@@ -4,7 +4,7 @@ import { Plugin, PluginService } from "./PluginService";
 type DuplicateDependencies = Map<string, Set<string>>;
 
 export class DuplicateDependenciesService {
-  static duplicateDependencies(absoluteProjectDir: string): void {
+  static executeDeduplication(absoluteProjectDir: string): void {
     console.info(`Checking for duplicate dev dependencies...`);
 
     const duplicateDependencies: DuplicateDependencies = new Map();
@@ -13,7 +13,7 @@ export class DuplicateDependenciesService {
       duplicateDependencies
     );
 
-    DuplicateDependenciesService.printDuplicateDependencies(duplicateDependencies);
+    DuplicateDependenciesService.printDuplicatedDependencies(duplicateDependencies);
 
     console.info(`Check for duplicate dev dependencies done!`);
   }
@@ -65,7 +65,7 @@ export class DuplicateDependenciesService {
     }
   }
 
-  private static printDuplicateDependencies(duplicateDependencies: DuplicateDependencies) {
+  private static printDuplicatedDependencies(duplicateDependencies: DuplicateDependencies) {
     duplicateDependencies.forEach((pluginDuplicateDependencies, plugin) => {
       if (pluginDuplicateDependencies.size) {
         const pluginDuplicateDependenciesValue = Array.from(pluginDuplicateDependencies);
