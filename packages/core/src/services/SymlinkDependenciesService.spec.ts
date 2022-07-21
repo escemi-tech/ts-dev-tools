@@ -28,7 +28,7 @@ describe("SymlinkDependenciesService", () => {
       restorePackageJson(__filename);
     });
 
-    it("should symlink dependencies ", () => {
+    it("should symlink dependencies", () => {
       PackageJson.fromDirPath(testProjectDir).merge({
         devDependencies: {
           "@ts-dev-tools/core": "1.0.0",
