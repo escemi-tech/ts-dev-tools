@@ -1,37 +1,38 @@
 import { existsSync } from "fs";
 import { join, resolve } from "path";
 
-import { CorePackageService } from "../services/CorePackageService";
+import { PROJECT_NAME } from "../constants";
 import { DuplicateDependenciesService } from "../services/DuplicateDependenciesService";
 import { MigrationsService } from "../services/MigrationsService";
 import { PackageJson } from "../services/PackageJson";
+import { SymlinkDependenciesService } from "../services/SymlinkDependenciesService";
 
 export async function install({ cwd, dir = "." }: { cwd: string; dir: string }): Promise<void> {
-  const packageName = CorePackageService.getPackageName();
-
   // Ensure that we're not trying to install outside cwd
   const absoluteProjectDir = resolve(cwd, dir);
 
   if (!existsSync(absoluteProjectDir)) {
-    throw new Error(`Unable to install ${packageName} in given directory ${join(cwd, dir)}`);
+    throw new Error(`Unable to install ${PROJECT_NAME} in given directory ${join(cwd, dir)}`);
   }
 
   if (!absoluteProjectDir.startsWith(cwd)) {
-    throw new Error(`Unable to install ${packageName} in a different folder than current process`);
+    throw new Error(`Unable to install ${PROJECT_NAME} in a different folder than current process`);
   }
 
   // Run installation migration
   const currentVersion = PackageJson.fromDirPath(absoluteProjectDir).getTsDevToolsVersion();
 
   if (currentVersion) {
-    console.info(`Updating ${packageName} installation...`);
+    console.info(`Updating ${PROJECT_NAME} installation...`);
   } else {
-    console.info(`Installing ${packageName}...`);
+    console.info(`Installing ${PROJECT_NAME}...`);
   }
 
   await MigrationsService.executeMigrations(absoluteProjectDir, currentVersion);
 
-  DuplicateDependenciesService.duplicateDependencies(absoluteProjectDir);
+  SymlinkDependenciesService.executeSymlinking(absoluteProjectDir);
+
+  DuplicateDependenciesService.executeDeduplication(absoluteProjectDir);
 
   console.info(`Installation done!`);
 }

@@ -55,11 +55,16 @@ describe("PluginService", () => {
 
       const installedPlugins = PluginService.getInstalledPlugins(testProjectDir);
 
-      expect(installedPlugins).toHaveLength(1);
+      expect(installedPlugins).toHaveLength(2);
       expect(installedPlugins[0]).toMatchObject({
         fullname: "@ts-dev-tools/react",
         path: expect.stringContaining("/packages/react"),
         shortname: "react",
+      });
+      expect(installedPlugins[1]).toMatchObject({
+        fullname: "@ts-dev-tools/core",
+        path: expect.stringContaining("/packages/core"),
+        shortname: "core",
       });
     });
 

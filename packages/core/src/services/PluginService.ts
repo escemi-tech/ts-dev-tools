@@ -23,14 +23,24 @@ export class PluginService {
       return [];
     }
 
-    const plugins = allDependenciesPackageNames.filter((packageName) =>
+    const pluginsFullname = allDependenciesPackageNames.filter((packageName) =>
       PluginService.packageNameIsPlugin(packageName)
     );
 
     const sortPlugins = (pluginA: string, pluginB: string) => pluginA.localeCompare(pluginB);
-    plugins.sort(sortPlugins);
+    pluginsFullname.sort(sortPlugins);
 
-    return plugins.map(PluginService.getPluginFromFullname);
+    const plugins = new Map<string, Plugin>();
+    for(const pluginFullname of pluginsFullname){
+      const plugin = PluginService.getPluginFromFullname(pluginFullname);
+      plugins.set(pluginFullname, plugin);
+      const pluginParents = PluginService.getInstalledPlugins(plugin.path);
+      for(const pluginParent of pluginParents){
+        plugins.set(pluginParent.fullname, pluginParent);
+      }
+    }
+
+    return Array.from(plugins.values());
   }
 
   static getPluginShortname(fullname: string): string {
