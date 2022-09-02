@@ -39,7 +39,7 @@ describe("DuplicateDependenciesService", () => {
       const executeDeduplicationAction = () =>
         DuplicateDependenciesService.executeDeduplication(testProjectDir);
 
-      expect(executeDeduplicationAction).not.toThrowError();
+      expect(executeDeduplicationAction).not.toThrow();
       expect(getConsoleInfoContent()).toMatchSnapshot();
     });
   });
