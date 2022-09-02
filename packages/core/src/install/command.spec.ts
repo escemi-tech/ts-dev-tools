@@ -50,7 +50,7 @@ describe("Install command", () => {
   it("should throws an error if project dir path is not a child of current working directory", async () => {
     const installAction = () => install({ cwd: testProjectDir, dir: ".." });
 
-    await expect(installAction()).rejects.toThrowError(
+    await expect(installAction()).rejects.toThrow(
       "Unable to install ts-dev-tools in a different folder than current process"
     );
   });

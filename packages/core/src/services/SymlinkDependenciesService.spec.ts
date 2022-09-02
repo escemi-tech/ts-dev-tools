@@ -4,8 +4,8 @@ import {
   removeTestProjectDir,
   restorePackageJson,
 } from "../tests/project";
-import { SymlinkDependenciesService } from "./SymlinkDependenciesService";
 import { PackageJson } from "./PackageJson";
+import { SymlinkDependenciesService } from "./SymlinkDependenciesService";
 
 describe("SymlinkDependenciesService", () => {
   let testProjectDir: string;
@@ -36,9 +36,9 @@ describe("SymlinkDependenciesService", () => {
       });
 
       const executeSymlinkingAction = () =>
-      SymlinkDependenciesService.executeSymlinking(testProjectDir);
+        SymlinkDependenciesService.executeSymlinking(testProjectDir);
 
-      expect(executeSymlinkingAction).not.toThrowError();
+      expect(executeSymlinkingAction).not.toThrow();
       expect(getConsoleInfoContent()).toMatchSnapshot();
     });
   });
