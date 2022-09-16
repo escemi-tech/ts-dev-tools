@@ -49,7 +49,7 @@
     "@ts-dev-tools/core": "^1.5.35",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
-    "eslint-plugin-react": "^7.31.7",
+    "eslint-plugin-react": "^7.31.8",
     "jest-environment-jsdom": "^29.0.3",
     "react-test-renderer": "^18.2.0"
   },
