@@ -50,7 +50,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "eslint-plugin-react": "^7.31.10",
-    "jest-environment-jsdom": "^29.1.2",
+    "jest-environment-jsdom": "^29.2.1",
     "react-test-renderer": "^18.2.0"
   },
   "devDependencies": {
