@@ -48,7 +48,7 @@
     "@testing-library/react": "^13.4.0",
     "@ts-dev-tools/core": "^1.5.36",
     "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.8",
+    "@types/react-dom": "^18.0.9",
     "eslint-plugin-react": "^7.31.10",
     "jest-environment-jsdom": "^29.3.1",
     "react-test-renderer": "^18.2.0"
