@@ -1,5 +1,5 @@
-import { mkdirSync } from "fs";
-import { join, resolve } from "path";
+import { existsSync, mkdirSync } from "fs";
+import { basename, join, resolve } from "path";
 
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
 import { exec, safeExec } from "@ts-dev-tools/core/dist/tests/cli";
@@ -18,14 +18,22 @@ const createTestReactProjectDir = async (projectDir: string) => {
 const packageToTest = "react";
 describe(`E2E - ${packageToTest}`, () => {
   let testProjectDir: string;
+  let testProjectTmpDir: string;
   let testProjectDirPackages: string;
   let packagePath: string;
 
   beforeAll(async () => {
     testProjectDir = createTestProjectDir(__filename);
+
+    testProjectTmpDir = join(__dirname, "../../../node_modules/.cache/", basename(testProjectDir));
+    if (!existsSync(testProjectTmpDir)) {
+      mkdirSync(testProjectTmpDir);
+      await createTestReactProjectDir(testProjectTmpDir);
+    }
+
     testProjectDirPackages = await createTestPackagesDir(testProjectDir);
     packagePath = resolve(testProjectDirPackages, packageToTest);
-  });
+  }, 200000);
 
   afterAll(() => removeTestProjectDir(__filename));
 
@@ -34,8 +42,7 @@ describe(`E2E - ${packageToTest}`, () => {
 
     beforeEach(async () => {
       testSimpleProjectDir = join(testProjectDir, "simple-project");
-      mkdirSync(testSimpleProjectDir);
-      await createTestReactProjectDir(testSimpleProjectDir);
+      await safeExec(testProjectDir, `cp -r ${testProjectTmpDir} ${testSimpleProjectDir}`);
     }, 200000);
 
     afterEach(() => deleteFolderRecursive(testSimpleProjectDir));
@@ -45,12 +52,11 @@ describe(`E2E - ${packageToTest}`, () => {
         code: installPackageCode,
         // stderr: installPackageStderr
       } = await exec(testSimpleProjectDir, `yarn add --dev "file:${packagePath}"`);
+      await safeExec(testSimpleProjectDir, `yarn install`);
 
       // FIXME: installation ouput warnings due to create-react-app
       // expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
-
-      await safeExec(testSimpleProjectDir, "yarn install");
 
       const {
         code: installCode,
@@ -87,7 +93,10 @@ describe(`E2E - ${packageToTest}`, () => {
       testMonorepoProjectDir = join(testProjectDir, "monorepo-project");
       mkdirSync(testMonorepoProjectDir);
 
-      await createTestMonorepoProjectDir(testMonorepoProjectDir, createTestReactProjectDir);
+      await createTestMonorepoProjectDir(testMonorepoProjectDir, async (projectDir) => {
+        await safeExec(testMonorepoProjectDir, `cp -r ${testProjectTmpDir} ${projectDir}`);
+        await safeExec(projectDir, `yarn install`);
+      });
     }, 200000);
 
     afterEach(() => deleteFolderRecursive(testMonorepoProjectDir));
