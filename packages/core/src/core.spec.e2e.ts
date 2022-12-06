@@ -1,5 +1,5 @@
-import { mkdirSync } from "fs";
-import { join, resolve } from "path";
+import { existsSync, mkdirSync } from "fs";
+import { basename, join, resolve } from "path";
 
 import { PackageJson } from "./services/PackageJson";
 import { exec, safeExec } from "./tests/cli";
@@ -16,20 +16,30 @@ const createTestTypescriptProjectDir = async (projectDir: string) => {
     projectDir,
     "git clone --depth=1 https://github.com/Microsoft/TypeScript-Node-Starter.git ./"
   );
-  await safeExec(projectDir, `rm -f ./package-lock.json`);
+  await safeExec(projectDir, "rm -fr .git");
+  await safeExec(projectDir, "yarn import");
+  await safeExec(projectDir, "rm -f ./package-lock.json");
 };
 
 const packageToTest = "core";
 describe(`E2E - ${packageToTest}`, () => {
   let testProjectDir: string;
+  let testProjectTmpDir: string;
   let testProjectDirPackages: string;
   let packagePath: string;
 
   beforeAll(async () => {
     testProjectDir = createTestProjectDir(__filename);
     testProjectDirPackages = await createTestPackagesDir(testProjectDir);
+
+    testProjectTmpDir = join(__dirname, "../../../node_modules/.cache/", basename(testProjectDir));
+    if (!existsSync(testProjectTmpDir)) {
+      mkdirSync(testProjectTmpDir);
+      await createTestTypescriptProjectDir(testProjectTmpDir);
+    }
+
     packagePath = resolve(testProjectDirPackages, packageToTest);
-  });
+  }, 200000);
 
   afterAll(() => removeTestProjectDir(__filename));
 
@@ -38,9 +48,8 @@ describe(`E2E - ${packageToTest}`, () => {
 
     beforeEach(async () => {
       testSimpleProjectDir = join(testProjectDir, "simple-project");
-      mkdirSync(testSimpleProjectDir);
-      await createTestTypescriptProjectDir(testSimpleProjectDir);
-      await safeExec(testSimpleProjectDir, "yarn install");
+      await safeExec(testProjectDir, `cp -r ${testProjectTmpDir} ${testSimpleProjectDir}`);
+      await safeExec(testSimpleProjectDir, `yarn install`);
     }, 200000);
 
     afterEach(() => deleteFolderRecursive(testSimpleProjectDir));
@@ -78,7 +87,6 @@ describe(`E2E - ${packageToTest}`, () => {
 
       expect(buildStderr).toBeFalsy();
       expect(buildCode).toBe(0);
-
     }, 200000);
   });
 
@@ -89,7 +97,10 @@ describe(`E2E - ${packageToTest}`, () => {
       testMonorepoProjectDir = join(testProjectDir, "monorepo-project");
       mkdirSync(testMonorepoProjectDir);
 
-      await createTestMonorepoProjectDir(testMonorepoProjectDir, createTestTypescriptProjectDir);
+      await createTestMonorepoProjectDir(testMonorepoProjectDir, async (projectDir) => {
+        await safeExec(testMonorepoProjectDir, `cp -r ${testProjectTmpDir} ${projectDir}`);
+        await safeExec(projectDir, `yarn install`);
+      });
     }, 200000);
 
     afterEach(() => deleteFolderRecursive(testMonorepoProjectDir));
