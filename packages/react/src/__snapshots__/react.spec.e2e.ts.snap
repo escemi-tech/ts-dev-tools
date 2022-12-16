@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`E2E - react Monorepo project Installs react package 1`] = `
-"$ /tmp/test-react/monorepo-project/node_modules/.bin/ts-dev-tools install
+"[2K[1G[2m$ /tmp/test-react/monorepo-project/node_modules/.bin/ts-dev-tools install[22m
 Installing ts-dev-tools...
 Applying migration \\"core - 20201024173398-init\\"...
 Migration \\"core - 20201024173398-init\\" applied!
@@ -10,7 +10,6 @@ Migration \\"react - 20201111162698-init\\" applied!
 Applying migration \\"core - 20220617100200-prettier-cache\\"...
 Migration \\"core - 20220617100200-prettier-cache\\" applied!
 Symlinking dev dependencies...
-- Symlinking ts-jest
 Symlinking dev dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by \\"@ts-dev-tools/core\\":
@@ -21,7 +20,7 @@ Installation done!"
 `;
 
 exports[`E2E - react Simple project Installs react package 1`] = `
-"$ /tmp/test-react/simple-project/node_modules/.bin/ts-dev-tools install
+"[2K[1G[2m$ /tmp/test-react/simple-project/node_modules/.bin/ts-dev-tools install[22m
 Installing ts-dev-tools...
 Applying migration \\"core - 20201024173398-init\\"...
 Migration \\"core - 20201024173398-init\\" applied!

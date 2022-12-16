@@ -1,0 +1,36 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "jest",
+          "test",
+          "test:unit",
+          "test:e2e",
+          "test:coverage"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "test:unit": {
+      "outputs": ["{projectRoot}/src/**/__snapshots__"]
+    },
+    "test:e2e": {
+      "outputs": ["{projectRoot}/src/**/__snapshots__"]
+    },
+    "test:coverage": {
+      "outputs": [
+        "{projectRoot}/coverage",
+        "{projectRoot}/src/**/__snapshots__"
+      ]
+    }
+  }
+}

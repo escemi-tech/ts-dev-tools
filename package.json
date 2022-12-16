@@ -13,14 +13,14 @@
     "lint": "lerna run --stream lint --",
     "build": "lerna run --stream build --scope @ts-dev-tools/core && lerna run --stream build --ignore @ts-dev-tools/core",
     "test": "lerna run --stream test --",
-    "test:ci": "lerna run --stream test:coverage",
+    "test:ci": "lerna run --stream test:coverage --",
     "link": "lerna exec yarn link",
     "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
-    "lerna": "^5.1.8",
+    "lerna": "^6.0.3",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.3"
   },
   "commitlint": {
     "extends": [

@@ -23,7 +23,7 @@ describe("PackageJson", () => {
     it("should throws an error if package.json file does not exist", () => {
       const getPackageJsonPathAction = () => new PackageJson("wrong/path/package.json");
 
-      expect(getPackageJsonPathAction).toThrowError(
+      expect(getPackageJsonPathAction).toThrow(
         'Package.json "wrong/path/package.json" does not exist'
       );
     });
@@ -39,9 +39,7 @@ describe("PackageJson", () => {
     it("should throws an error if no package.json exist for the given directory path", () => {
       const getPackageJsonPathAction = () => PackageJson.fromDirPath("wrong/path");
 
-      expect(getPackageJsonPathAction).toThrowError(
-        'No package.json found in directory "wrong/path"'
-      );
+      expect(getPackageJsonPathAction).toThrow('No package.json found in directory "wrong/path"');
     });
   });
 

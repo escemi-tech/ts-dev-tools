@@ -26,7 +26,7 @@ describe("PackageJsonMerge", () => {
 
       const getPackageJsonPathAction = () => PackageJsonMerge.merge(source, update);
 
-      expect(getPackageJsonPathAction).toThrowError(
+      expect(getPackageJsonPathAction).toThrow(
         "Unable to merge package json value because types are different"
       );
     });
