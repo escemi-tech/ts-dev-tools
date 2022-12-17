@@ -22,5 +22,5 @@ describe("bin", () => {
     expect(result.stderr).toBeFalsy();
     expect(result.stdout).toContain(`Usage`);
     expect(result.code).toBe(0);
-  });
+  }, 10000);
 });
