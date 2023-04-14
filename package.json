@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "lerna": "^6.0.3",
-    "rimraf": "^4.0.4",
+    "rimraf": "^5.0.0",
     "typescript": "^5.0.2"
   },
   "commitlint": {
