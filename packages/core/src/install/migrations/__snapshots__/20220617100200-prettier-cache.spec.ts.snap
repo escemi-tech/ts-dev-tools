@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Migration 20220617100200-prettier-cache Up should apply migration 1`] = `
-Object {
-  "scripts": Object {
+{
+  "scripts": {
     "format": "prettier --cache --write '**/*.ts'",
   },
   "version": "1.0.0",
