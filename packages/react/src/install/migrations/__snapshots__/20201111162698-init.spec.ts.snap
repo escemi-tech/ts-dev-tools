@@ -1,25 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Migration 20201111162698-init Up should apply migration 1`] = `
-Object {
-  "eslintConfig": Object {
-    "env": Object {
+{
+  "eslintConfig": {
+    "env": {
       "browser": true,
     },
-    "extends": Array [
+    "extends": [
       "plugin:react/recommended",
     ],
-    "rules": Object {
+    "rules": {
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",
     },
-    "settings": Object {
-      "react": Object {
+    "settings": {
+      "react": {
         "version": "detect",
       },
     },
   },
-  "jest": Object {
+  "jest": {
     "testEnvironment": "jsdom",
   },
   "version": "1.0.0",
@@ -27,30 +27,30 @@ Object {
 `;
 
 exports[`Migration 20201111162698-init Up should apply migration after core 1`] = `
-Object {
-  "eslintConfig": Object {
-    "env": Object {
+{
+  "eslintConfig": {
+    "env": {
       "browser": true,
       "es2021": true,
     },
-    "extends": Array [
+    "extends": [
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:jest/recommended",
       "plugin:react/recommended",
       "prettier",
     ],
-    "rules": Object {
+    "rules": {
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",
     },
-    "settings": Object {
-      "react": Object {
+    "settings": {
+      "react": {
         "version": "detect",
       },
     },
   },
-  "jest": Object {
+  "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
   },
