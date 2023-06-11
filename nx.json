@@ -17,14 +17,22 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
     },
     "test:unit": {
-      "outputs": ["{projectRoot}/src/**/__snapshots__"]
+      "outputs": [
+        "{projectRoot}/src/**/__snapshots__"
+      ]
     },
     "test:e2e": {
-      "outputs": ["{projectRoot}/src/**/__snapshots__"]
+      "outputs": [
+        "{projectRoot}/src/**/__snapshots__"
+      ]
     },
     "test:coverage": {
       "outputs": [
@@ -32,5 +40,16 @@
         "{projectRoot}/src/**/__snapshots__"
       ]
     }
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [],
+    "production": [
+      "default"
+    ]
   }
 }
