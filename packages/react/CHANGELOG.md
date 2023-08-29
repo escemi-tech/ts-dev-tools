@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.6.0 (2023-08-29)
+
+
+### Features
+
+* upgrade typescript-eslint dependencies ([7c60e12](https://github.com/escemi-tech/ts-dev-tools/commit/7c60e12c346b1b6f486dd6382272fa4ec40b5460))
+
+
+
+
+
 ## 1.5.42 (2023-08-19)
 
 **Note:** Version bump only for package @ts-dev-tools/react
