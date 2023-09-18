@@ -8,6 +8,23 @@ updates:
       interval: weekly
       day: friday
       time: "04:00"
+    groups:
+      eslint-dependencies:
+        patterns:
+          - "@typescript-eslint/*"
+          - "eslint-*"
+          - "eslint"
+      commitlint-dependencies:
+        patterns:
+          - "@commitlint/*"
+      prettier-dependencies:
+        patterns:
+          - "prettier-*"
+          - "prettier"
+      testing-library-dependencies:
+        patterns:
+          - "@testing-library/*"
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
