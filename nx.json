@@ -1,20 +1,4 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "jest",
-          "test",
-          "test:unit",
-          "test:e2e",
-          "test:coverage"
-        ]
-      }
-    }
-  },
   "targetDefaults": {
     "build": {
       "dependsOn": [
@@ -22,23 +6,36 @@
       ],
       "outputs": [
         "{projectRoot}/dist"
-      ]
+      ],
+      "cache": true
     },
     "test:unit": {
       "outputs": [
         "{projectRoot}/src/**/__snapshots__"
-      ]
+      ],
+      "cache": true
     },
     "test:e2e": {
       "outputs": [
         "{projectRoot}/src/**/__snapshots__"
-      ]
+      ],
+      "cache": true
     },
     "test:coverage": {
       "outputs": [
         "{projectRoot}/coverage",
         "{projectRoot}/src/**/__snapshots__"
-      ]
+      ],
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "jest": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",

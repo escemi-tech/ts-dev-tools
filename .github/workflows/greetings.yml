@@ -1,13 +1,11 @@
 name: Greetings
 
-on: [pull_request, issues]
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    branches: [main]
 
 jobs:
-  greeting:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/first-interaction@v1
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-message: 'Hi, thank for reporting an issue, we will check it out very soon'
-        pr-message: 'Hi, thank you for creating your PR, we will check it out very soon'
+  greetings:
+    uses: hoverkraft-tech/ci-github-common/.github/workflows/greetings.yml@0.10.1
