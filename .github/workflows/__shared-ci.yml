@@ -1,0 +1,15 @@
+name: Shared - Continuous Integration for common tasks
+
+on:
+  workflow_call:
+
+jobs:
+  continuous-integration:
+    # FIXME: This is a workaround for having workflow actions. See https://github.com/orgs/community/discussions/38659
+    permissions:
+      id-token: write
+      contents: read
+      security-events: write
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@0.2.1
+    with:
+      build: '{"artifact":"packages/*/dist"}'
