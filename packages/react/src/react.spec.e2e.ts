@@ -27,7 +27,7 @@ describe(`E2E - ${packageToTest}`, () => {
 
     testProjectTmpDir = join(__dirname, "../../../node_modules/.cache/", basename(testProjectDir));
     if (!existsSync(testProjectTmpDir)) {
-      mkdirSync(testProjectTmpDir);
+      mkdirSync(testProjectTmpDir, { recursive: true });
       await createTestReactProjectDir(testProjectTmpDir);
     }
 
