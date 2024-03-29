@@ -2,12 +2,16 @@
 
 exports[`MigrationsService executeMigrations should execute migrations when no available migrations exist after given version 1`] = `
 "Applying migration "core - 20220617100200-prettier-cache"...
-Migration "core - 20220617100200-prettier-cache" applied!"
+Migration "core - 20220617100200-prettier-cache" applied!
+Applying migration "core - 20240329200200-eslint-ignore"...
+Migration "core - 20240329200200-eslint-ignore" applied!"
 `;
 
 exports[`MigrationsService executeMigrations should execute migrations when no version is provided 1`] = `
 "Applying migration "core - 20201024173398-init"...
 Migration "core - 20201024173398-init" applied!
 Applying migration "core - 20220617100200-prettier-cache"...
-Migration "core - 20220617100200-prettier-cache" applied!"
+Migration "core - 20220617100200-prettier-cache" applied!
+Applying migration "core - 20240329200200-eslint-ignore"...
+Migration "core - 20240329200200-eslint-ignore" applied!"
 `;

@@ -60,15 +60,17 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     },
   };
 
+  const packageManager = PackageManagerService.detectPackageManager(absoluteProjectDir);
+
   const scripts = {
     build: "tsc --noEmit",
     format: "prettier --write '**/*.js'",
     lint: 'eslint "src/**/*.{ts,tsx}"',
     jest: "jest --detectOpenHandles --forceExit",
-    test: "yarn jest --maxWorkers=50%",
-    "test:watch": "yarn jest --watch --maxWorkers=25%",
-    "test:cov": "yarn jest --coverage",
-    "test:ci": "yarn test:cov --runInBand",
+    test: `${packageManager} run jest --maxWorkers=50%`,
+    "test:watch": `${packageManager} run jest --watch --maxWorkers=25%`,
+    "test:cov": `${packageManager} run jest --coverage`,
+    "test:ci": `${packageManager} run test:cov --runInBand`,
     prepare: `${PROJECT_NAME} install`,
   };
 
@@ -87,8 +89,6 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
   const isGitRepository = await GitService.isGitRepository(absoluteProjectDir);
 
   if (isGitRepository) {
-    const packageManager = PackageManagerService.detectPackageManager(absoluteProjectDir);
-
     const gitHooks = {
       "pre-commit": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
       "commit-msg": "npx --no-install commitlint --edit $1",

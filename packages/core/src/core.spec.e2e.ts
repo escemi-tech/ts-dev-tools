@@ -49,6 +49,7 @@ describe(`E2E - ${packageToTest}`, () => {
     beforeEach(async () => {
       testSimpleProjectDir = join(testProjectDir, "simple-project");
       await safeExec(testProjectDir, `cp -r ${testProjectTmpDir} ${testSimpleProjectDir}`);
+      await safeExec(testSimpleProjectDir, `rm -f package-lock.json`);
       await safeExec(testSimpleProjectDir, `yarn install`);
     }, 200000);
 
