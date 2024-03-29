@@ -69,7 +69,7 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     jest: "jest --detectOpenHandles --forceExit",
     test: `${packageManager} run jest --maxWorkers=50%`,
     "test:watch": `${packageManager} run jest --watch --maxWorkers=25%`,
-    "test:cov": `${packageManager} run jest --coverage`,
+    "test:cov": `${packageManager} run test --coverage`,
     "test:ci": `${packageManager} run test:cov --runInBand`,
     prepare: `${PROJECT_NAME} install`,
   };

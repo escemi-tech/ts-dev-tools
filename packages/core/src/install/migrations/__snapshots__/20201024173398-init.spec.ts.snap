@@ -71,7 +71,7 @@ exports[`Migration 20201024173398-init Up should apply migration 1`] = `
     "prepare": "ts-dev-tools install",
     "test": "npm run jest --maxWorkers=50%",
     "test:ci": "npm run test:cov --runInBand",
-    "test:cov": "npm run jest --coverage",
+    "test:cov": "npm run test --coverage",
     "test:watch": "npm run jest --watch --maxWorkers=25%",
   },
   "version": "1.0.0",
