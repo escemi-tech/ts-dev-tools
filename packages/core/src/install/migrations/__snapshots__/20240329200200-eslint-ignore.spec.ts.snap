@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Migration 20240329200200-eslint-ignore Up should apply migration 1`] = `
+{
+  "eslintConfig": {
+    "ignorePatterns": [
+      "dist",
+      "node_modules",
+    ],
+  },
+  "version": "1.0.0",
+}
+`;
