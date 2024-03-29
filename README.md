@@ -54,7 +54,7 @@ Using **ts-dev-tools** you should just have to update it and you'll have all the
 _Example with plugin `@ts-dev-tools/core`, replace `@ts-dev-tools/core` by the plugin you want to use_
 
 ```sh
-npm install --dev @ts-dev-tools/core
+npm install --include=dev @ts-dev-tools/core
 ```
 
 Or

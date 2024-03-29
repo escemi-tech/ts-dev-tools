@@ -68,7 +68,7 @@
 ### _1_. Install
 
 ```sh
-npm install --dev @ts-dev-tools/core
+npm install --include=dev @ts-dev-tools/core
 ```
 
 Or

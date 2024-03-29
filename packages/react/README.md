@@ -37,7 +37,7 @@
 ### _1_. Install
 
 ```sh
-npm install --dev @ts-dev-tools/react
+npm install --include=dev @ts-dev-tools/react
 ```
 
 Or
