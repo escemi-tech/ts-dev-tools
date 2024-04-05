@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.6.1...@ts-dev-tools/react@1.7.0) (2024-04-05)
+
+
+### Features
+
+* **core:** add eslint ignore ([99cffbd](https://github.com/escemi-tech/ts-dev-tools/commit/99cffbd44d0f69cf1774a2fbdeef3a6dfda1ef53))
+
+
+
+
+
 ## 1.6.2 (2024-02-10)
 
 **Note:** Version bump only for package @ts-dev-tools/react
