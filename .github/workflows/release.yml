@@ -21,7 +21,7 @@ jobs:
         with:
           token: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
 
-      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@0.3.2
+      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@0.4.2
 
       - uses: actions/download-artifact@v4
         with:
@@ -56,7 +56,7 @@ jobs:
           mkdir -p documentation
           echo "theme: jekyll-theme-cayman" > documentation/_config.yml
           cp README.md documentation/index.md
-      - uses: actions/configure-pages@v4
+      - uses: actions/configure-pages@v5
       - uses: actions/jekyll-build-pages@v1
         with:
           source: documentation/
