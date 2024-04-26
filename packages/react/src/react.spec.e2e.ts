@@ -11,8 +11,15 @@ import {
   removeTestProjectDir,
 } from "@ts-dev-tools/core/dist/tests/project";
 
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
+
 const createTestReactProjectDir = async (projectDir: string) => {
   await safeExec(projectDir, "yarn create react-app . --template typescript");
+
+  PackageJson.fromDirPath(projectDir).merge({
+    license: "MIT",
+  });
 };
 
 const packageToTest = "react";
@@ -35,7 +42,7 @@ describe(`E2E - ${packageToTest}`, () => {
     packagePath = resolve(testProjectDirPackages, packageToTest);
   }, 200000);
 
-  afterAll(() => removeTestProjectDir(__filename));
+  afterAll(() => shouldCleanupAfterTest && removeTestProjectDir(__filename));
 
   describe("Simple project", () => {
     let testSimpleProjectDir: string;
@@ -45,7 +52,7 @@ describe(`E2E - ${packageToTest}`, () => {
       await safeExec(testProjectDir, `cp -r ${testProjectTmpDir} ${testSimpleProjectDir}`);
     }, 200000);
 
-    afterEach(() => deleteFolderRecursive(testSimpleProjectDir));
+    afterEach(() => shouldCleanupAfterTest && deleteFolderRecursive(testSimpleProjectDir));
 
     it(`Installs ${packageToTest} package`, async () => {
       const {
@@ -70,6 +77,7 @@ describe(`E2E - ${packageToTest}`, () => {
 
       const packageJson = PackageJson.fromDirPath(testSimpleProjectDir);
       expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
+      expect(packageJson.getContent().scripts).toMatchSnapshot();
 
       const { code: lintCode, stderr: lintStderr } = await exec(testSimpleProjectDir, "yarn lint");
 
@@ -99,7 +107,7 @@ describe(`E2E - ${packageToTest}`, () => {
       });
     }, 200000);
 
-    afterEach(() => deleteFolderRecursive(testMonorepoProjectDir));
+    afterEach(() => shouldCleanupAfterTest && deleteFolderRecursive(testMonorepoProjectDir));
 
     it(`Installs ${packageToTest} package`, async () => {
       const {

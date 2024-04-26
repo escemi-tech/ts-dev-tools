@@ -39,7 +39,9 @@ describe("PackageJson", () => {
     it("should throws an error if no package.json exist for the given directory path", () => {
       const getPackageJsonPathAction = () => PackageJson.fromDirPath("wrong/path");
 
-      expect(getPackageJsonPathAction).toThrow('No package.json found in directory "wrong/path"');
+      expect(getPackageJsonPathAction).toThrow(
+        'Package.json "wrong/path/package.json" does not exist'
+      );
     });
   });
 
@@ -47,7 +49,7 @@ describe("PackageJson", () => {
     it("should retrieve the package.json content", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir).getContent();
 
-      expect(packageJson).toEqual({ version: "1.0.0" });
+      expect(packageJson).toEqual({ version: "1.0.0", license: "MIT" });
     });
   });
 

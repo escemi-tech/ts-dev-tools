@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Migration 20240412185501-eslint-config Up should apply migration 1`] = `
+{
+  "license": "MIT",
+  "version": "1.0.0",
+}
+`;
+
+exports[`Migration 20240412185501-eslint-config Up should apply migration 2`] = `
+"import { default as tsDevToolsReact } from "@ts-dev-tools/react/dist/eslint-plugin-ts-dev-tools/index.js";
+export default tsDevToolsReact.default;
+"
+`;
