@@ -1,4 +1,4 @@
-import { existsSync, symlinkSync } from "fs";
+import { existsSync, mkdirSync, symlinkSync } from "fs";
 import { join } from "path";
 
 import { PackageJson } from "./PackageJson";
@@ -21,23 +21,28 @@ export class SymlinkDependenciesService {
 
   private static symlinkPluginDependencies(absoluteProjectDir: string, plugin: Plugin) {
     const pluginDependencies = SymlinkDependenciesService.getPluginDependencies(plugin);
+    const pluginDependenciesPath = join(
+      plugin.path,
+      SymlinkDependenciesService.DEPENDENCIES_FOLDER
+    );
+
+    if (!existsSync(pluginDependenciesPath)) {
+      throw new Error(`Plugin dependencies folder not found: ${pluginDependenciesPath}`);
+    }
 
     for (const pluginDependency of pluginDependencies) {
-      const pluginDependencyPath = join(
-        plugin.path,
-        SymlinkDependenciesService.DEPENDENCIES_FOLDER,
-        pluginDependency
-      );
+      const pluginDependencyPath = join(pluginDependenciesPath, pluginDependency);
 
       if (!existsSync(pluginDependencyPath)) {
         continue;
       }
 
-      const projectPluginDependencyPath = join(
+      const projectDependencyPath = join(
         absoluteProjectDir,
-        SymlinkDependenciesService.DEPENDENCIES_FOLDER,
-        pluginDependency
+        SymlinkDependenciesService.DEPENDENCIES_FOLDER
       );
+
+      const projectPluginDependencyPath = join(projectDependencyPath, pluginDependency);
       if (existsSync(projectPluginDependencyPath)) {
         continue;
       }
@@ -59,6 +64,11 @@ export class SymlinkDependenciesService {
     pluginDependencyPath: string,
     projectPluginDependencyPath: string
   ): void {
+    const pluginDependencyParentFolder = join(projectPluginDependencyPath, "..");
+    if (!existsSync(pluginDependencyParentFolder)) {
+      mkdirSync(pluginDependencyParentFolder, { recursive: true });
+    }
+
     symlinkSync(pluginDependencyPath, projectPluginDependencyPath);
   }
 }

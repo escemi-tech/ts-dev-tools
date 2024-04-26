@@ -7,7 +7,7 @@
     "prettier",
     "git-hooks"
   ],
-  "author": "Emilien Escalle <emilien.escalle@escemi.com>",
+  "author": "ESCEMI <contact@escemi.com>",
   "homepage": "https://github.com/escemi-tech/ts-dev-tools",
   "license": "MIT",
   "directories": {
@@ -44,40 +44,17 @@
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^15.0.1",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.0",
     "@ts-dev-tools/core": "^1.7.0",
-    "@types/react": "^18.0.25",
+    "@types/react": "^18.3.4",
     "@types/react-dom": "^18.0.9",
-    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react": "^7.35.0",
     "jest-environment-jsdom": "^29.3.1",
     "react-test-renderer": "^18.2.0"
   },
   "devDependencies": {
     "pinst": "^3.0.0"
-  },
-  "eslintConfig": {
-    "env": {
-      "es2021": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:jest/recommended",
-      "prettier"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 12,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "jest"
-    ]
   },
   "prettier": {
     "semi": true,

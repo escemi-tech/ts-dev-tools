@@ -24,8 +24,7 @@ export class MigrationsService {
       for (const migration of migrations) {
         console.info(`Applying migration "${migration.fullname}"...`);
 
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { up } = require(migration.path);
+        const { up } = await import(migration.path);
 
         // Apply migration
         await up(absoluteProjectDir);
