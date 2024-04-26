@@ -13,5 +13,3 @@ jobs:
     uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@0.5.1
     with:
       build: '{"artifact":"packages/*/dist"}'
-    secrets:
-      codecov-token: ${{ secrets.CODECOV_TOKEN }}
