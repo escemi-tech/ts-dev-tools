@@ -8,6 +8,7 @@ exports[`Migration 20240329200200-eslint-ignore Up should apply migration 1`] = 
       "node_modules",
     ],
   },
+  "license": "MIT",
   "version": "1.0.0",
 }
 `;

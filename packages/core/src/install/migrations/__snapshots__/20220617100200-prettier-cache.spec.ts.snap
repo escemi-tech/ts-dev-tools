@@ -2,6 +2,7 @@
 
 exports[`Migration 20220617100200-prettier-cache Up should apply migration 1`] = `
 {
+  "license": "MIT",
   "scripts": {
     "format": "prettier --cache --write '**/*.ts'",
   },

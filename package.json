@@ -3,7 +3,7 @@
   "description": "Opinionated and advisable packages to configure tools to develop a Typescript project",
   "main": "index.js",
   "repository": "git@github.com:escemi-tech/ts-dev-tools.git",
-  "author": "Emilien Escalle <emilien.escalle@escemi.com>",
+  "author": "ESCEMI <contact@escemi.com>",
   "private": true,
   "workspaces": [
     "packages/*"

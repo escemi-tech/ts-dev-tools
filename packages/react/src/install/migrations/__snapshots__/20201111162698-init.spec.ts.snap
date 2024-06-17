@@ -22,6 +22,7 @@ exports[`Migration 20201111162698-init Up should apply migration 1`] = `
   "jest": {
     "testEnvironment": "jsdom",
   },
+  "license": "MIT",
   "version": "1.0.0",
 }
 `;
@@ -54,6 +55,7 @@ exports[`Migration 20201111162698-init Up should apply migration after core 1`] 
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
   },
+  "license": "MIT",
   "version": "1.0.0",
 }
 `;

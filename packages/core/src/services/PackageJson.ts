@@ -1,9 +1,8 @@
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
-
 import { PackageJson as PackageJsonType } from "type-fest";
 
 import { PackageJsonMerge } from "./PackageJsonMerge";
+import { FileService } from "./FileService";
+import { join } from "path";
 
 export type JsonArray = boolean[] | number[] | string[] | JsonFileData[] | Date[];
 export type AnyJson = boolean | number | string | JsonFileData | Date | JsonArray | JsonArray[];
@@ -14,10 +13,12 @@ export type JsonFileData = {
 export type PackageJsonContent = JsonFileData & PackageJsonType;
 
 export class PackageJson {
+  private static readonly PACKAGE_JSON_FILE_NAME = "package.json";
+
   private content?: PackageJsonContent = undefined;
 
   constructor(private path: string) {
-    if (!existsSync(this.path)) {
+    if (!FileService.fileExists(this.path)) {
       throw new Error(`Package.json "${this.path}" does not exist`);
     }
   }
@@ -30,7 +31,7 @@ export class PackageJson {
     if (this.content) {
       return this.content;
     }
-    return (this.content = JSON.parse(readFileSync(this.path, "utf-8")) as PackageJsonContent);
+    return (this.content = JSON.parse(FileService.getFileContent(this.path)) as PackageJsonContent);
   }
 
   setContent(content: PackageJsonContent): void {
@@ -79,24 +80,21 @@ export class PackageJson {
 
   backup(): string {
     const backupPath = this.path + ".backup";
-    copyFileSync(this.path, backupPath);
+    FileService.copyFile(this.path, backupPath);
     return backupPath;
   }
 
   restore(backupPath: string): void {
-    copyFileSync(backupPath, this.path);
+    FileService.copyFile(backupPath, this.path);
     this.content = undefined;
   }
 
   private write() {
-    writeFileSync(this.path, JSON.stringify(this.content, null, 2));
+    FileService.putFileContent(this.path, JSON.stringify(this.content, null, 2));
   }
 
   static fromDirPath(dirPath: string): PackageJson {
-    const packageJsonPath = join(dirPath, "package.json");
-    if (!existsSync(packageJsonPath)) {
-      throw new Error(`No package.json found in directory "${dirPath}"`);
-    }
+    const packageJsonPath = join(dirPath, PackageJson.PACKAGE_JSON_FILE_NAME);
     return new PackageJson(packageJsonPath);
   }
 }

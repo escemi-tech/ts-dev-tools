@@ -13,6 +13,9 @@ import {
 
 const createTestReactProjectDir = async (projectDir: string) => {
   await safeExec(projectDir, "yarn create react-app . --template typescript");
+  PackageJson.fromDirPath(projectDir).merge({
+    license: "MIT",
+  });
 };
 
 const packageToTest = "react";

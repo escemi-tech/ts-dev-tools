@@ -53,6 +53,7 @@ exports[`Migration 20201024173398-init Up should apply migration 1`] = `
       "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)",
     ],
   },
+  "license": "MIT",
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --fix",
