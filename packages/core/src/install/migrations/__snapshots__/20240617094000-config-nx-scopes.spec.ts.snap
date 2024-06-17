@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Migration 20240617094000-config-nx-scopes Up should apply migration 1`] = `
+{
+  "license": "MIT",
+  "version": "1.0.0",
+}
+`;

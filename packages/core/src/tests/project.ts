@@ -60,6 +60,7 @@ export const createTestMonorepoProjectDir = async (
   createProject: (projectDir: string) => Promise<void>
 ) => {
   await safeExec(projectDir, "yarn init --yes");
+  await safeExec(projectDir, "yarn install");
   await safeExec(projectDir, "yarn add -W --dev typescript");
   await safeExec(projectDir, "yarn tsc --init");
 
@@ -71,8 +72,6 @@ export const createTestMonorepoProjectDir = async (
   const packageDir = join(projectDir, "packages/test-package");
   mkdirSync(packageDir, { recursive: true });
   await createProject(packageDir);
-
-  await safeExec(projectDir, "yarn install");
 };
 
 /**

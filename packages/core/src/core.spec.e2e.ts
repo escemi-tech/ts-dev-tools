@@ -107,6 +107,7 @@ describe(`E2E - ${packageToTest}`, () => {
       await createTestMonorepoProjectDir(testMonorepoProjectDir, async (projectDir) => {
         await safeExec(testMonorepoProjectDir, `cp -r ${testProjectTmpDir} ${projectDir}`);
         await safeExec(projectDir, `yarn install`);
+        await safeExec(testMonorepoProjectDir, `npx lerna init --no-progress`);
       });
     }, 200000);
 

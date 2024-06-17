@@ -1,4 +1,4 @@
-import { readdirSync, unlinkSync } from "fs";
+import { existsSync, readdirSync, unlinkSync } from "fs";
 import { resolve } from "path";
 
 import { PackageJson } from "../services/PackageJson";
@@ -42,7 +42,9 @@ export class MigrationsService {
       throw error;
     }
 
-    unlinkSync(packageJsonBackupPath);
+    if (existsSync(packageJsonBackupPath)) {
+      unlinkSync(packageJsonBackupPath);
+    }
   }
 
   private static getAvailableMigrations(
