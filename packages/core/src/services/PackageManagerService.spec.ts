@@ -30,4 +30,40 @@ describe("PackageManagerService", () => {
       expect(packageManager).toEqual(PackageManagerType.yarn);
     });
   });
+
+  describe("isPackageInstalled", () => {
+    it("should return false if package is not installed", async () => {
+      const isInstalled = await PackageManagerService.isPackageInstalled(
+        "test-package",
+        testProjectDir
+      );
+
+      expect(isInstalled).toBeFalsy();
+    });
+
+    it("should return true if package is installed", async () => {
+      await PackageManagerService.addDevPackage("test-package", testProjectDir);
+
+      const isInstalled = await PackageManagerService.isPackageInstalled(
+        "test-package",
+        testProjectDir
+      );
+
+      expect(isInstalled).toBeTruthy();
+    });
+  });
+
+  describe("addDevPackage", () => {
+    it("should add a dev package using npm", async () => {
+      expect(
+        await PackageManagerService.isPackageInstalled("test-package", testProjectDir)
+      ).toBeFalsy();
+
+      await PackageManagerService.addDevPackage("test-package", testProjectDir);
+
+      expect(
+        await PackageManagerService.isPackageInstalled("test-package", testProjectDir)
+      ).toBeTruthy();
+    });
+  });
 });
