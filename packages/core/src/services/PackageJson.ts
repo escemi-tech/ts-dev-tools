@@ -73,6 +73,10 @@ export class PackageJson {
     );
   }
 
+  hasDependency(packageName: string): boolean {
+    return this.getAllDependenciesPackageNames().includes(packageName);
+  }
+
   merge(update: PackageJsonContent): void {
     this.content = PackageJsonMerge.merge(this.getContent(), update);
     this.write();

@@ -198,6 +198,33 @@ describe("PackageJson", () => {
     });
   });
 
+  describe("hasDependency", () => {
+    afterEach(() => {
+      restorePackageJson(__filename);
+    });
+
+    it("should return true if the given package name is installed", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+      packageJson.merge({
+        dependencies: {
+          "test-dependency": "1.0.0",
+        },
+      });
+
+      const hasDependency = packageJson.hasDependency("test-dependency");
+
+      expect(hasDependency).toBe(true);
+    });
+
+    it("should return false if the given package name is not installed", () => {
+      const packageJson = PackageJson.fromDirPath(testProjectDir);
+
+      const hasDependency = packageJson.hasDependency("test-dependency");
+
+      expect(hasDependency).toBe(false);
+    });
+  });
+
   describe("merge", () => {
     afterEach(() => {
       restorePackageJson(__filename);
