@@ -41,7 +41,7 @@ export class PackageManagerService {
 
     args.push(packageName);
 
-    await PackageManagerService.execCommand(args, dirPath);
+    await PackageManagerService.execCommand(args, dirPath, true);
   }
 
   static async isMonorepo(dirPath: string) {
