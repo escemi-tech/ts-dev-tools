@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.8.0...@ts-dev-tools/react@1.8.1) (2024-08-30)
+
+
+### Bug Fixes
+
+* **core:** eslint and nx installation issues ([44bef47](https://github.com/escemi-tech/ts-dev-tools/commit/44bef47ad57da521d37c8793f709fd6d75161faf))
+
+
+
+
+
 # [1.8.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.7.0...@ts-dev-tools/react@1.8.0) (2024-08-29)
 
 
