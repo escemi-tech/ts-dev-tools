@@ -16,9 +16,9 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
 
   FileService.putFileContent(
     eslintConfigFilePath,
-    `import tsDevToolsCore from "@ts-dev-tools/core/dist/eslint-plugin-ts-dev-tools/index.js";
+    `import { default as tsDevToolsCore } from "@ts-dev-tools/core/dist/eslint-plugin-ts-dev-tools/index.js";
 
-export default tsDevToolsCore;
+export default tsDevToolsCore.default;
 `
   );
 };
