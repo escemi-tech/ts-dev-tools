@@ -55,14 +55,13 @@ describe(`E2E - ${packageToTest}`, () => {
     afterEach(() => shouldCleanupAfterTest && deleteFolderRecursive(testSimpleProjectDir));
 
     it(`Installs ${packageToTest} package`, async () => {
-      const {
-        code: installPackageCode,
-        // stderr: installPackageStderr
-      } = await exec(testSimpleProjectDir, `yarn add --dev "file:${packagePath}"`);
+      const { code: installPackageCode, stderr: installPackageStderr } = await exec(
+        testSimpleProjectDir,
+        `yarn add --dev "file:${packagePath}"`
+      );
       await safeExec(testSimpleProjectDir, `yarn install`);
 
-      // FIXME: installation ouput warnings due to create-react-app
-      // expect(installPackageStderr).toBeFalsy();
+      expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {
@@ -111,24 +110,22 @@ describe(`E2E - ${packageToTest}`, () => {
     afterEach(() => shouldCleanupAfterTest && deleteFolderRecursive(testMonorepoProjectDir));
 
     it(`Installs ${packageToTest} package`, async () => {
-      const {
-        code: installPackageCode,
-        // stderr: installPackageStderr
-      } = await exec(testMonorepoProjectDir, `yarn add -W --dev "file:${packagePath}"`);
+      const { code: installPackageCode, stderr: installPackageStderr } = await exec(
+        testMonorepoProjectDir,
+        `yarn add -W --dev "file:${packagePath}"`
+      );
 
-      // FIXME: installation ouput warnings due to create-react-app
-      // expect(installPackageStderr).toBeFalsy();
+      expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {
         code: installCode,
-        // stderr: stderrCode,
+        stderr: stderrCode,
         stdout,
       } = await exec(testMonorepoProjectDir, "yarn ts-dev-tools install");
 
       expect(stdout).toMatchSnapshot();
-      // FIXME: installation ouput warnings due to create-react-app
-      // expect(stderrCode).toBeFalsy();
+      expect(stderrCode).toBeFalsy();
       expect(installCode).toBe(0);
 
       const packageJson = PackageJson.fromDirPath(testMonorepoProjectDir);
