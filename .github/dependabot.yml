@@ -11,9 +11,10 @@ updates:
     groups:
       eslint-dependencies:
         patterns:
-          - "@typescript-eslint/*"
-          - "eslint-*"
           - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
+          - "typescript-eslint"
       commitlint-dependencies:
         patterns:
           - "@commitlint/*"
