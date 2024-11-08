@@ -303,7 +303,7 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@commitlint/cli@^19.4.0":
+"@commitlint/cli@^19.4.0", "@commitlint/cli@^19.5.0":
   version "19.5.0"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-19.5.0.tgz#a6e2f7f8397ddf9abd5ee5870e30a1bf51b7be2b"
   integrity sha512-gaGqSliGwB86MDmAAKAtV9SV1SHdmN8pnGq4EJU4+hLisQ7IFfx4jvU4s+pk6tl0+9bv6yT+CaZkufOinkSJIQ==
@@ -323,6 +323,13 @@
   dependencies:
     "@commitlint/types" "^19.5.0"
     conventional-changelog-conventionalcommits "^7.0.2"
+
+"@commitlint/config-nx-scopes@^19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-nx-scopes/-/config-nx-scopes-19.5.0.tgz#0d2c39bc80ef1354b661e6a6389a3569b4e440ab"
+  integrity sha512-YjJVN9n5PJGnom1JqpC9tnQzWsWPeCbKN63AU6jTk25yxNpMtMVKNNEFU+yEPneo4kJk2yIicKjtPuRqYqL3Wg==
+  dependencies:
+    "@commitlint/types" "^19.5.0"
 
 "@commitlint/config-validator@^19.5.0":
   version "19.5.0"
