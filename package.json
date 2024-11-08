@@ -18,13 +18,15 @@
     "unlink": "lerna exec yarn unlink"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-nx-scopes": "^19.5.0",
     "lerna": "^8.1.8",
     "rimraf": "^6.0.1",
     "typescript": "^5.5.4"
   },
   "commitlint": {
     "extends": [
-      "@commitlint/config-conventional"
+      "@commitlint/config-nx-scopes"
     ]
   },
   "lint-staged": {
