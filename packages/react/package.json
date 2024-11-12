@@ -44,6 +44,7 @@
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
   },
   "dependencies": {
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.0",
     "@ts-dev-tools/core": "^1.8.4",
