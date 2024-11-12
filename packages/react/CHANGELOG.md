@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.5](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.8.4...@ts-dev-tools/react@1.8.5) (2024-11-12)
+
+
+### Bug Fixes
+
+* **react:** add missing lib for test ([b6bf457](https://github.com/escemi-tech/ts-dev-tools/commit/b6bf457063ded196d263dc5830e999e62a9daada))
+
+
+
+
+
 ## [1.8.4](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.8.3...@ts-dev-tools/react@1.8.4) (2024-11-08)
 
 **Note:** Version bump only for package @ts-dev-tools/react
