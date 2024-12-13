@@ -22,6 +22,12 @@ updates:
         patterns:
           - "prettier-*"
           - "prettier"
+      react-dependencies:
+        patterns:
+          - "react"
+          - "react-*"
+          - "@types/react"
+          - "@types/react-*"
       testing-library-dependencies:
         patterns:
           - "@testing-library/*"
