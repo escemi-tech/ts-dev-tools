@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.9](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.8.8...@ts-dev-tools/react@1.8.9) (2025-02-01)
+
+**Note:** Version bump only for package @ts-dev-tools/react
+
+
+
+
+
 ## [1.8.8](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.8.7...@ts-dev-tools/react@1.8.8) (2025-01-01)
 
 **Note:** Version bump only for package @ts-dev-tools/react
