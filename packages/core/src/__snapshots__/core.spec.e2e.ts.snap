@@ -37,15 +37,9 @@ Migration "core - 20240412185500-eslint-config" applied!
 Applying migration "core - 20240617094000-config-nx-scopes"...
 Migration "core - 20240617094000-config-nx-scopes" applied!
 Symlinking dev dependencies...
-- Symlinking typescript-eslint
 Symlinking dev dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
-  - @types/jest
-  - @types/node
-  - eslint
-  - jest
-  - ts-jest
   - typescript
 
 Check for duplicate dev dependencies done!
@@ -55,26 +49,15 @@ Installation done!"
 exports[`E2E - core Simple project Installs core package 2`] = `
 {
   "build": "tsc --noEmit",
-  "build-sass": "sass src/public/css/main.scss dist/public/css/main.css",
-  "build-ts": "tsc",
-  "copy-static-assets": "ts-node copyStaticAssets.ts",
-  "debug": "npm run build && npm run watch-debug",
+  "dev": "vite",
   "format": "prettier --cache --write '**/*.ts'",
   "jest": "jest --detectOpenHandles --forceExit",
   "lint": "eslint "src/**/*.{ts,tsx}"",
   "prepare": "ts-dev-tools install",
-  "serve": "node dist/server.js",
-  "serve-debug": "nodemon --inspect dist/server.js",
-  "start": "npm run serve",
+  "preview": "vite preview",
   "test": "yarn run jest --maxWorkers=50%",
   "test:ci": "yarn run test:cov --runInBand",
   "test:cov": "yarn run test --coverage",
   "test:watch": "yarn run jest --watch --maxWorkers=25%",
-  "watch": "concurrently -k -p "[{name}]" -n "Sass,TypeScript,Node" -c "yellow.bold,cyan.bold,green.bold" "npm run watch-sass" "npm run watch-ts" "npm run watch-node"",
-  "watch-debug": "concurrently -k -p "[{name}]" -n "Sass,TypeScript,Node" -c "yellow.bold,cyan.bold,green.bold" "npm run watch-sass" "npm run watch-ts" "npm run serve-debug"",
-  "watch-node": "nodemon dist/server.js",
-  "watch-sass": "sass --watch src/public/css/main.scss dist/public/css/main.css",
-  "watch-test": "npm run test -- --watchAll",
-  "watch-ts": "tsc -w",
 }
 `;
