@@ -15,13 +15,8 @@ import {
 const shouldCleanupAfterTest = true;
 
 const createTestTypescriptProjectDir = async (projectDir: string) => {
-  await safeExec(
-    projectDir,
-    "git clone --depth=1 https://github.com/Microsoft/TypeScript-Node-Starter.git ./"
-  );
-  await safeExec(projectDir, "rm -fr .git");
-  await safeExec(projectDir, "yarn import");
-  await safeExec(projectDir, "rm -f ./package-lock.json");
+  await safeExec(projectDir, "yarn create vite . --template vanilla-ts");
+  await safeExec(projectDir, "yarn install");
 };
 
 const packageToTest = "core";
@@ -52,20 +47,17 @@ describe(`E2E - ${packageToTest}`, () => {
     beforeEach(async () => {
       testSimpleProjectDir = join(testProjectDir, "simple-project");
       await safeExec(testProjectDir, `cp -r ${testProjectTmpDir} ${testSimpleProjectDir}`);
-      await safeExec(testSimpleProjectDir, `rm -f package-lock.json`);
-      await safeExec(testSimpleProjectDir, `yarn install`);
     }, 200000);
 
     afterEach(() => shouldCleanupAfterTest && deleteFolderRecursive(testSimpleProjectDir));
 
     it(`Installs ${packageToTest} package`, async () => {
-      const {
-        code: installPackageCode,
-        // stderr: installPackageStderr
-      } = await exec(testSimpleProjectDir, `yarn add --dev "file:/${packagePath}"`);
+      const { code: installPackageCode, stderr: installPackageStderr } = await exec(
+        testSimpleProjectDir,
+        `yarn add --dev "file:/${packagePath}"`
+      );
 
-      // FIXME: installation ouput warnings due to dependencies
-      // expect(installPackageStderr).toBeFalsy();
+      expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {
@@ -118,6 +110,8 @@ describe(`E2E - ${packageToTest}`, () => {
         code: installPackageCode,
         // stderr: installPackageStderr
       } = await exec(testMonorepoProjectDir, `yarn add -W --dev "file:${packagePath}"`);
+
+      // FIXME: installation ouput warnings due to dependencies
       // expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
