@@ -15,11 +15,8 @@ import {
 const shouldCleanupAfterTest = true;
 
 const createTestReactProjectDir = async (projectDir: string) => {
-  await safeExec(projectDir, "yarn create react-app . --template typescript");
-
-  PackageJson.fromDirPath(projectDir).merge({
-    license: "MIT",
-  });
+  await safeExec(projectDir, "yarn create vite . --template react-ts");
+  await safeExec(projectDir, "yarn install --prefer-offline --frozen-lockfile --mutex network");
 };
 
 const packageToTest = "react";
@@ -31,6 +28,7 @@ describe(`E2E - ${packageToTest}`, () => {
 
   beforeAll(async () => {
     testProjectDir = createTestProjectDir(__filename);
+    testProjectDirPackages = await createTestPackagesDir(testProjectDir);
 
     testProjectTmpDir = join(__dirname, "../../../node_modules/.cache/", basename(testProjectDir));
     if (!existsSync(testProjectTmpDir)) {
@@ -38,7 +36,6 @@ describe(`E2E - ${packageToTest}`, () => {
       await createTestReactProjectDir(testProjectTmpDir);
     }
 
-    testProjectDirPackages = await createTestPackagesDir(testProjectDir);
     packagePath = resolve(testProjectDirPackages, packageToTest);
   }, 200000);
 
@@ -59,9 +56,8 @@ describe(`E2E - ${packageToTest}`, () => {
         code: installPackageCode,
         // stderr: installPackageStderr
       } = await exec(testSimpleProjectDir, `yarn add --dev "file:${packagePath}"`);
-      await safeExec(testSimpleProjectDir, `yarn install`);
 
-      // FIXME: installation ouput warnings due to create-react-app
+      // FIXME: installation ouput warnings due to dependencies
       // expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
@@ -103,8 +99,6 @@ describe(`E2E - ${packageToTest}`, () => {
 
       await createTestMonorepoProjectDir(testMonorepoProjectDir, async (projectDir) => {
         await safeExec(testMonorepoProjectDir, `cp -r ${testProjectTmpDir} ${projectDir}`);
-        await safeExec(projectDir, `yarn install`);
-        await safeExec(testMonorepoProjectDir, `npx lerna init --no-progress`);
       });
     }, 200000);
 
@@ -116,19 +110,18 @@ describe(`E2E - ${packageToTest}`, () => {
         // stderr: installPackageStderr
       } = await exec(testMonorepoProjectDir, `yarn add -W --dev "file:${packagePath}"`);
 
-      // FIXME: installation ouput warnings due to create-react-app
+      // FIXME: installation ouput warnings due to dependencies
       // expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {
         code: installCode,
-        // stderr: stderrCode,
+        stderr: stderrCode,
         stdout,
       } = await exec(testMonorepoProjectDir, "yarn ts-dev-tools install");
 
       expect(stdout).toMatchSnapshot();
-      // FIXME: installation ouput warnings due to create-react-app
-      // expect(stderrCode).toBeFalsy();
+      expect(stderrCode).toBeFalsy();
       expect(installCode).toBe(0);
 
       const packageJson = PackageJson.fromDirPath(testMonorepoProjectDir);
