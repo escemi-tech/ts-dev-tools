@@ -9,26 +9,26 @@ updates:
       day: friday
       time: "04:00"
     groups:
-      eslint-dependencies:
+      npm-eslint-dependencies:
         patterns:
           - "eslint"
           - "eslint-*"
           - "@eslint/*"
           - "typescript-eslint"
-      commitlint-dependencies:
+      npm-commitlint-dependencies:
         patterns:
           - "@commitlint/*"
-      prettier-dependencies:
+      npm-prettier-dependencies:
         patterns:
           - "prettier-*"
           - "prettier"
-      react-dependencies:
+      npm-react-dependencies:
         patterns:
           - "react"
           - "react-*"
           - "@types/react"
           - "@types/react-*"
-      testing-library-dependencies:
+      npm-testing-library-dependencies:
         patterns:
           - "@testing-library/*"
 
