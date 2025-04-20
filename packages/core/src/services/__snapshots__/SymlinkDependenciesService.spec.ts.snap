@@ -2,5 +2,6 @@
 
 exports[`SymlinkDependenciesService executeSymlinking should symlink dependencies 1`] = `
 "Symlinking dev dependencies...
+- Symlinking @types/node
 Symlinking dev dependencies done!"
 `;

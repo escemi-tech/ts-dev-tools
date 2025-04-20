@@ -46,13 +46,13 @@
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
-    "@testing-library/react": "^16.0.0",
+    "@testing-library/react": "^16.3.0",
     "@ts-dev-tools/core": "^1.8.9",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.2",
-    "eslint-plugin-react": "^7.35.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "eslint-plugin-react": "^7.37.5",
     "jest-environment-jsdom": "^29.3.1",
-    "react-test-renderer": "^19.0.0"
+    "react-test-renderer": "^19.1.0"
   },
   "devDependencies": {
     "pinst": "^3.0.0"

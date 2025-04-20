@@ -52,13 +52,13 @@ describe(`E2E - ${packageToTest}`, () => {
     afterEach(() => shouldCleanupAfterTest && deleteFolderRecursive(testSimpleProjectDir));
 
     it(`Installs ${packageToTest} package`, async () => {
-      const {
-        code: installPackageCode,
-        // stderr: installPackageStderr
-      } = await exec(testSimpleProjectDir, `yarn add --dev "file:/${packagePath}"`);
+      const { code: installPackageCode, stderr: installPackageStderr } = await exec(
+        testSimpleProjectDir,
+        `yarn add --dev "file:/${packagePath}"`
+      );
 
       // FIXME: installation ouput warnings due to dependencies
-      // expect(installPackageStderr).toBeFalsy();
+      expect(installPackageStderr).toMatchSnapshot();
       expect(installPackageCode).toBe(0);
 
       const {
@@ -105,13 +105,13 @@ describe(`E2E - ${packageToTest}`, () => {
     afterEach(() => shouldCleanupAfterTest && deleteFolderRecursive(testMonorepoProjectDir));
 
     it(`Installs ${packageToTest} package`, async () => {
-      const {
-        code: installPackageCode,
-        // stderr: installPackageStderr
-      } = await exec(testMonorepoProjectDir, `yarn add -W --dev "file:${packagePath}"`);
+      const { code: installPackageCode, stderr: installPackageStderr } = await exec(
+        testMonorepoProjectDir,
+        `yarn add -W --dev "file:${packagePath}"`
+      );
 
       // FIXME: installation ouput warnings due to dependencies
-      // expect(installPackageStderr).toBeFalsy();
+      expect(installPackageStderr).toMatchSnapshot();
       expect(installPackageCode).toBe(0);
 
       const {

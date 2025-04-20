@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`E2E - core Monorepo project Installs core package 1`] = `
+"[2K[1G[33mwarning[39m file:/tmp/test-core/tmp-packages/packages/core > jest > @jest/core > jest-config > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m file:/tmp/test-core/tmp-packages/packages/core > jest > @jest/core > jest-runtime > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m file:/tmp/test-core/tmp-packages/packages/core > jest > @jest/core > @jest/reporters > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m file:/tmp/test-core/tmp-packages/packages/core > jest > @jest/core > jest-config > glob > inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2K[1G[33mwarning[39m file:/tmp/test-core/tmp-packages/packages/core > jest > @jest/core > @jest/transform > babel-plugin-istanbul > test-exclude > glob@7.2.3: Glob versions prior to v9 are no longer supported
+"
+`;
+
+exports[`E2E - core Monorepo project Installs core package 2`] = `
 "[2K[1G[2m$ /tmp/test-core/monorepo-project/node_modules/.bin/ts-dev-tools install[22m
 Installing ts-dev-tools...
 Applying migration "core - 20201024173398-init"...
@@ -24,6 +33,15 @@ Installation done!"
 `;
 
 exports[`E2E - core Simple project Installs core package 1`] = `
+"[2K[1G[33mwarning[39m file://tmp/test-core/tmp-packages/packages/core > jest > jest-cli > jest-config > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m file://tmp/test-core/tmp-packages/packages/core > jest > @jest/core > jest-runtime > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m file://tmp/test-core/tmp-packages/packages/core > jest > @jest/core > @jest/reporters > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m file://tmp/test-core/tmp-packages/packages/core > jest > jest-cli > jest-config > glob > inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2K[1G[33mwarning[39m file://tmp/test-core/tmp-packages/packages/core > jest > @jest/core > @jest/transform > babel-plugin-istanbul > test-exclude > glob@7.2.3: Glob versions prior to v9 are no longer supported
+"
+`;
+
+exports[`E2E - core Simple project Installs core package 2`] = `
 "[2K[1G[2m$ /tmp/test-core/simple-project/node_modules/.bin/ts-dev-tools install[22m
 Installing ts-dev-tools...
 Applying migration "core - 20201024173398-init"...
@@ -48,7 +66,7 @@ Check for duplicate dev dependencies done!
 Installation done!"
 `;
 
-exports[`E2E - core Simple project Installs core package 2`] = `
+exports[`E2E - core Simple project Installs core package 3`] = `
 {
   "build": "tsc --noEmit",
   "dev": "vite",
