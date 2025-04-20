@@ -10,6 +10,6 @@ jobs:
       id-token: write
       contents: read
       security-events: write
-    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@0.9.0
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@b0379ecb0cf6867aa0d94183e645681e2c8f1e6f # 0.9.0
     with:
       build: '{"artifact":"packages/*/dist"}'
