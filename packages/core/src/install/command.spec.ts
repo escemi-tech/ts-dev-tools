@@ -1,30 +1,26 @@
 import { PackageJson } from "../services/PackageJson";
 import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
-import {
-  createTestProjectDirWithFixtures,
-  removeTestProjectDir,
-  restorePackageJson,
-} from "../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { install } from "./command";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("Install command", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDirWithFixtures(__filename);
-  });
-
-  afterAll(() => {
-    removeTestProjectDir(__filename);
-  });
-
-  beforeEach(() => {
+  beforeEach(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
     mockConsoleInfo();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     resetMockedConsoleInfo();
-    restorePackageJson(__filename);
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   it("should run fresh installation without error", async () => {

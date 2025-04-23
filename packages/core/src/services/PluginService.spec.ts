@@ -1,27 +1,26 @@
-import {
-  createTestProjectDirWithFixtures,
-  removeTestProjectDir,
-  restorePackageJson,
-} from "../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { PackageJson } from "./PackageJson";
 import { PluginService } from "./PluginService";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("PluginService", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDirWithFixtures(__filename);
+  beforeEach(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
   });
 
-  afterAll(() => {
-    removeTestProjectDir(__filename);
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   describe("getInstalledPlugins", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should return an empty array if no plugin is installed", () => {
       const installedPlugins = PluginService.getInstalledPlugins(testProjectDir);
 

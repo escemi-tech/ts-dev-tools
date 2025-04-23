@@ -35,7 +35,10 @@
       "cache": true
     },
     "test": {
-      "cache": true
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/src/**/__snapshots__"
+      ]
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",

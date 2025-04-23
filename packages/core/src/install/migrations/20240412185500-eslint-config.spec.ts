@@ -1,28 +1,27 @@
 import { FileService } from "../../services/FileService";
 import { PackageJson } from "../../services/PackageJson";
-import {
-  createTestProjectDirWithFixtures,
-  removeTestProjectDir,
-  restorePackageJson,
-} from "../../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../../tests/test-project";
 import { up } from "./20240412185500-eslint-config";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("Migration 20240412185500-eslint-config", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDirWithFixtures(__filename);
+  beforeAll(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
   });
 
-  afterAll(() => {
-    removeTestProjectDir(__filename);
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   describe("Up", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should apply migration", async () => {
       await up(testProjectDir);
 

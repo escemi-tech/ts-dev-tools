@@ -1,22 +1,25 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
-import {
-  createTestProjectDirWithFixtures,
-  removeTestProjectDir,
-  restorePackageJson,
-} from "../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { PackageJson, PackageJsonContent } from "./PackageJson";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("PackageJson", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDirWithFixtures(__filename);
+  beforeEach(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
   });
 
-  afterAll(() => {
-    removeTestProjectDir(__filename);
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   describe("constructor", () => {
@@ -126,10 +129,6 @@ describe("PackageJson", () => {
   });
 
   describe("getTsDevToolsVersion", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should retrieve the package.json TsDevTools version", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
 
@@ -155,10 +154,6 @@ describe("PackageJson", () => {
   });
 
   describe("getDependenciesPackageNames", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should return installed dependencies package names", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
       packageJson.merge({
@@ -199,10 +194,6 @@ describe("PackageJson", () => {
   });
 
   describe("hasDependency", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should return true if the given package name is installed", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
       packageJson.merge({
@@ -226,10 +217,6 @@ describe("PackageJson", () => {
   });
 
   describe("merge", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should merge the given data in package.json", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
 
@@ -251,10 +238,6 @@ describe("PackageJson", () => {
   });
 
   describe("restore", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should restore package.json from backup file", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
       const expectedContent = { ...packageJson.getContent() };

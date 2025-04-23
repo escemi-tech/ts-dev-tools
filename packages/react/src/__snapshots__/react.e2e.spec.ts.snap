@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`E2E - react Monorepo project Installs react package 1`] = `
+"$ /tmp/ts-dev-tools/test-react-e2e-spec/node_modules/.bin/ts-dev-tools install
+Installing ts-dev-tools...
+Applying migration "core - 20201024173398-init"...
+Migration "core - 20201024173398-init" applied!
+Applying migration "react - 20201111162698-init"...
+Migration "react - 20201111162698-init" applied!
+Applying migration "core - 20220617100200-prettier-cache"...
+Migration "core - 20220617100200-prettier-cache" applied!
+Applying migration "core - 20240329200200-eslint-ignore"...
+Migration "core - 20240329200200-eslint-ignore" applied!
+Applying migration "core - 20240412185500-eslint-config"...
+Migration "core - 20240412185500-eslint-config" applied!
+Applying migration "react - 20240412185501-eslint-config"...
+Migration "react - 20240412185501-eslint-config" applied!
+Applying migration "core - 20240617094000-config-nx-scopes"...
+Migration "core - 20240617094000-config-nx-scopes" applied!
+Symlinking dev dependencies...
+Symlinking dev dependencies done!
+Checking for duplicate dev dependencies...
+Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
+  - typescript
+
+Check for duplicate dev dependencies done!
+Installation done!"
+`;
+
+exports[`E2E - react Simple project Installs react package 1`] = `
+"$ /tmp/ts-dev-tools/test-react-e2e-spec/node_modules/.bin/ts-dev-tools install
+Installing ts-dev-tools...
+Applying migration "core - 20201024173398-init"...
+Migration "core - 20201024173398-init" applied!
+Applying migration "react - 20201111162698-init"...
+Migration "react - 20201111162698-init" applied!
+Applying migration "core - 20220617100200-prettier-cache"...
+Migration "core - 20220617100200-prettier-cache" applied!
+Applying migration "core - 20240329200200-eslint-ignore"...
+Migration "core - 20240329200200-eslint-ignore" applied!
+Applying migration "core - 20240412185500-eslint-config"...
+Migration "core - 20240412185500-eslint-config" applied!
+Applying migration "react - 20240412185501-eslint-config"...
+Migration "react - 20240412185501-eslint-config" applied!
+Applying migration "core - 20240617094000-config-nx-scopes"...
+Migration "core - 20240617094000-config-nx-scopes" applied!
+Symlinking dev dependencies...
+- Symlinking ts-jest
+Symlinking dev dependencies done!
+Checking for duplicate dev dependencies...
+Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
+  - @eslint/js
+  - eslint
+  - typescript
+  - typescript-eslint
+
+Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/react":
+  - @types/react
+  - @types/react-dom
+
+Check for duplicate dev dependencies done!
+Installation done!"
+`;
+
+exports[`E2E - react Simple project Installs react package 2`] = `
+{
+  "build": "tsc --noEmit",
+  "dev": "vite",
+  "format": "prettier --cache --write '**/*.ts'",
+  "jest": "jest --detectOpenHandles --forceExit",
+  "lint": "eslint "src/**/*.{ts,tsx}"",
+  "prepare": "ts-dev-tools install",
+  "preview": "vite preview",
+  "test": "yarn run jest --maxWorkers=50%",
+  "test:ci": "yarn run test:cov --runInBand",
+  "test:cov": "yarn run test --coverage",
+  "test:watch": "yarn run jest --watch --maxWorkers=25%",
+}
+`;

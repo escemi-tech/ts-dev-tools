@@ -34,7 +34,7 @@
     "jest": "jest --detectOpenHandles --forceExit",
     "test": "yarn jest --maxWorkers=50%",
     "test:unit": "yarn test --testPathPattern \".+spec\\.ts\"",
-    "test:e2e": "yarn test --testPathPattern \".+spec\\.e2e\\.ts\"",
+    "test:e2e": "yarn test --testPathPattern \".+e2e\\.spec\\.ts\"",
     "test:coverage": "yarn test --coverage",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "prepublishOnly": "pinst --disable",
