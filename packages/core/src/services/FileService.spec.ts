@@ -1,18 +1,25 @@
 import { writeFileSync } from "fs";
 import { join } from "path";
 
-import { createTestProjectDir, removeTestProjectDir } from "../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { FileService } from "./FileService";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("FileService", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDir(__filename);
+  beforeEach(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
   });
 
-  afterAll(() => {
-    removeTestProjectDir(__filename);
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   describe("fileExists", () => {

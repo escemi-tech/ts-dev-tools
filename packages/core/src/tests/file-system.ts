@@ -1,39 +1,32 @@
-import {
-  copyFileSync,
-  existsSync,
-  lstatSync,
-  mkdirSync,
-  readdirSync,
-  rmdirSync,
-  unlinkSync,
-} from "fs";
-import { join } from "path";
+import { existsSync, mkdirSync } from "fs";
+import { safeExec } from "./cli";
 
-export function deleteFolderRecursive(path: string) {
+export async function recreateFolderRecursive(path: string): Promise<void> {
   if (existsSync(path)) {
-    readdirSync(path).forEach((file) => {
-      const curPath = join(path, file);
-      if (lstatSync(curPath).isDirectory()) {
-        // recurse
-        deleteFolderRecursive(curPath);
-      } else {
-        // delete file
-        unlinkSync(curPath);
-      }
-    });
-    rmdirSync(path);
+    await deleteFolderRecursive(path);
+  }
+
+  mkdirSync(path, { recursive: true });
+}
+
+export async function deleteFolderRecursive(path: string) {
+  if (existsSync(path)) {
+    await safeExec(path, `rm -rf ${path}`);
   }
 }
 
-export function copyFolderSync(from: string, to: string) {
-  if (!existsSync(to)) {
-    mkdirSync(to);
-  }
-  readdirSync(from).forEach((element) => {
-    if (lstatSync(join(from, element)).isFile()) {
-      copyFileSync(join(from, element), join(to, element));
-    } else {
-      copyFolderSync(join(from, element), join(to, element));
-    }
-  });
+export async function copyFolder(src: string, dest: string): Promise<void> {
+  await recreateFolderRecursive(dest);
+
+  const command = [
+    "rsync -a",
+    "--include='/.git/'",
+    "--include='/.git/hooks/'",
+    "--include='/.git/hooks/**'",
+    "--exclude='/.git/**'",
+    `"${src}/"`,
+    `"${dest}/"`,
+  ].join(" ");
+
+  await safeExec(src, command);
 }

@@ -1,18 +1,25 @@
 import { existsSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join } from "path";
 
-import { createTestProjectDirWithFixtures, removeTestProjectDir } from "../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { GitService } from "./GitService";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("GitService", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDirWithFixtures(__filename);
+  beforeEach(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
   });
 
-  afterAll(() => {
-    removeTestProjectDir(__filename);
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   describe("isGitRepository", () => {
@@ -54,10 +61,10 @@ echo ok;`);
     it("should set right permissions on existing git hook", async () => {
       const expectedGitCommitHookFile = join(testProjectDir, ".git/hooks/pre-commit");
       const expectedGitCommitHookContent = "test";
-      writeFileSync(expectedGitCommitHookFile, expectedGitCommitHookContent);
+      writeFileSync(expectedGitCommitHookFile, expectedGitCommitHookContent, { mode: 0o644 });
       const { mode: originalMode } = statSync(expectedGitCommitHookFile);
 
-      expect(parseInt(originalMode.toString(8), 10)).toBe(100755);
+      expect(parseInt(originalMode.toString(8), 10)).toBe(100644);
 
       await GitService.addGitHook(testProjectDir, "pre-commit", "echo ok;");
 

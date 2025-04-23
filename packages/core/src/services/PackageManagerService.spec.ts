@@ -1,18 +1,25 @@
 import { safeExec } from "../tests/cli";
-import { createTestProjectDir, removeTestProjectDir } from "../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { PackageJson } from "./PackageJson";
 import { PackageManagerService, PackageManagerType } from "./PackageManagerService";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("PackageManagerService", () => {
   let testProjectDir: string;
 
   describe("detectPackageManager", () => {
     beforeEach(async () => {
-      testProjectDir = createTestProjectDir(__filename);
+      testProjectDir = await createProjectForTestFile(__filename, useCache);
     });
 
-    afterEach(() => {
-      removeTestProjectDir(__filename);
+    afterEach(async () => {
+      if (shouldCleanupAfterTest) {
+        await deleteTestProject(__filename);
+      }
     });
 
     it("should retrieve the default package manager when no one is detectable", () => {
@@ -29,14 +36,17 @@ describe("PackageManagerService", () => {
         ".spec.ts",
         `-${packageManagerType}.spec.ts`
       );
+
       beforeEach(async () => {
-        testProjectDir = createTestProjectDir(packageTypeTestFileName);
+        testProjectDir = await createProjectForTestFile(packageTypeTestFileName, useCache);
         await safeExec(testProjectDir, `${packageManagerType} init --yes`);
         await safeExec(testProjectDir, `${packageManagerType} install --silent`);
       });
 
-      afterEach(() => {
-        removeTestProjectDir(packageTypeTestFileName);
+      afterEach(async () => {
+        if (shouldCleanupAfterTest) {
+          await deleteTestProject(packageTypeTestFileName);
+        }
       });
 
       describe("detectPackageManager", () => {
@@ -84,8 +94,9 @@ describe("PackageManagerService", () => {
 
           const testPackageDir = `${testProjectDir}/packages/test-package`;
 
-          await safeExec(testProjectDir, `mkdir -p packages/test-package`);
+          await safeExec(testProjectDir, `mkdir -p ${testPackageDir}`);
           await safeExec(testPackageDir, `${packageManagerType} init --yes`);
+          await safeExec(testProjectDir, `${packageManagerType} install`);
 
           const isMonorepo = await PackageManagerService.isMonorepo(testProjectDir);
 

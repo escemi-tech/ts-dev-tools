@@ -1,33 +1,29 @@
 import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
-import {
-  createTestProjectDirWithFixtures,
-  removeTestProjectDir,
-  restorePackageJson,
-} from "../tests/project";
+import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { DuplicateDependenciesService } from "./DuplicateDependenciesService";
 import { PackageJson } from "./PackageJson";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("DuplicateDependenciesService", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDirWithFixtures(__filename);
+  beforeEach(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
+    mockConsoleInfo();
   });
 
-  afterAll(() => {
-    removeTestProjectDir(__filename);
+  afterEach(async () => {
+    resetMockedConsoleInfo();
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   describe("executeDeduplication", () => {
-    beforeEach(() => {
-      mockConsoleInfo();
-    });
-
-    afterEach(() => {
-      resetMockedConsoleInfo();
-      restorePackageJson(__filename);
-    });
-
     it("should duplicate dependencies when project has duplicates dev dependencies", () => {
       PackageJson.fromDirPath(testProjectDir).merge({
         devDependencies: {

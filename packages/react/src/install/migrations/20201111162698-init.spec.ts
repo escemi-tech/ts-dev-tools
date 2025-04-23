@@ -1,28 +1,29 @@
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
-import {
-  createTestProjectDirWithFixtures,
-  removeTestProjectDir,
-  restorePackageJson,
-} from "@ts-dev-tools/core/dist/tests/project";
-
 import { up } from "./20201111162698-init";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "@ts-dev-tools/core/dist/tests/test-project";
+
+// Set to false to avoid using the cache
+const useCache = true;
+// Set to false to inspect the test project directory after the test
+const shouldCleanupAfterTest = true;
 
 describe("Migration 20201111162698-init", () => {
   let testProjectDir: string;
 
-  beforeAll(() => {
-    testProjectDir = createTestProjectDirWithFixtures(__filename);
+  beforeEach(async () => {
+    testProjectDir = await createProjectForTestFile(__filename, useCache);
   });
 
-  afterAll(() => {
-    removeTestProjectDir(__filename);
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
+    }
   });
 
   describe("Up", () => {
-    afterEach(() => {
-      restorePackageJson(__filename);
-    });
-
     it("should apply migration", () => {
       up(testProjectDir);
 
