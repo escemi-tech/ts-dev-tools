@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
 
-      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@b0379ecb0cf6867aa0d94183e645681e2c8f1e6f # 0.9.0
+      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@5c1010a9146952f724730bf79ba8e2e40ba8e474 # 0.11.0
 
       - uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
         with:
