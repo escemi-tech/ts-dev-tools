@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.8.9...@ts-dev-tools/core@1.9.0) (2025-05-01)
+
+
+### Features
+
+* upgrade dependencies ([6028cfe](https://github.com/escemi-tech/ts-dev-tools/commit/6028cfe20879136d73314dbae1bb377c1ac4a4f4))
+
+
+
+
+
 ## [1.8.9](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.8.8...@ts-dev-tools/core@1.8.9) (2025-02-01)
 
 **Note:** Version bump only for package @ts-dev-tools/core
