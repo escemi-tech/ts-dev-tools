@@ -1,5 +1,5 @@
 import { copyFileSync, symlinkSync } from "fs";
-import { join, resolve, parse, relative } from "path";
+import { join, resolve, relative } from "path";
 
 import { getTestCacheDirPath, testCacheDirExists } from "./test-cache";
 import { copyFolder, recreateFolderRecursive, deleteFolderRecursive } from "./file-system";
@@ -27,12 +27,9 @@ export const getPackageNameFromFilepath = (filepath: string): string => {
 
 const getTestProjectDirPath = (filename: string) => {
   const testProjectRootDirPath = join(tmpdir(), "ts-dev-tools");
+  const relativeFilepath = relative(rootDirPath, filename);
 
-  const testProjectDirName =
-    "test-" +
-    parse(filename)
-      .name.toLowerCase()
-      .replace(/[^a-z0-9]/g, "-");
+  const testProjectDirName = "test-" + relativeFilepath.toLowerCase().replace(/[^a-z0-9]/g, "-");
 
   return join(testProjectRootDirPath, testProjectDirName);
 };

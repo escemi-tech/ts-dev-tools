@@ -11,7 +11,7 @@ import { stripAnsi } from "./tests/console";
 // Set to false to avoid using the cache
 const useCache = true;
 // Set to false to inspect the test project directory after the test
-const shouldCleanupAfterTest = true;
+const shouldCleanupAfterTest = false;
 
 async function typescriptProjectGenerator(projectDir: string) {
   await safeExec(projectDir, "yarn create vite . --template vanilla-ts");
