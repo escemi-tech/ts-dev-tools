@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`E2E - core Monorepo project Installs core package 1`] = `
-"$ /tmp/ts-dev-tools/test-core-e2e-spec/node_modules/.bin/ts-dev-tools install
+"$ /tmp/ts-dev-tools/test-packages-core-src-core-e2e-spec-ts/node_modules/.bin/ts-dev-tools install
 Installing ts-dev-tools...
 Applying migration "core - 20201024173398-init"...
 Migration "core - 20201024173398-init" applied!
@@ -24,7 +24,7 @@ Installation done!"
 `;
 
 exports[`E2E - core Simple project Installs core package 1`] = `
-"$ /tmp/ts-dev-tools/test-core-e2e-spec/node_modules/.bin/ts-dev-tools install
+"$ /tmp/ts-dev-tools/test-packages-core-src-core-e2e-spec-ts/node_modules/.bin/ts-dev-tools install
 Installing ts-dev-tools...
 Applying migration "core - 20201024173398-init"...
 Migration "core - 20201024173398-init" applied!
@@ -37,8 +37,6 @@ Migration "core - 20240412185500-eslint-config" applied!
 Applying migration "core - 20240617094000-config-nx-scopes"...
 Migration "core - 20240617094000-config-nx-scopes" applied!
 Symlinking dev dependencies...
-- Symlinking ts-jest
-- Symlinking typescript-eslint
 Symlinking dev dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
