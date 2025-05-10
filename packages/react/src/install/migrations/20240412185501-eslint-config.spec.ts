@@ -14,6 +14,15 @@ const shouldCleanupAfterTest = true;
 describe("Migration 20240412185501-eslint-config", () => {
   let testProjectDir: string;
 
+  beforeAll(() => {
+    if (!useCache) {
+      console.warn("Cache is disabled. Enable it one dev is done.");
+    }
+    if (!shouldCleanupAfterTest) {
+      console.warn("Cleanup is disabled. Enable it one dev is done.");
+    }
+  });
+
   beforeEach(async () => {
     testProjectDir = await createProjectForTestFile(__filename, useCache);
   });

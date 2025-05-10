@@ -2,5 +2,6 @@
 
 exports[`SymlinkDependenciesService executeSymlinking should symlink dependencies 1`] = `
 "Symlinking dev dependencies...
+- Skipping symlinking core dependencies, already in node_modules
 Symlinking dev dependencies done!"
 `;

@@ -11,11 +11,11 @@ import { stripAnsi } from "./tests/console";
 // Set to false to avoid using the cache
 const useCache = true;
 // Set to false to inspect the test project directory after the test
-const shouldCleanupAfterTest = false;
+const shouldCleanupAfterTest = true;
 
 async function typescriptProjectGenerator(projectDir: string) {
-  await safeExec(projectDir, "yarn create vite . --template vanilla-ts");
-  await safeExec(projectDir, "yarn install --prefer-offline --frozen-lockfile --mutex network");
+  await safeExec(projectDir, "npm create vite . -- --template vanilla-ts");
+  await safeExec(projectDir, "npm install");
 }
 
 function removeInstallWarnings(installPackageStderr: string, packageToInstall: string): string {
@@ -37,9 +37,16 @@ describe(`E2E - ${packageToTest}`, () => {
   let packageToInstall: string;
 
   beforeAll(async () => {
-    testProjectDirPackages = await createTestPackagesDir(__filename, useCache);
+    if (!useCache) {
+      console.warn("Cache is disabled. Enable it one dev is done.");
+    }
+    if (!shouldCleanupAfterTest) {
+      console.warn("Cleanup is disabled. Enable it one dev is done.");
+    }
+
+    testProjectDirPackages = await createTestPackagesDir(__filename);
     const packagePath = resolve(testProjectDirPackages, "packages", packageToTest);
-    packageToInstall = `file:/${packagePath}`;
+    packageToInstall = `${packagePath}`;
   }, 200000);
 
   afterEach(async () => {
@@ -68,7 +75,7 @@ describe(`E2E - ${packageToTest}`, () => {
     it(`Installs ${packageToTest} package`, async () => {
       const { code: installPackageCode, stderr: installPackageStderr } = await exec(
         testProjectDir,
-        `yarn add --dev "${packageToInstall}"`
+        `npm install --save-dev "${packageToInstall}"`
       );
 
       expect(removeInstallWarnings(installPackageStderr, packageToInstall)).toBeFalsy();
@@ -78,7 +85,7 @@ describe(`E2E - ${packageToTest}`, () => {
         code: installCode,
         stderr: stderrCode,
         stdout,
-      } = await exec(testProjectDir, "yarn ts-dev-tools install");
+      } = await exec(testProjectDir, "npm exec ts-dev-tools install");
 
       expect(stripAnsi(stdout)).toMatchSnapshot();
       expect(stderrCode).toBeFalsy();
@@ -88,12 +95,12 @@ describe(`E2E - ${packageToTest}`, () => {
       expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
       expect(packageJson.getContent().scripts).toMatchSnapshot();
 
-      const { code: lintCode, stderr: lintStderr } = await exec(testProjectDir, "yarn lint");
+      const { code: lintCode, stderr: lintStderr } = await exec(testProjectDir, "npm run lint");
 
       expect(lintStderr).toBeFalsy();
       expect(lintCode).toBe(0);
 
-      const { code: buildCode, stderr: buildStderr } = await exec(testProjectDir, "yarn build");
+      const { code: buildCode, stderr: buildStderr } = await exec(testProjectDir, "npm run build");
 
       expect(buildStderr).toBeFalsy();
       expect(buildCode).toBe(0);
@@ -114,7 +121,7 @@ describe(`E2E - ${packageToTest}`, () => {
     it(`Installs ${packageToTest} package`, async () => {
       const { code: installPackageCode, stderr: installPackageStderr } = await exec(
         testProjectDir,
-        `yarn add -W --dev "${packageToInstall}"`
+        `npm install --save-dev -W "${packageToInstall}"`
       );
 
       expect(removeInstallWarnings(installPackageStderr, packageToInstall)).toBeFalsy();
@@ -124,7 +131,7 @@ describe(`E2E - ${packageToTest}`, () => {
         code: installCode,
         stderr: stderrCode,
         stdout,
-      } = await exec(testProjectDir, "yarn ts-dev-tools install");
+      } = await exec(testProjectDir, "npm exec ts-dev-tools install");
 
       expect(stripAnsi(stdout)).toMatchSnapshot();
       expect(stderrCode).toBeFalsy();

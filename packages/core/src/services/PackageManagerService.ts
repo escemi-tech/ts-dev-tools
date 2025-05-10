@@ -95,6 +95,32 @@ export class PackageManagerService {
     }
   }
 
+  static async getNodeModulesPath(dirPath: string): Promise<string> {
+    const packageManager = PackageManagerService.detectPackageManager(dirPath);
+
+    let nodeModulesPath: string;
+    switch (packageManager) {
+      case PackageManagerType.yarn:
+        nodeModulesPath = join(dirPath, "node_modules");
+        break;
+      case PackageManagerType.npm:
+        nodeModulesPath = (
+          await PackageManagerService.execCommand(
+            [packageManager, "root", "--no-progress", "--non-interactive"],
+            dirPath,
+            true
+          )
+        ).trim();
+        break;
+    }
+
+    if (nodeModulesPath) {
+      return nodeModulesPath;
+    }
+
+    throw new Error(`Node modules path not found for package manager ${packageManager}`);
+  }
+
   private static async execCommand(
     args: string | string[],
     cwd?: string,

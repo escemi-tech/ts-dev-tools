@@ -5,6 +5,7 @@ exports[`Install command should run fresh installation without error 1`] = `
 Symlinking dev dependencies...
 Symlinking dev dependencies done!
 Checking for duplicate dev dependencies...
+No duplicate dev dependencies found.
 Check for duplicate dev dependencies done!
 Installation done!"
 `;
@@ -14,6 +15,7 @@ exports[`Install command should run update without error 1`] = `
 Symlinking dev dependencies...
 Symlinking dev dependencies done!
 Checking for duplicate dev dependencies...
+No duplicate dev dependencies found.
 Check for duplicate dev dependencies done!
 Installation done!"
 `;

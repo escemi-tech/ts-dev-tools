@@ -11,6 +11,15 @@ const shouldCleanupAfterTest = true;
 describe("SymlinkDependenciesService", () => {
   let testProjectDir: string;
 
+  beforeAll(() => {
+    if (!useCache) {
+      console.warn("Cache is disabled. Enable it one dev is done.");
+    }
+    if (!shouldCleanupAfterTest) {
+      console.warn("Cleanup is disabled. Enable it one dev is done.");
+    }
+  });
+
   beforeEach(async () => {
     testProjectDir = await createProjectForTestFile(__filename, useCache);
     mockConsoleInfo();
@@ -24,17 +33,15 @@ describe("SymlinkDependenciesService", () => {
   });
 
   describe("executeSymlinking", () => {
-    it("should symlink dependencies", () => {
+    it("should symlink dependencies", async () => {
       PackageJson.fromDirPath(testProjectDir).merge({
         devDependencies: {
           "@ts-dev-tools/core": "1.0.0",
         },
       });
 
-      const executeSymlinkingAction = () =>
-        SymlinkDependenciesService.executeSymlinking(testProjectDir);
+      await SymlinkDependenciesService.executeSymlinking(testProjectDir);
 
-      expect(executeSymlinkingAction).not.toThrow();
       expect(getConsoleInfoContent()).toMatchSnapshot();
     });
   });

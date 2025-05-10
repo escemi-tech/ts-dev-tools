@@ -28,17 +28,15 @@
     "url": "git+https://github.com/escemi-tech/ts-dev-tools.git"
   },
   "scripts": {
-    "start": "yarn link && tsc -w",
-    "stop": "yarn unlink",
+    "start": "pnpm link && tsc -w",
+    "stop": "pnpm unlink",
     "build": "rimraf dist && tsc",
     "jest": "jest --detectOpenHandles --forceExit",
-    "test": "yarn jest --maxWorkers=50%",
-    "test:unit": "yarn test --testPathPattern \".+spec\\.ts\"",
-    "test:e2e": "yarn test --testPathPattern \".+e2e\\.spec\\.ts\"",
-    "test:coverage": "yarn test --coverage",
-    "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "prepublishOnly": "pinst --disable",
-    "postpublish": "pinst --enable"
+    "test": "npm run jest -- --maxWorkers=50%",
+    "test:unit": "npm run test -- --testPathPattern \".+spec\\.ts\"",
+    "test:e2e": "npm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
+    "test:coverage": "npm run test -- --coverage",
+    "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
   "bugs": {
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
@@ -54,9 +52,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "react-test-renderer": "^19.1.0"
   },
-  "devDependencies": {
-    "pinst": "^3.0.0"
-  },
+  "devDependencies": {},
   "prettier": {
     "semi": true,
     "printWidth": 100,
