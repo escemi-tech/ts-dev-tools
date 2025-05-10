@@ -66,9 +66,11 @@ export class DuplicateDependenciesService {
   }
 
   private static printDuplicatedDependencies(duplicateDependencies: DuplicateDependencies) {
+    let hasDuplicates = false;
     duplicateDependencies.forEach((pluginDuplicateDependencies, plugin) => {
       if (pluginDuplicateDependencies.size) {
         const pluginDuplicateDependenciesValue = Array.from(pluginDuplicateDependencies);
+        hasDuplicates = true;
         console.info(
           `Some dev dependencies are unnecessarily installed as their are already required by "${plugin}":\n  - ${pluginDuplicateDependenciesValue.join(
             "\n  - "
@@ -76,5 +78,9 @@ export class DuplicateDependenciesService {
         );
       }
     });
+
+    if (!hasDuplicates) {
+      console.info(`No duplicate dev dependencies found.`);
+    }
   }
 }

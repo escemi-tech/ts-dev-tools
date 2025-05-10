@@ -12,6 +12,13 @@ describe("Migration 20240412185500-eslint-config", () => {
   let testProjectDir: string;
 
   beforeAll(async () => {
+    if (!useCache) {
+      console.warn("Cache is disabled. Enable it one dev is done.");
+    }
+    if (!shouldCleanupAfterTest) {
+      console.warn("Cleanup is disabled. Enable it one dev is done.");
+    }
+
     testProjectDir = await createProjectForTestFile(__filename, useCache);
   });
 

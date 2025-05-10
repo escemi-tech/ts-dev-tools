@@ -68,7 +68,7 @@
 ### _1_. Install
 
 ```sh
-npm install --include=dev @ts-dev-tools/core
+npm install --save-dev @ts-dev-tools/core
 ```
 
 Or
@@ -77,10 +77,16 @@ Or
 yarn add --dev @ts-dev-tools/core
 ```
 
+Or
+
+```sh
+pnpm add -D @ts-dev-tools/core
+```
+
 ### _2_. Enable ts-dev-tools
 
 ```sh
-npx ts-dev-tools install
+npm exec ts-dev-tools install
 ```
 
 Or
@@ -89,4 +95,10 @@ Or
 yarn ts-dev-tools install
 ```
 
-⚠️ If your package is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.
+Or
+
+```sh
+pnpm ts-dev-tools install
+```
+
+⚠️ If your package is using yarn, is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.

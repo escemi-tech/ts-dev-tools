@@ -14,10 +14,10 @@ async function generateProjectInMonorepoProject(
   useCache: boolean,
   testProjectGenerator: TestProjectGenerator
 ): Promise<void> {
-  await safeExec(projectDir, "yarn init --yes");
-  await safeExec(projectDir, "yarn install --prefer-offline --frozen-lockfile --mutex network");
-  await safeExec(projectDir, "yarn add -W --dev typescript");
-  await safeExec(projectDir, "yarn tsc --init");
+  await safeExec(projectDir, "npm init --yes");
+  await safeExec(projectDir, "npm install");
+  await safeExec(projectDir, "npm install --save-dev -W typescript");
+  await safeExec(projectDir, "npm exec tsc -- --init");
 
   PackageJson.fromDirPath(projectDir).merge({
     private: true,
@@ -27,8 +27,8 @@ async function generateProjectInMonorepoProject(
   const packageDir = join(projectDir, "packages/test-package");
   await createTestProject(packageName, packageDir, useCache, testProjectGenerator);
 
-  await safeExec(projectDir, `npx lerna init --no-progress --skipInstall`);
-  await safeExec(projectDir, "yarn install --prefer-offline --mutex network");
+  await safeExec(projectDir, `npm exec lerna -- init --no-progress --skipInstall`);
+  await safeExec(projectDir, "npm install");
 }
 
 function generateMonorepoProject(

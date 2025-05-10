@@ -11,6 +11,15 @@ const shouldCleanupAfterTest = true;
 describe("PackageManagerService", () => {
   let testProjectDir: string;
 
+  beforeAll(() => {
+    if (!useCache) {
+      console.warn("Cache is disabled. Enable it one dev is done.");
+    }
+    if (!shouldCleanupAfterTest) {
+      console.warn("Cleanup is disabled. Enable it one dev is done.");
+    }
+  });
+
   describe("detectPackageManager", () => {
     beforeEach(async () => {
       testProjectDir = await createProjectForTestFile(__filename, useCache);
@@ -115,6 +124,14 @@ describe("PackageManagerService", () => {
           expect(
             await PackageManagerService.isPackageInstalled("test-package", testProjectDir)
           ).toBeTruthy();
+        });
+      });
+
+      describe("getNodeModulesPath", () => {
+        it("should return the node_modules path", async () => {
+          const nodeModulesPath = await PackageManagerService.getNodeModulesPath(testProjectDir);
+
+          expect(nodeModulesPath).toEqual(`${testProjectDir}/node_modules`);
         });
       });
     },

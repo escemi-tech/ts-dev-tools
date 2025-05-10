@@ -30,7 +30,7 @@ export async function install({ cwd, dir = "." }: { cwd: string; dir: string }):
 
   await MigrationsService.executeMigrations(absoluteProjectDir, currentVersion);
 
-  SymlinkDependenciesService.executeSymlinking(absoluteProjectDir);
+  await SymlinkDependenciesService.executeSymlinking(absoluteProjectDir);
 
   DuplicateDependenciesService.executeDeduplication(absoluteProjectDir);
 
