@@ -31,6 +31,13 @@ updates:
       npm-testing-library-dependencies:
         patterns:
           - "@testing-library/*"
+      npm-jest-dependencies:
+        patterns:
+          - "jest"
+          - "@types/jest"
+          - "@types/jest-*"
+          - "ts-jest"
+          - "jest-*"
 
   - package-ecosystem: github-actions
     directory: "/"
