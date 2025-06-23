@@ -1,7 +1,7 @@
 [![Homepage](https://repository-images.githubusercontent.com/306680259/8d077b80-19cd-11eb-8625-f2b1a474d4a9)](https://github.com/escemi-tech/ts-dev-tools)
 
 [![npm](https://img.shields.io/npm/v/@ts-dev-tools/core)](https://www.npmjs.com/search?q=%40ts-dev-tools)
-[![Continuous integration](https://github.com/escemi-tech/ts-dev-tools/workflows/Continuous%20Integration/badge.svg)](https://github.com/escemi-tech/ts-dev-tools/actions?query=workflow%3A%22Continuous+Integration%22)
+[![Continuous Integration](https://github.com/escemi-tech/ts-dev-tools/actions/workflows/main-ci.yml/badge.svg)](https://github.com/escemi-tech/ts-dev-tools/actions/workflows/main-ci.yml)
 [![Code coverage](https://codecov.io/gh/escemi-tech/ts-dev-tools/branch/main/graph/badge.svg?token=mVB3P7BFzR)](https://codecov.io/gh/escemi-tech/ts-dev-tools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING)
