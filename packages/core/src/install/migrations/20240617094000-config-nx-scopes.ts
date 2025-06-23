@@ -3,8 +3,8 @@ import { PackageJson } from "../../services/PackageJson";
 import { PackageManagerService } from "../../services/PackageManagerService";
 
 export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
-  const packageToInstall = "@commitlint/config-nx-scopes";
   const nxDeps = ["@nrwl/workspace", "nx", "lerna"];
+  const packageToInstall = "@commitlint/config-nx-scopes";
 
   // Check if project is using nx or lerna
   const packageJson = PackageJson.fromDirPath(absoluteProjectDir);

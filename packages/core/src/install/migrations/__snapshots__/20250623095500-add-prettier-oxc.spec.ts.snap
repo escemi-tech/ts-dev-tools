@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Migration 20250623095500-add-prettier-oxc Up should apply migration 1`] = `
+{
+  "license": "MIT",
+  "prettier": {
+    "plugins": [
+      "@prettier/plugin-oxc",
+    ],
+  },
+  "version": "1.0.0",
+}
+`;

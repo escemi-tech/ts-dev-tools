@@ -45,6 +45,7 @@
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.0.3",
     "@eslint/js": "^9.25.0",
+    "@prettier/plugin-oxc": "^0.0.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.1",
     "eslint": "^9.25.0",
@@ -66,7 +67,10 @@
   "prettier": {
     "semi": true,
     "printWidth": 100,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "plugins": [
+      "@prettier/plugin-oxc"
+    ]
   },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
