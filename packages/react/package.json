@@ -55,7 +55,10 @@
   "prettier": {
     "semi": true,
     "printWidth": 100,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "plugins": [
+      "@prettier/plugin-oxc"
+    ]
   },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {

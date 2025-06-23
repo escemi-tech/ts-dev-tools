@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MigrationsService executeMigrations should execute migrations when no available migrations exist after given version 1`] = `
 "Applying migration "core - 20220617100200-prettier-cache"...
@@ -8,7 +8,9 @@ Migration "core - 20240329200200-eslint-ignore" applied!
 Applying migration "core - 20240412185500-eslint-config"...
 Migration "core - 20240412185500-eslint-config" applied!
 Applying migration "core - 20240617094000-config-nx-scopes"...
-Migration "core - 20240617094000-config-nx-scopes" applied!"
+Migration "core - 20240617094000-config-nx-scopes" applied!
+Applying migration "core - 20250623095500-add-prettier-oxc"...
+Migration "core - 20250623095500-add-prettier-oxc" applied!"
 `;
 
 exports[`MigrationsService executeMigrations should execute migrations when no version is provided 1`] = `
@@ -21,5 +23,7 @@ Migration "core - 20240329200200-eslint-ignore" applied!
 Applying migration "core - 20240412185500-eslint-config"...
 Migration "core - 20240412185500-eslint-config" applied!
 Applying migration "core - 20240617094000-config-nx-scopes"...
-Migration "core - 20240617094000-config-nx-scopes" applied!"
+Migration "core - 20240617094000-config-nx-scopes" applied!
+Applying migration "core - 20250623095500-add-prettier-oxc"...
+Migration "core - 20250623095500-add-prettier-oxc" applied!"
 `;

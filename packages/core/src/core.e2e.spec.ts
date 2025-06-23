@@ -94,6 +94,8 @@ describe(`E2E - ${packageToTest}`, () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
       expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
       expect(packageJson.getContent().scripts).toMatchSnapshot();
+      expect(packageJson.getContent().prettier).toMatchSnapshot();
+      expect(packageJson.getContent().jest).toMatchSnapshot();
 
       const { code: lintCode, stderr: lintStderr } = await exec(testProjectDir, "npm run lint");
 

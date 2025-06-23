@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`E2E - core Monorepo project Installs core package 1`] = `
 "Installing ts-dev-tools...
@@ -12,10 +12,13 @@ Applying migration "core - 20240412185500-eslint-config"...
 Migration "core - 20240412185500-eslint-config" applied!
 Applying migration "core - 20240617094000-config-nx-scopes"...
 Migration "core - 20240617094000-config-nx-scopes" applied!
+Applying migration "core - 20250623095500-add-prettier-oxc"...
+Migration "core - 20250623095500-add-prettier-oxc" applied!
 Symlinking dev dependencies...
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
 - Symlinking @eslint/js
+- Symlinking @prettier/plugin-oxc
 - Symlinking @types/jest
 - Symlinking eslint
 - Symlinking eslint-config-prettier
@@ -49,10 +52,13 @@ Applying migration "core - 20240412185500-eslint-config"...
 Migration "core - 20240412185500-eslint-config" applied!
 Applying migration "core - 20240617094000-config-nx-scopes"...
 Migration "core - 20240617094000-config-nx-scopes" applied!
+Applying migration "core - 20250623095500-add-prettier-oxc"...
+Migration "core - 20250623095500-add-prettier-oxc" applied!
 Symlinking dev dependencies...
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
 - Symlinking @eslint/js
+- Symlinking @prettier/plugin-oxc
 - Symlinking @types/jest
 - Symlinking @types/node
 - Symlinking eslint
@@ -88,5 +94,30 @@ exports[`E2E - core Simple project Installs core package 2`] = `
   "test:ci": "npm run test:cov --runInBand",
   "test:cov": "npm run test --coverage",
   "test:watch": "npm run jest --watch --maxWorkers=25%",
+}
+`;
+
+exports[`E2E - core Simple project Installs core package 3`] = `
+{
+  "plugins": [
+    "@prettier/plugin-oxc",
+  ],
+  "printWidth": 100,
+  "semi": true,
+  "trailingComma": "es5",
+}
+`;
+
+exports[`E2E - core Simple project Installs core package 4`] = `
+{
+  "collectCoverageFrom": [
+    "**/src/**/*.[jt]s?(x)",
+  ],
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "testMatch": [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)",
+  ],
 }
 `;
