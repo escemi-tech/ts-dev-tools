@@ -22,6 +22,7 @@ updates:
         patterns:
           - "prettier-*"
           - "prettier"
+          - "@prettier/*"
       npm-react-dependencies:
         patterns:
           - "react"
