@@ -43,6 +43,7 @@ jobs:
           npx lerna publish --force-publish --conventional-commits --create-release github --yes
 
   documentation:
+    if: github.ref_name == github.event.repository.default_branch
     name: 📚 Publish documentation
     needs: ci
     runs-on: ubuntu-latest
