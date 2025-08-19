@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.5](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.9.4...@ts-dev-tools/core@1.9.5) (2025-08-19)
+
+
+### Bug Fixes
+
+* npm audit ([dfcd65a](https://github.com/escemi-tech/ts-dev-tools/commit/dfcd65a1a9881bb465252d3c15a26f841563451e))
+
+
+
+
+
 ## [1.9.4](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.9.3...@ts-dev-tools/core@1.9.4) (2025-07-01)
 
 **Note:** Version bump only for package @ts-dev-tools/core
