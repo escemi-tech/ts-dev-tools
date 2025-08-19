@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SymlinkDependenciesService executeSymlinking should symlink dependencies 1`] = `
 "Symlinking dev dependencies...
