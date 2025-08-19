@@ -14,14 +14,16 @@ on:
         description: "By default, the commit entered above is compared to the one directly before it; to go back further, enter an earlier SHA here"
         required: false
 permissions:
-
   contents: read
   issues: write
-jobs:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
   main:
-    uses: hoverkraft-tech/ci-github-common/.github/workflows/need-fix-to-issue.yml@6857ef6d10f704e0998aa4955282f27d1b9be778 # 0.23.1
+    uses: hoverkraft-tech/ci-github-common/.github/workflows/need-fix-to-issue.yml@b4883995e100e291a1fed68678d47a560328ed08 # 0.24.0
     with:
       manual-commit-ref: ${{ inputs.manual-commit-ref }}
       manual-base-ref: ${{ inputs.manual-base-ref }}
-
