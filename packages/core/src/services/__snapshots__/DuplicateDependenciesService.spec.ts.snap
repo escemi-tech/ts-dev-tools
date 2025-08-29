@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`DuplicateDependenciesService executeDeduplication should duplicate dependencies when project has duplicates dev dependencies 1`] = `
 "Checking for duplicate dev dependencies...
