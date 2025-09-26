@@ -3,3 +3,5 @@ dist/
 coverage/
 **/yarn-error.log
 .nx
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
