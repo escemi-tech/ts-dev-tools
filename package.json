@@ -18,8 +18,8 @@
     "unlink": "lerna exec npm unlink"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-nx-scopes": "^19.5.0",
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-nx-scopes": "^20.0.0",
     "lerna": "^8.2.2",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
