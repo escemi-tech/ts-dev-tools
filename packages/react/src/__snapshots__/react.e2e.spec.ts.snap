@@ -98,6 +98,7 @@ Symlinking dev dependencies...
 - Symlinking prettier-plugin-import-sort
 - Symlinking pretty-quick
 - Symlinking ts-jest
+- Symlinking type-fest
 Symlinking dev dependencies done!
 Resolving peer dependencies...
 - Symlinking peer dependency "jiti" required by "eslint"
@@ -111,6 +112,7 @@ Some dev dependencies are unnecessarily installed as their are already required 
   - @eslint/js
   - @types/node
   - eslint
+  - globals
   - typescript
   - typescript-eslint
 
