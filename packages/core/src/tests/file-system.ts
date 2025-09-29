@@ -1,32 +1,24 @@
-import { existsSync, mkdirSync } from "node:fs";
-import { safeExec } from "./cli";
+import { cp, mkdir, rm } from "node:fs/promises";
+import { relative, sep } from "node:path";
 
 export async function recreateFolderRecursive(path: string): Promise<void> {
-  if (existsSync(path)) {
-    await deleteFolderRecursive(path);
-  }
-
-  mkdirSync(path, { recursive: true });
+  await deleteFolderRecursive(path);
+  await mkdir(path, { recursive: true });
 }
 
-export async function deleteFolderRecursive(path: string) {
-  if (existsSync(path)) {
-    await safeExec(path, `rm -rf ${path}`);
-  }
+export async function deleteFolderRecursive(path: string): Promise<void> {
+  await rm(path, { recursive: true, force: true });
 }
 
 export async function copyFolder(src: string, dest: string): Promise<void> {
   await recreateFolderRecursive(dest);
-
-  const command = [
-    "rsync -a",
-    "--include='/.git/'",
-    "--include='/.git/hooks/'",
-    "--include='/.git/hooks/**'",
-    "--exclude='/.git/**'",
-    `"${src}/"`,
-    `"${dest}/"`,
-  ].join(" ");
-
-  await safeExec(src, command);
+  await cp(src, dest, {
+    recursive: true,
+    preserveTimestamps: true,
+    verbatimSymlinks: true,
+    filter: (sourcePath) => {
+      const parts = relative(src, sourcePath).split(sep);
+      return parts[0] !== ".git" || parts.length === 1 || parts[1] === "hooks";
+    },
+  });
 }

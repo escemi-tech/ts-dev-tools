@@ -1,0 +1,14 @@
+packages:
+  - 'packages/*'
+minimumReleaseAge: 1440
+overrides:
+  # Lerna 10.0.1 pins the vulnerable Handlebars 4.7.9 release.
+  'lerna>handlebars': 4.7.10
+  # Lerna also pins these dependencies before their security fixes.
+  'lerna>js-yaml': ^4.3.2
+  'lerna>pacote': ^21.5.1
+  # Nx 23.3.0 pins Undici before its security fixes.
+  'nx>undici': ^7.30.0
+allowBuilds:
+  nx: true
+  unrs-resolver: true

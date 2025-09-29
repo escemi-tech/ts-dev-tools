@@ -27,10 +27,16 @@ function normalizeBiomeSchemaVersion(content: string): string {
 }
 
 async function reactProjectGenerator(projectDir: string) {
-  await safeExec(
+  const output = await safeExec(
     projectDir,
-    "npm create vite . -- --template react-ts --no-interactive",
+    "npm create --yes vite@latest . -- --template react-ts --no-interactive --overwrite",
   );
+
+  // Vite can cancel scaffolding without returning a failing exit code.
+  if (!FileService.fileExists(resolve(projectDir, "package.json"))) {
+    throw new Error(`Vite did not create the project manifest:\n${output}`);
+  }
+
   await safeExec(projectDir, "npm install");
 }
 
@@ -56,15 +62,15 @@ describe(`E2E - ${packageToTest}`, () => {
     packageToInstall = `${packagePath}`;
   }, 200000);
 
-  afterEach(async () => {
-    if (shouldCleanupAfterTest) {
-      await deleteTestProject(__filename);
-    }
-  });
-
   afterAll(async () => {
     if (shouldCleanupAfterTest) {
       await deleteFolderRecursive(testProjectDirPackages);
+    }
+  });
+
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
     }
   });
 
