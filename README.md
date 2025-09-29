@@ -14,6 +14,8 @@
 
 ## Opinionated and advisable packages to configure tools to develop a Typescript project
 
+> ✨ Works with npm, yarn, and pnpm package managers
+
 ---
 
 ## Why **ts-dev-tools** ?
@@ -108,22 +110,28 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 
 ### Developer setup
 
+Install the latest pnpm release, which is also selected by CI:
+
 ```sh
-npm install
+npm install -g pnpm
+pnpm install --frozen-lockfile
 ```
+
+Dependency updates must respect the 24-hour minimum release age configured in
+`pnpm-workspace.yaml`. Commit the generated lockfile with dependency updates.
 
 ### Checks
 
 ```sh
-npm run lint
-npm run test
-npm run build
+pnpm run lint
+pnpm run test
+pnpm run build
 ```
 
 Or run everything in one command:
 
 ```sh
-npm run ci
+pnpm run ci
 ```
 
 ### Clean cache

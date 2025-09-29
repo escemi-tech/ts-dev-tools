@@ -45,6 +45,12 @@ npm install --save-dev @ts-dev-tools/react
 Or
 
 ```sh
+pnpm add --save-dev @ts-dev-tools/react
+```
+
+Or
+
+```sh
 yarn add --dev @ts-dev-tools/react
 ```
 
@@ -54,6 +60,12 @@ Vitest 5 stores generated artifacts under `.vitest/`. Add that directory to your
 
 ```sh
 npm exec ts-dev-tools install
+```
+
+Or
+
+```sh
+pnpm ts-dev-tools install
 ```
 
 Or

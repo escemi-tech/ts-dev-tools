@@ -28,10 +28,16 @@ function normalizeBiomeSchemaVersion(content: string): string {
 }
 
 async function typescriptProjectGenerator(projectDir: string) {
-  await safeExec(
+  const output = await safeExec(
     projectDir,
-    "npm create vite . -- --template vanilla-ts --no-interactive",
+    "npm create --yes vite@latest . -- --template vanilla-ts --no-interactive --overwrite",
   );
+
+  // Vite can cancel scaffolding without returning a failing exit code.
+  if (!FileService.fileExists(resolve(projectDir, "package.json"))) {
+    throw new Error(`Vite did not create the project manifest:\n${output}`);
+  }
+
   await safeExec(projectDir, "npm install");
 }
 

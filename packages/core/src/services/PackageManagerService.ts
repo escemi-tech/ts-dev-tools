@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { NpmPackageManagerAdapter } from "./package-manager/NpmPackageManagerAdapter";
 import type { PackageManagerAdapter } from "./package-manager/PackageManagerAdapter";
 import { PackageManagerType } from "./package-manager/PackageManagerType";
+import { PnpmPackageManagerAdapter } from "./package-manager/PnpmPackageManagerAdapter";
 import { YarnPackageManagerAdapter } from "./package-manager/YarnPackageManagerAdapter";
 
 export { PackageManagerType } from "./package-manager/PackageManagerType";
@@ -12,10 +13,20 @@ export class PackageManagerService {
   private constructor() {}
 
   static detectPackageManager(dirPath: string): PackageManagerType {
+    if (existsSync(join(dirPath, "pnpm-lock.yaml"))) {
+      return PackageManagerType.pnpm;
+    }
     if (existsSync(join(dirPath, "yarn.lock"))) {
       return PackageManagerType.yarn;
     }
-    return PackageManagerType.npm;
+
+    if (existsSync(join(dirPath, "package-lock.json"))) {
+      return PackageManagerType.npm;
+    }
+
+    throw new Error(
+      `Could not detect package manager in directory: ${dirPath}. No lock file found.`,
+    );
   }
 
   static async addDevPackage(
@@ -56,6 +67,8 @@ export class PackageManagerService {
         return new YarnPackageManagerAdapter();
       case PackageManagerType.npm:
         return new NpmPackageManagerAdapter();
+      case PackageManagerType.pnpm:
+        return new PnpmPackageManagerAdapter();
       default:
         throw new Error(`Unsupported package manager: ${packageManager}`);
     }
