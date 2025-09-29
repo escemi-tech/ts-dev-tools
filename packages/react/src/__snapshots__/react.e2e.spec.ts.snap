@@ -91,12 +91,14 @@ Symlinking dev dependencies...
 - Symlinking prettier-plugin-import-sort
 - Symlinking pretty-quick
 - Symlinking ts-jest
+- Symlinking type-fest
 Symlinking dev dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
   - @eslint/js
   - @types/node
   - eslint
+  - globals
   - typescript
   - typescript-eslint
 

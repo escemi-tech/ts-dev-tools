@@ -5,6 +5,7 @@
 		"ghcr.io/devcontainers/features/node:1": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
+	"postCreateCommand": "npm install -g pnpm",
 	"remoteEnv": {
 		"GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
 	},
