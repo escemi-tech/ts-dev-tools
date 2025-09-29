@@ -14,6 +14,8 @@
 
 ## Opinionated and advisable packages to configure tools to develop a Typescript project
 
+> ✨ Works with npm, yarn, and pnpm package managers
+
 ---
 
 ## Why **ts-dev-tools** ?
