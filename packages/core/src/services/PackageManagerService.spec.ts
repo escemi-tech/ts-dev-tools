@@ -1,3 +1,4 @@
+import { existsSync, writeFileSync } from "fs";
 import { safeExec } from "../tests/cli";
 import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { PackageJson } from "./PackageJson";
@@ -31,14 +32,14 @@ describe("PackageManagerService", () => {
       }
     });
 
-    it("should retrieve the default package manager when no one is detectable", () => {
-      const packageManager = PackageManagerService.detectPackageManager(testProjectDir);
-
-      expect(packageManager).toEqual(PackageManagerType.npm);
+    it("should throws an error when no package manager is detectable", () => {
+      expect(() => {
+        PackageManagerService.detectPackageManager(testProjectDir);
+      }).toThrow(`Could not detect package manager in directory: ${testProjectDir}. No lock file found.`);
     });
   });
 
-  describe.each([PackageManagerType.npm, PackageManagerType.yarn])(
+  describe.each([PackageManagerType.npm, PackageManagerType.yarn, PackageManagerType.pnpm])(
     `with package manager %s`,
     (packageManagerType) => {
       const packageTypeTestFileName = __filename.replace(
@@ -48,8 +49,20 @@ describe("PackageManagerService", () => {
 
       beforeEach(async () => {
         testProjectDir = await createProjectForTestFile(packageTypeTestFileName, useCache);
-        await safeExec(testProjectDir, `${packageManagerType} init --yes`);
-        await safeExec(testProjectDir, `${packageManagerType} install --silent`);
+
+        if (packageManagerType === PackageManagerType.pnpm) {
+          // Check if package.json already exists to avoid pnpm init error
+          const packageJsonPath = `${testProjectDir}/package.json`;
+          if (!existsSync(packageJsonPath)) {
+            await safeExec(testProjectDir, `${packageManagerType} init`);
+          }
+          // Create pnpm-lock.yaml to indicate pnpm usage
+          writeFileSync(`${testProjectDir}/pnpm-lock.yaml`, 'lockfileVersion: \'6.0\'\n');
+          await safeExec(testProjectDir, `${packageManagerType} install --silent`);
+        } else {
+          await safeExec(testProjectDir, `${packageManagerType} init --yes`);
+          await safeExec(testProjectDir, `${packageManagerType} install --silent`);
+        }
       });
 
       afterEach(async () => {
@@ -104,7 +117,16 @@ describe("PackageManagerService", () => {
           const testPackageDir = `${testProjectDir}/packages/test-package`;
 
           await safeExec(testProjectDir, `mkdir -p ${testPackageDir}`);
-          await safeExec(testPackageDir, `${packageManagerType} init --yes`);
+
+          if (packageManagerType === PackageManagerType.pnpm) {
+            // For pnpm, also create a pnpm-workspace.yaml file
+            writeFileSync(`${testProjectDir}/pnpm-workspace.yaml`, 'packages:\n  - "packages/*"\n');
+            // pnpm init doesn't support --yes flag
+            await safeExec(testPackageDir, `${packageManagerType} init`);
+          } else {
+            await safeExec(testPackageDir, `${packageManagerType} init --yes`);
+          }
+
           await safeExec(testProjectDir, `${packageManagerType} install`);
 
           const isMonorepo = await PackageManagerService.isMonorepo(testProjectDir);
