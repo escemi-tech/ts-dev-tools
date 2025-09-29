@@ -9,6 +9,7 @@ const rootDirPath = resolve(__dirname, "../../../..");
 const corePackageDirPath = resolve(__dirname, "..", "..");
 const testProjectDir = resolve("__tests__/test-project");
 const defaultPackageJsonPath = join(testProjectDir, "package.json");
+const defaultPackageJsonLockPath = join(testProjectDir, "package-lock.json");
 
 export const getPackageNameFromFilepath = (filepath: string): string => {
   const relativeFilepath = relative(rootDirPath, filepath);
@@ -45,6 +46,7 @@ async function defaultProjectGenerator(testProjectDirPath: string): Promise<void
   symlinkSync(resolve(__dirname, ".."), tsDevToolsDistPath);
 
   copyFileSync(defaultPackageJsonPath, join(testProjectDirPath, "package.json"));
+  copyFileSync(defaultPackageJsonLockPath, join(testProjectDirPath, "package-lock.json"));
 }
 
 export type TestProjectGenerator = (testProjectDir: string) => Promise<void>;

@@ -38,7 +38,6 @@
 - Install and configure [eslint](https://eslint.org/) with recommended [rules](https://eslint.org/docs/rules/)
 - Configure Eslint to works with [typescript](https://github.com/typescript-eslint/typescript-eslint#readme)
 - Install and configure the following Eslint plugins:
-
   - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import): ES2015+ (ES6+) import/export syntax
   - [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest#readme): Rules for Jest
   - [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node#readme): Additional ESLint's rules for Node.js
@@ -74,13 +73,13 @@ npm install --save-dev @ts-dev-tools/core
 Or
 
 ```sh
-yarn add --dev @ts-dev-tools/core
+pnpm add -D @ts-dev-tools/core
 ```
 
 Or
 
 ```sh
-pnpm add -D @ts-dev-tools/core
+yarn add --dev @ts-dev-tools/core
 ```
 
 ### _2_. Enable ts-dev-tools
@@ -92,13 +91,13 @@ npm exec ts-dev-tools install
 Or
 
 ```sh
-yarn ts-dev-tools install
+pnpm ts-dev-tools install
 ```
 
 Or
 
 ```sh
-pnpm ts-dev-tools install
+yarn ts-dev-tools install
 ```
 
 ⚠️ If your package is using yarn, is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.
