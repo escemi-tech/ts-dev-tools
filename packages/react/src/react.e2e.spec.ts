@@ -17,7 +17,7 @@ const useCache = true;
 const shouldCleanupAfterTest = true;
 
 async function reactProjectGenerator(projectDir: string) {
-  await safeExec(projectDir, "npm create vite . -- --template react-ts");
+  await safeExec(projectDir, "npm create vite . -- --template react-ts --no-interactive");
   await safeExec(projectDir, "npm install");
 }
 
