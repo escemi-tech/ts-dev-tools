@@ -15,7 +15,8 @@
     "test": "lerna run --stream test --",
     "test:ci": "lerna run --stream test:coverage --",
     "link": "lerna exec npm link",
-    "unlink": "lerna exec npm unlink"
+    "unlink": "lerna exec npm unlink",
+    "ci": "npm run lint:fix && npm run build && npm run test:ci"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.0.0",
