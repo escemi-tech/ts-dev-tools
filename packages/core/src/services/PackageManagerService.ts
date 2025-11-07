@@ -157,18 +157,18 @@ export class PackageManagerService {
 
     if (Array.isArray(args)) {
       // Check if any arg contains shell-specific syntax (redirections, pipes, etc.)
-      const hasShellSyntax = args.some(
-        (arg) =>
-          arg.includes(">") ||
-          arg.includes("|") ||
-          arg.includes("&&") ||
-          arg.includes("||") ||
-          arg.includes(";") ||
-          arg.includes("<") ||
-          arg.includes(">>") ||
-          arg.includes("2>") ||
-          arg.includes("&") ||
-          arg.includes("$(")
+      // We check if the arg starts/ends with operators or contains operators surrounded by spaces
+      // to avoid false positives with URLs or file paths that might contain these characters
+      const shellOperators = [">", "|", "&&", "||", ";", "<", ">>", "2>", "&", "$("];
+      const hasShellSyntax = args.some((arg) =>
+        shellOperators.some(
+          (op) =>
+            arg.trim().startsWith(op) ||
+            arg.trim().endsWith(op) ||
+            arg.includes(` ${op} `) ||
+            arg.includes(` ${op}`) ||
+            arg.includes(`${op} `)
+        )
       );
 
       if (hasShellSyntax) {
@@ -202,7 +202,7 @@ export class PackageManagerService {
         if (code) {
           // For commands that output to stdout even on error (like npm list),
           // reject with the output so caller can handle it
-          return reject(output || error);
+          return reject(output.length > 0 ? output : error);
         }
         resolve(output);
       });
