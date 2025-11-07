@@ -85,11 +85,16 @@ export class PackageManagerService {
       output = await PackageManagerService.execCommand(args, dirPath, true);
     } catch (error) {
       // npm returns non-zero exit code when package is not found, but still outputs valid JSON
-      // So we try to use the error as output if it looks like JSON
-      if (typeof error === "string" && error.trim().startsWith("{")) {
-        output = error;
+      if (typeof error === "string") {
+        try {
+          // Try to parse as JSON - if successful, use it as output
+          JSON.parse(error.trim());
+          output = error;
+        } catch {
+          // If it's not valid JSON, the package is not installed
+          return false;
+        }
       } else {
-        // If it's not JSON output, the package is not installed
         return false;
       }
     }
@@ -156,20 +161,24 @@ export class PackageManagerService {
     let useShell = false;
 
     if (Array.isArray(args)) {
-      // Check if any arg contains shell-specific syntax (redirections, pipes, etc.)
-      // We check if the arg starts/ends with operators or contains operators surrounded by spaces
-      // to avoid false positives with URLs or file paths that might contain these characters
-      const shellOperators = [">", "|", "&&", "||", ";", "<", ">>", "2>", "&", "$("];
-      const hasShellSyntax = args.some((arg) =>
-        shellOperators.some(
+      // Shell operators that indicate shell-specific syntax requiring shell mode
+      // These include redirections (>, <, >>), pipes (|), command chaining (&&, ||, ;),
+      // background execution (&), and command substitution ($())
+      const SHELL_OPERATORS = [">", "|", "&&", "||", ";", "<", ">>", "2>", "&", "$("];
+
+      // Check if any arg contains shell operators at word boundaries to avoid
+      // false positives with URLs (e.g., http://example.com?a=1&b=2) or file paths
+      const hasShellSyntax = args.some((arg) => {
+        const trimmedArg = arg.trim();
+        return SHELL_OPERATORS.some(
           (op) =>
-            arg.trim().startsWith(op) ||
-            arg.trim().endsWith(op) ||
-            arg.includes(` ${op} `) ||
-            arg.includes(` ${op}`) ||
-            arg.includes(`${op} `)
-        )
-      );
+            trimmedArg.startsWith(op) ||
+            trimmedArg.endsWith(op) ||
+            trimmedArg.includes(` ${op} `) ||
+            trimmedArg.includes(` ${op}`) ||
+            trimmedArg.includes(`${op} `)
+        );
+      });
 
       if (hasShellSyntax) {
         // Use shell mode for commands with shell syntax
