@@ -30,3 +30,4 @@ export async function safeExec(cwd: string, cmd: string) {
   }
   return stdout;
 }
+
