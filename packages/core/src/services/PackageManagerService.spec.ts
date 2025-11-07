@@ -75,7 +75,7 @@ describe("PackageManagerService", () => {
             await safeExec(testProjectDir, `${packageManagerType} init`);
           }
           // Create pnpm-lock.yaml to indicate pnpm usage
-          writeFileSync(`${testProjectDir}/pnpm-lock.yaml`, 'lockfileVersion: \'6.0\'\n');
+          writeFileSync(`${testProjectDir}/pnpm-lock.yaml`, 'lockfileVersion: \'9.0\'\n');
           await safeExec(testProjectDir, `${packageManagerType} install --silent`);
         } else {
           await safeExec(testProjectDir, `${packageManagerType} init --yes`);

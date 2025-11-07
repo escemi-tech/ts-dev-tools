@@ -32,10 +32,10 @@
     "stop": "pnpm unlink",
     "build": "rimraf dist && tsc",
     "jest": "jest --detectOpenHandles --forceExit",
-    "test": "pnpm jest --maxWorkers=50%",
-    "test:unit": "pnpm test --testPathPattern \".+spec\\.ts\"",
-    "test:e2e": "pnpm test --testPathPattern \".+e2e\\.spec\\.ts\"",
-    "test:coverage": "pnpm test --coverage",
+    "test": "pnpm run jest -- --maxWorkers=50%",
+    "test:unit": "pnpm run test -- --testPathPattern \".+spec\\.ts\"",
+    "test:e2e": "pnpm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
+    "test:coverage": "pnpm run test -- --coverage",
     "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
   "bugs": {
