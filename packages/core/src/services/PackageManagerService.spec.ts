@@ -59,6 +59,15 @@ describe("PackageManagerService", () => {
       beforeEach(async () => {
         testProjectDir = await createProjectForTestFile(packageTypeTestFileName, useCache);
 
+        // Remove all lock files to start fresh
+        const lockFiles = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'];
+        lockFiles.forEach(lockFile => {
+          const lockFilePath = `${testProjectDir}/${lockFile}`;
+          if (existsSync(lockFilePath)) {
+            unlinkSync(lockFilePath);
+          }
+        });
+
         if (packageManagerType === PackageManagerType.pnpm) {
           // Check if package.json already exists to avoid pnpm init error
           const packageJsonPath = `${testProjectDir}/package.json`;
