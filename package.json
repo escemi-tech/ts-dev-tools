@@ -15,9 +15,9 @@
     "build": "lerna run --stream build --scope @ts-dev-tools/core && lerna run --stream build --ignore @ts-dev-tools/core",
     "test": "lerna run --stream test --",
     "test:ci": "lerna run --stream test:coverage --",
-    "link": "lerna exec npm link",
-    "unlink": "lerna exec npm unlink",
-    "ci": "npm run lint:fix && npm run build && npm run test:ci"
+    "link": "lerna exec pnpm link",
+    "unlink": "lerna exec pnpm unlink",
+    "ci": "pnpm run lint:fix && pnpm run build && pnpm run test:ci"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.0.0",

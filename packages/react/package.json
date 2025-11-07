@@ -32,10 +32,10 @@
     "stop": "pnpm unlink",
     "build": "rimraf dist && tsc",
     "jest": "jest --detectOpenHandles --forceExit",
-    "test": "npm run jest -- --maxWorkers=50%",
-    "test:unit": "npm run test -- --testPathPattern \".+spec\\.ts\"",
-    "test:e2e": "npm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
-    "test:coverage": "npm run test -- --coverage",
+    "test": "pnpm jest --maxWorkers=50%",
+    "test:unit": "pnpm test --testPathPattern \".+spec\\.ts\"",
+    "test:e2e": "pnpm test --testPathPattern \".+e2e\\.spec\\.ts\"",
+    "test:coverage": "pnpm test --coverage",
     "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
   "bugs": {
@@ -46,6 +46,7 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.3.0",
     "@ts-dev-tools/core": "^1.9.7",
+    "@types/node": "^24.10.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "eslint-plugin-react": "^7.37.5",
