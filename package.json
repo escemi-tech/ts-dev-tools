@@ -11,11 +11,13 @@
   "scripts": {
     "start": "lerna run --stream start --",
     "lint": "lerna run --stream lint --",
+    "lint:fix": "lerna run --stream lint:fix --",
     "build": "lerna run --stream build --scope @ts-dev-tools/core && lerna run --stream build --ignore @ts-dev-tools/core",
     "test": "lerna run --stream test --",
     "test:ci": "lerna run --stream test:coverage --",
     "link": "lerna exec npm link",
-    "unlink": "lerna exec npm unlink"
+    "unlink": "lerna exec npm unlink",
+    "ci": "npm run lint:fix && npm run build && npm run test:ci"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.0.0",

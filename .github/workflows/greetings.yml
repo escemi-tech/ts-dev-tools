@@ -13,4 +13,4 @@ permissions:
 
 jobs:
   greetings:
-    uses: hoverkraft-tech/ci-github-common/.github/workflows/greetings.yml@b4883995e100e291a1fed68678d47a560328ed08 # 0.24.0
+    uses: hoverkraft-tech/ci-github-common/.github/workflows/greetings.yml@5f11437c716059f30c635f90055060e4ef8b31a0 # 0.28.0

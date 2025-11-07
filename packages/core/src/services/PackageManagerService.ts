@@ -101,20 +101,14 @@ export class PackageManagerService {
   static async isPackageInstalled(packageName: string, dirPath: string): Promise<boolean> {
     const packageManager = PackageManagerService.detectPackageManager(dirPath);
 
-    let args: string[];
+    const args: string[] = [packageManager, "list", "--depth=1", "--json"];
 
     switch (packageManager) {
       case PackageManagerType.yarn:
+        args.push(`--pattern=${packageName}`);
+        break;
       case PackageManagerType.npm:
-        args = [
-          packageManager,
-          "list",
-          "--depth=1",
-          "--json",
-          "--no-progress",
-          `--pattern="${packageName}"`,
-          "--non-interactive",
-        ];
+        args.push("--no-progress", "--non-interactive", packageName);
         break;
       case PackageManagerType.pnpm:
         args = [
@@ -125,11 +119,26 @@ export class PackageManagerService {
           "--depth=1",
         ];
         break;
-      default:
-        throw new Error(`Unsupported package manager: ${packageManager}`);
     }
 
-    const output = await PackageManagerService.execCommand(args, dirPath, true);
+    let output: string;
+    try {
+      output = await PackageManagerService.execCommand(args, dirPath, true);
+    } catch (error) {
+      // npm returns non-zero exit code when package is not found, but still outputs valid JSON
+      if (typeof error === "string") {
+        try {
+          // Try to parse as JSON - if successful, use it as output
+          JSON.parse(error.trim());
+          output = error;
+        } catch {
+          // If it's not valid JSON, the package is not installed
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
 
     const installedPackages = JSON.parse(output);
 
@@ -197,7 +206,11 @@ export class PackageManagerService {
     cwd?: string,
     silent = false
   ): Promise<string> {
-    if (!args.length) {
+    // Handle empty args check for both string and array
+    if (Array.isArray(args) && args.length === 0) {
+      throw new Error("Command args must not be empty");
+    }
+    if (typeof args === "string" && args.trim().length === 0) {
       throw new Error("Command args must not be empty");
     }
 
@@ -206,17 +219,49 @@ export class PackageManagerService {
     }
 
     let cmd: string;
+    let cmdArgs: string[];
+    let useShell = false;
+
     if (Array.isArray(args)) {
-      cmd = args.shift() || "";
+      // Shell operators that indicate shell-specific syntax requiring shell mode
+      // These include redirections (>, <, >>), pipes (|), command chaining (&&, ||, ;),
+      // background execution (&), and command substitution ($())
+      const SHELL_OPERATORS = [">", "|", "&&", "||", ";", "<", ">>", "2>", "&", "$("];
+
+      // Check if any arg contains shell operators at word boundaries to avoid
+      // false positives with URLs (e.g., http://example.com?a=1&b=2) or file paths
+      const hasShellSyntax = args.some((arg) => {
+        const trimmedArg = arg.trim();
+        return SHELL_OPERATORS.some(
+          (op) =>
+            trimmedArg.startsWith(op) ||
+            trimmedArg.endsWith(op) ||
+            trimmedArg.includes(` ${op} `) ||
+            trimmedArg.includes(` ${op}`) ||
+            trimmedArg.includes(`${op} `)
+        );
+      });
+
+      if (hasShellSyntax) {
+        // Use shell mode for commands with shell syntax
+        cmd = args.join(" ").trim();
+        cmdArgs = [];
+        useShell = true;
+      } else {
+        // Use array mode for normal commands
+        cmd = args[0];
+        cmdArgs = args.slice(1);
+      }
     } else {
       cmd = args;
-      args = [];
+      cmdArgs = [];
+      useShell = true;
     }
 
     return new Promise((resolve, reject) => {
-      const child = spawn(cmd, args as string[], {
+      const child = spawn(cmd, cmdArgs, {
         stdio: silent ? "pipe" : "inherit",
-        shell: true,
+        shell: useShell,
         windowsVerbatimArguments: true,
         cwd,
       });
@@ -226,7 +271,9 @@ export class PackageManagerService {
 
       child.on("exit", function (code) {
         if (code) {
-          return reject(error);
+          // For commands that output to stdout even on error (like npm list),
+          // reject with the output so caller can handle it
+          return reject(output.length > 0 ? output : error);
         }
         resolve(output);
       });

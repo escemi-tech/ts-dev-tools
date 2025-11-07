@@ -78,7 +78,6 @@ Symlinking dev dependencies...
 - Symlinking @commitlint/config-conventional
 - Symlinking @prettier/plugin-oxc
 - Symlinking @types/jest
-- Symlinking @types/node
 - Symlinking eslint-config-prettier
 - Symlinking eslint-plugin-jest
 - Symlinking import-sort-style-module
@@ -92,6 +91,7 @@ Symlinking dev dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
   - @eslint/js
+  - @types/node
   - eslint
   - typescript
   - typescript-eslint

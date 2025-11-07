@@ -14,22 +14,10 @@ const useCache = true;
 const shouldCleanupAfterTest = true;
 
 async function typescriptProjectGenerator(projectDir: string) {
-  await safeExec(projectDir, "npm create vite . -- --template vanilla-ts");
+  await safeExec(projectDir, "npm create vite . -- --template vanilla-ts --no-interactive");
   await safeExec(projectDir, "npm install");
 }
 
-function removeInstallWarnings(installPackageStderr: string, packageToInstall: string): string {
-  return installPackageStderr
-    .split("\n")
-    .filter((line) => {
-      const lineWithoutColors = stripAnsi(line);
-      return (
-        !lineWithoutColors.includes(`warning "${packageToInstall}`) &&
-        !lineWithoutColors.includes(`warning ${packageToInstall}`)
-      );
-    })
-    .join("\n");
-}
 
 const packageToTest = "core";
 describe(`E2E - ${packageToTest}`, () => {
@@ -78,7 +66,7 @@ describe(`E2E - ${packageToTest}`, () => {
         `npm install --save-dev "${packageToInstall}"`
       );
 
-      expect(removeInstallWarnings(installPackageStderr, packageToInstall)).toBeFalsy();
+      expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {
@@ -123,10 +111,10 @@ describe(`E2E - ${packageToTest}`, () => {
     it(`Installs ${packageToTest} package`, async () => {
       const { code: installPackageCode, stderr: installPackageStderr } = await exec(
         testProjectDir,
-        `npm install --save-dev -W "${packageToInstall}"`
+        `npm install --save-dev "${packageToInstall}"`
       );
 
-      expect(removeInstallWarnings(installPackageStderr, packageToInstall)).toBeFalsy();
+      expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {
