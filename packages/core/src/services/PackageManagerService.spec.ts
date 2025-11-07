@@ -1,4 +1,4 @@
-import { existsSync, writeFileSync } from "fs";
+import { existsSync, unlinkSync, writeFileSync } from "fs";
 import { safeExec } from "../tests/cli";
 import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
 import { PackageJson } from "./PackageJson";
@@ -33,6 +33,15 @@ describe("PackageManagerService", () => {
     });
 
     it("should throws an error when no package manager is detectable", () => {
+      // Remove all lock files to ensure no package manager is detected
+      const lockFiles = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'];
+      lockFiles.forEach(lockFile => {
+        const lockFilePath = `${testProjectDir}/${lockFile}`;
+        if (existsSync(lockFilePath)) {
+          unlinkSync(lockFilePath);
+        }
+      });
+      
       expect(() => {
         PackageManagerService.detectPackageManager(testProjectDir);
       }).toThrow(`Could not detect package manager in directory: ${testProjectDir}. No lock file found.`);

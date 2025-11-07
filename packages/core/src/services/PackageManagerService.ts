@@ -101,7 +101,7 @@ export class PackageManagerService {
   static async isPackageInstalled(packageName: string, dirPath: string): Promise<boolean> {
     const packageManager = PackageManagerService.detectPackageManager(dirPath);
 
-    const args: string[] = [packageManager, "list", "--depth=1", "--json"];
+    let args: string[] = [packageManager, "list", "--depth=1", "--json"];
 
     switch (packageManager) {
       case PackageManagerType.yarn:
