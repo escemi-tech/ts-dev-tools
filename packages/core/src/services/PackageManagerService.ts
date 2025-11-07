@@ -69,15 +69,16 @@ export class PackageManagerService {
   static async isPackageInstalled(packageName: string, dirPath: string): Promise<boolean> {
     const packageManager = PackageManagerService.detectPackageManager(dirPath);
 
-    const args = [
-      packageManager,
-      "list",
-      "--depth=1",
-      "--json",
-      "--no-progress",
-      `--pattern="${packageName}"`,
-      "--non-interactive",
-    ];
+    const args: string[] = [packageManager, "list", "--depth=1", "--json"];
+
+    switch (packageManager) {
+      case PackageManagerType.yarn:
+        args.push(`--pattern=${packageName}`);
+        break;
+      case PackageManagerType.npm:
+        args.push("--no-progress", `--pattern=${packageName}`, "--non-interactive");
+        break;
+    }
 
     const output = await PackageManagerService.execCommand(args, dirPath, true);
 
@@ -135,16 +136,33 @@ export class PackageManagerService {
     }
 
     let cmd: string;
+    let cmdArgs: string[];
+    let useShell = false;
+
     if (Array.isArray(args)) {
-      cmd = args.join(" ").trim();
+      // Check if any arg contains shell-specific syntax (redirections, pipes, etc.)
+      const hasShellSyntax = args.some((arg) => arg.includes(">") || arg.includes("|"));
+      
+      if (hasShellSyntax) {
+        // Use shell mode for commands with shell syntax
+        cmd = args.join(" ").trim();
+        cmdArgs = [];
+        useShell = true;
+      } else {
+        // Use array mode for normal commands
+        cmd = args[0];
+        cmdArgs = args.slice(1);
+      }
     } else {
       cmd = args;
+      cmdArgs = [];
+      useShell = true;
     }
 
     return new Promise((resolve, reject) => {
-      const child = spawn(cmd, {
+      const child = spawn(cmd, cmdArgs, {
         stdio: silent ? "pipe" : "inherit",
-        shell: false,
+        shell: useShell,
         windowsVerbatimArguments: true,
         cwd,
       });
