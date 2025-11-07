@@ -136,16 +136,15 @@ export class PackageManagerService {
 
     let cmd: string;
     if (Array.isArray(args)) {
-      cmd = args.shift() || "";
+      cmd = args.join(" ").trim();
     } else {
       cmd = args;
-      args = [];
     }
 
     return new Promise((resolve, reject) => {
-      const child = spawn(cmd, args as string[], {
+      const child = spawn(cmd, {
         stdio: silent ? "pipe" : "inherit",
-        shell: true,
+        shell: false,
         windowsVerbatimArguments: true,
         cwd,
       });

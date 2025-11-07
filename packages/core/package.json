@@ -31,7 +31,7 @@
     "start": "npm link && tsc -w",
     "stop": "npm unlink",
     "build": "rimraf dist && tsc",
-    "jest": "jest --detectOpenHandles --forceExit",
+    "jest": "NODE_OPTIONS='--trace-deprecation' jest --detectOpenHandles --forceExit",
     "test": "npm run jest -- --maxWorkers=50%",
     "test:unit": "npm run test -- --testPathPattern \".+spec\\.ts\"",
     "test:e2e": "npm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
