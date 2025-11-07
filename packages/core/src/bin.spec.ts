@@ -2,23 +2,23 @@ import { resolve as resolvePath } from "path";
 
 import { exec } from "./tests/cli";
 
-function execBin(args: string[]) {
+function execBin(cmd?: string) {
   return exec(
     resolvePath("./__tests__/test-project"),
-    `ts-node ${resolvePath("./src/bin.ts")} ${args.join(" ")}`
+    `ts-node ${resolvePath("./src/bin.ts")} ${cmd || ""}`.trim()
   );
 }
 
 describe("bin", () => {
   it("should display version", async () => {
-    const result = await execBin(["--version"]);
+    const result = await execBin("--version");
     expect(result.stderr).toBeFalsy();
     expect(result.stdout).toMatch(/[0-9]{1}\.[0-9]{1}\.[0-9]{1}/);
     expect(result.code).toBe(0);
   }, 10000);
 
   it("should display help", async () => {
-    const result = await execBin([]);
+    const result = await execBin();
     expect(result.stderr).toBeFalsy();
     expect(result.stdout).toContain(`Usage`);
     expect(result.code).toBe(0);

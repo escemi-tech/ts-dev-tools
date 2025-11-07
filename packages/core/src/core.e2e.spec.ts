@@ -123,7 +123,7 @@ describe(`E2E - ${packageToTest}`, () => {
     it(`Installs ${packageToTest} package`, async () => {
       const { code: installPackageCode, stderr: installPackageStderr } = await exec(
         testProjectDir,
-        `npm install --save-dev -W "${packageToInstall}"`
+        `npm install --save-dev "${packageToInstall}"`
       );
 
       expect(removeInstallWarnings(installPackageStderr, packageToInstall)).toBeFalsy();
