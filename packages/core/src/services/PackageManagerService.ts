@@ -76,11 +76,23 @@ export class PackageManagerService {
         args.push(`--pattern=${packageName}`);
         break;
       case PackageManagerType.npm:
-        args.push("--no-progress", `--pattern=${packageName}`, "--non-interactive");
+        args.push("--no-progress", "--non-interactive", packageName);
         break;
     }
 
-    const output = await PackageManagerService.execCommand(args, dirPath, true);
+    let output: string;
+    try {
+      output = await PackageManagerService.execCommand(args, dirPath, true);
+    } catch (error) {
+      // npm returns non-zero exit code when package is not found, but still outputs valid JSON
+      // So we try to use the error as output if it looks like JSON
+      if (typeof error === "string" && error.trim().startsWith("{")) {
+        output = error;
+      } else {
+        // If it's not JSON output, the package is not installed
+        return false;
+      }
+    }
 
     const installedPackages = JSON.parse(output);
 
@@ -127,7 +139,11 @@ export class PackageManagerService {
     cwd?: string,
     silent = false
   ): Promise<string> {
-    if (!args.length) {
+    // Handle empty args check for both string and array
+    if (Array.isArray(args) && args.length === 0) {
+      throw new Error("Command args must not be empty");
+    }
+    if (typeof args === "string" && args.trim().length === 0) {
       throw new Error("Command args must not be empty");
     }
 
@@ -141,8 +157,20 @@ export class PackageManagerService {
 
     if (Array.isArray(args)) {
       // Check if any arg contains shell-specific syntax (redirections, pipes, etc.)
-      const hasShellSyntax = args.some((arg) => arg.includes(">") || arg.includes("|"));
-      
+      const hasShellSyntax = args.some(
+        (arg) =>
+          arg.includes(">") ||
+          arg.includes("|") ||
+          arg.includes("&&") ||
+          arg.includes("||") ||
+          arg.includes(";") ||
+          arg.includes("<") ||
+          arg.includes(">>") ||
+          arg.includes("2>") ||
+          arg.includes("&") ||
+          arg.includes("$(")
+      );
+
       if (hasShellSyntax) {
         // Use shell mode for commands with shell syntax
         cmd = args.join(" ").trim();
@@ -172,7 +200,9 @@ export class PackageManagerService {
 
       child.on("exit", function (code) {
         if (code) {
-          return reject(error);
+          // For commands that output to stdout even on error (like npm list),
+          // reject with the output so caller can handle it
+          return reject(output || error);
         }
         resolve(output);
       });
