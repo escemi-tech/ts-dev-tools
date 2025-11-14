@@ -9,8 +9,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   ci:
     name: Continuous Integration
     uses: ./.github/workflows/__shared-ci.yml
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+      security-events: write
     secrets: inherit

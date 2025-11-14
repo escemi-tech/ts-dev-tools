@@ -9,22 +9,31 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   ci:
     name: Continuous Integration
     uses: ./.github/workflows/__shared-ci.yml
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+      security-events: write
 
   npm-packages:
     name: 📦 Publish NPM packages
     needs: ci
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
 
-      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@0264395060bbde4ec3276b6dca84f0db828070f3 # 0.17.0
+      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@32a69b7b8fd5f7ab7bf656e7e88aa90ad235cf8d # 0.18.0
 
       - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -56,6 +65,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
       - run: |
           mkdir -p documentation
           echo "theme: jekyll-theme-cayman" > documentation/_config.yml

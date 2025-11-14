@@ -3,13 +3,17 @@ name: Shared - Continuous Integration for common tasks
 on:
   workflow_call:
 
+permissions: {}
+
 jobs:
   continuous-integration:
-    # FIXME: This is a workaround for having workflow actions. See https://github.com/orgs/community/discussions/38659
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@32a69b7b8fd5f7ab7bf656e7e88aa90ad235cf8d # 0.18.0
     permissions:
-      id-token: write
       contents: read
+      id-token: write
+      pull-requests: write
       security-events: write
-    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@0264395060bbde4ec3276b6dca84f0db828070f3 # 0.17.0
     with:
       build: '{"artifact":"packages/*/dist"}'
+      test: |
+        {"coverage": "codecov"}
