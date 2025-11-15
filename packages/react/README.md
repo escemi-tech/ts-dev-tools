@@ -43,6 +43,12 @@ npm install --save-dev @ts-dev-tools/react
 Or
 
 ```sh
+pnpm add --save-dev @ts-dev-tools/react
+```
+
+Or
+
+```sh
 yarn add --dev @ts-dev-tools/react
 ```
 
@@ -50,6 +56,12 @@ yarn add --dev @ts-dev-tools/react
 
 ```sh
 npm exec ts-dev-tools install
+```
+
+Or
+
+```sh
+pnpm ts-dev-tools install
 ```
 
 Or
