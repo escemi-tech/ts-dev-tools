@@ -32,26 +32,34 @@
     "stop": "pnpm unlink",
     "build": "rimraf dist && tsc",
     "jest": "jest --detectOpenHandles --forceExit",
-    "test": "npm run jest -- --maxWorkers=50%",
-    "test:unit": "npm run test -- --testPathPattern \".+spec\\.ts\"",
-    "test:e2e": "npm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
-    "test:coverage": "npm run test -- --coverage",
+    "test": "pnpm run jest --maxWorkers=50%",
+    "test:unit": "pnpm run test --testPathPattern \".+spec\\.ts\"",
+    "test:e2e": "pnpm run test --testPathPattern \".+e2e\\.spec\\.ts\"",
+    "test:coverage": "pnpm run test --coverage",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "lint:ci": "npm run lint -- --output-file eslint-report.json --format json"
+    "lint:ci": "pnpm run lint --output-file eslint-report.json --format json"
   },
   "bugs": {
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
   },
   "dependencies": {
+    "@eslint/js": "^9.39.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.3.0",
     "@ts-dev-tools/core": "^1.9.7",
+    "@types/node": "^24.10.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest": "^29.0.1",
     "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.5.0",
     "jest-environment-jsdom": "^30.0.0",
-    "react-test-renderer": "^19.1.0"
+    "react-test-renderer": "^19.1.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3"
   },
   "prettier": {
     "semi": true,
