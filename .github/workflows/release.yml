@@ -18,6 +18,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: read
       pull-requests: write
       security-events: write
 
@@ -28,16 +29,16 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
 
-      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@32a69b7b8fd5f7ab7bf656e7e88aa90ad235cf8d # 0.18.0
+      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@a9809af04394e66675b8644865be1ddcec02cdcd # 0.20.0
 
       - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
-          name: build
+          artifact-ids: ${{ needs.ci.outputs.build-artifact-id }}
           path: /
 
       - env:
@@ -62,25 +63,18 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.url }}
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
-      - run: |
-          mkdir -p documentation
-          echo "theme: jekyll-theme-cayman" > documentation/_config.yml
-          cp README.md documentation/index.md
-      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
-      - uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
-        with:
-          source: documentation/
-          destination: documentation/_site
 
-      - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+      - id: prepare-deploy
+        uses: hoverkraft-tech/ci-github-publish/actions/deploy/jekyll@ecafdeac18a6a6dcc01058cd53ac7431bedb5c3b # 0.14.1
         with:
-          path: documentation/_site
+          pages: documentation/
 
-      - name: 🌐 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+      - id: deployment
+        uses: hoverkraft-tech/ci-github-publish/actions/deploy/github-pages@275b6d8500449d5653bce59c799e4f54c072929d # 0.15.0
+        with:
+          build-path: ${{ steps.prepare-deploy.outputs.build-path }}
