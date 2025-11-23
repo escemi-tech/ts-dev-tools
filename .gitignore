@@ -1,6 +1,7 @@
 node_modules/
 dist/
 coverage/
+**/eslint-report.json
 **/yarn-error.log
 .nx
 .cursor/rules/nx-rules.mdc
