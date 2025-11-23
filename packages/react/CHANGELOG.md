@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.8](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.9.7...@ts-dev-tools/react@1.9.8) (2025-11-23)
+
+
+### Bug Fixes
+
+* npm audit ([ac483d4](https://github.com/escemi-tech/ts-dev-tools/commit/ac483d44c65909d6244a78124a53d1abb2aa2ecb))
+
+
+
+
+
 ## [1.9.7](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.9.6...@ts-dev-tools/react@1.9.7) (2025-10-01)
 
 **Note:** Version bump only for package @ts-dev-tools/react

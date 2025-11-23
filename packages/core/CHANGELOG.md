@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.8](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.9.7...@ts-dev-tools/core@1.9.8) (2025-11-23)
+
+
+### Bug Fixes
+
+* address code review feedback on spawn handling and npm list args ([3d100b4](https://github.com/escemi-tech/ts-dev-tools/commit/3d100b45cdfebb1e3980a3c6d872ecf7c12ac740))
+* improve shell syntax detection and error handling ([ddce7bb](https://github.com/escemi-tech/ts-dev-tools/commit/ddce7bb22e1ea30e0b4ea584fd7b8844d16e73bc))
+* npm audit ([ac483d4](https://github.com/escemi-tech/ts-dev-tools/commit/ac483d44c65909d6244a78124a53d1abb2aa2ecb))
+* properly handle spawn command arguments to prevent ENOENT errors ([81081db](https://github.com/escemi-tech/ts-dev-tools/commit/81081dbd6aef9051fd6a2a62e490676786c565ff))
+
+
+
+
+
 ## [1.9.7](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.9.6...@ts-dev-tools/core@1.9.7) (2025-10-01)
 
 **Note:** Version bump only for package @ts-dev-tools/core
