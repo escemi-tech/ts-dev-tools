@@ -36,7 +36,8 @@
     "test:unit": "npm run test -- --testPathPattern \".+spec\\.ts\"",
     "test:e2e": "npm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
     "test:coverage": "npm run test -- --coverage",
-    "lint": "eslint \"src/**/*.{ts,tsx}\""
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:ci": "npm run lint -- --output-file eslint-report.json --format json"
   },
   "bugs": {
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"

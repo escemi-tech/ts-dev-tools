@@ -2,15 +2,20 @@ name: Shared - Continuous Integration for common tasks
 
 on:
   workflow_call:
+    outputs:
+      build-artifact-id:
+        description: "The ID of the build artifact"
+        value: ${{ jobs.continuous-integration.outputs.build-artifact-id }}
 
 permissions: {}
 
 jobs:
   continuous-integration:
-    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@32a69b7b8fd5f7ab7bf656e7e88aa90ad235cf8d # 0.18.0
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@a9809af04394e66675b8644865be1ddcec02cdcd # 0.20.0
     permissions:
       contents: read
       id-token: write
+      packages: read
       pull-requests: write
       security-events: write
     with:
