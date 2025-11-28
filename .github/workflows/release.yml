@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_PRIVATE_ACCESS_TOKEN }}
 
-      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@a9809af04394e66675b8644865be1ddcec02cdcd # 0.20.0
+      - uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@ce2467e5d41ff0abe85094dcc39c98288448065a # 0.20.4
 
       - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -70,11 +70,11 @@ jobs:
           persist-credentials: false
 
       - id: prepare-deploy
-        uses: hoverkraft-tech/ci-github-publish/actions/deploy/jekyll@ecafdeac18a6a6dcc01058cd53ac7431bedb5c3b # 0.14.1
+        uses: hoverkraft-tech/ci-github-publish/actions/deploy/jekyll@ed864a88ec8610dc2a1b9aab1dbde2864bf75df4 # 0.16.0
         with:
           pages: documentation/
 
       - id: deployment
-        uses: hoverkraft-tech/ci-github-publish/actions/deploy/github-pages@275b6d8500449d5653bce59c799e4f54c072929d # 0.15.0
+        uses: hoverkraft-tech/ci-github-publish/actions/deploy/github-pages@ed864a88ec8610dc2a1b9aab1dbde2864bf75df4 # 0.16.0
         with:
           build-path: ${{ steps.prepare-deploy.outputs.build-path }}
