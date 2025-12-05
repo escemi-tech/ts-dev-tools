@@ -14,6 +14,8 @@ Applying migration "core - 20240617094000-config-nx-scopes"...
 Migration "core - 20240617094000-config-nx-scopes" applied!
 Applying migration "core - 20250623095500-add-prettier-oxc"...
 Migration "core - 20250623095500-add-prettier-oxc" applied!
+Applying migration "core - 20250623095600-remove-prettier-oxc"...
+Migration "core - 20250623095600-remove-prettier-oxc" applied!
 Symlinking dev dependencies...
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
@@ -54,6 +56,8 @@ Applying migration "core - 20240617094000-config-nx-scopes"...
 Migration "core - 20240617094000-config-nx-scopes" applied!
 Applying migration "core - 20250623095500-add-prettier-oxc"...
 Migration "core - 20250623095500-add-prettier-oxc" applied!
+Applying migration "core - 20250623095600-remove-prettier-oxc"...
+Migration "core - 20250623095600-remove-prettier-oxc" applied!
 Symlinking dev dependencies...
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
@@ -99,9 +103,6 @@ exports[`E2E - core Simple project Installs core package 2`] = `
 
 exports[`E2E - core Simple project Installs core package 3`] = `
 {
-  "plugins": [
-    "@prettier/plugin-oxc",
-  ],
   "printWidth": 100,
   "semi": true,
   "trailingComma": "es5",
