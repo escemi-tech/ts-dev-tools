@@ -103,6 +103,7 @@ exports[`E2E - core Simple project Installs core package 2`] = `
 
 exports[`E2E - core Simple project Installs core package 3`] = `
 {
+  "plugins": [],
   "printWidth": 100,
   "semi": true,
   "trailingComma": "es5",

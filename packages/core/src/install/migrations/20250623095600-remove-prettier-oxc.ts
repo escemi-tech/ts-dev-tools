@@ -6,12 +6,17 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
 
   const packageJsonContent = packageJson.getContent();
   
-  // Remove prettier.plugins if it exists
+  // Remove @prettier/plugin-oxc from prettier.plugins if it exists
   if (packageJsonContent.prettier && typeof packageJsonContent.prettier === "object") {
     const prettierConfig = packageJsonContent.prettier as JsonFileData;
-    if (prettierConfig.plugins) {
-      delete prettierConfig.plugins;
-      packageJson.setContent(packageJsonContent);
+    if (Array.isArray(prettierConfig.plugins)) {
+      const plugins = prettierConfig.plugins as string[];
+      const filteredPlugins = plugins.filter((plugin) => plugin !== "@prettier/plugin-oxc");
+      
+      if (filteredPlugins.length !== plugins.length) {
+        prettierConfig.plugins = filteredPlugins;
+        packageJson.setContent(packageJsonContent);
+      }
     }
   }
 };
