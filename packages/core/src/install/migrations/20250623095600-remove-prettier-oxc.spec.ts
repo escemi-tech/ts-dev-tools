@@ -12,10 +12,10 @@ describe("Migration 20250623095600-remove-prettier-oxc", () => {
 
   beforeAll(async () => {
     if (!useCache) {
-      console.warn("Cache is disabled. Enable it one dev is done.");
+      console.warn("Cache is disabled. Enable it once dev is done.");
     }
     if (!shouldCleanupAfterTest) {
-      console.warn("Cleanup is disabled. Enable it one dev is done.");
+      console.warn("Cleanup is disabled. Enable it once dev is done.");
     }
 
     testProjectDir = await createProjectForTestFile(__filename, useCache);
