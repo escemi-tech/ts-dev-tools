@@ -92,6 +92,11 @@ describe(`E2E - ${packageToTest}`, () => {
 
       expect(buildStderr).toBeFalsy();
       expect(buildCode).toBe(0);
+
+      const { code: formatCode, stderr: formatStderr } = await exec(testProjectDir, "npm run format");
+
+      expect(formatStderr).toBeFalsy();
+      expect(formatCode).toBe(0);
     }, 200000);
   });
 
