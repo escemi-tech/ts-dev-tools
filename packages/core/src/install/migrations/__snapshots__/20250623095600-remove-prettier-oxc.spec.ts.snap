@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Migration 20250623095600-remove-prettier-oxc Up should apply migration and remove prettier plugins 1`] = `
+{
+  "license": "MIT",
+  "prettier": {},
+  "version": "1.0.0",
+}
+`;
