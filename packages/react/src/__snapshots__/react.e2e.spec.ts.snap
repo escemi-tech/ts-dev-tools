@@ -126,6 +126,7 @@ exports[`E2E - react Simple project Installs react package 2`] = `
 
 exports[`E2E - react Simple project Installs react package 3`] = `
 {
+  "plugins": [],
   "printWidth": 100,
   "semi": true,
   "trailingComma": "es5",
