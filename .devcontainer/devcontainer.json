@@ -3,7 +3,7 @@
 	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {},
-    	"ghcr.io/devcontainers/features/github-cli:1": {}
+		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
 	"remoteEnv": {
 		"GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
@@ -17,7 +17,10 @@
 				"github.copilot-chat",
 				"dbaeumer.vscode-eslint",
 				"esbenp.prettier-vscode"
-			]
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			}
 		}
 	}
 }

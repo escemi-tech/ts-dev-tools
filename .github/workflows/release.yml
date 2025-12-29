@@ -28,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -72,7 +73,8 @@ jobs:
       - id: prepare-deploy
         uses: hoverkraft-tech/ci-github-publish/actions/deploy/jekyll@84e8ace407055e7a40ba6670a8c697e1ce2dfafa # 0.20.1
         with:
-          pages: documentation/
+          pages: |
+            packages/*/README.md
 
       - id: deployment
         uses: hoverkraft-tech/ci-github-publish/actions/deploy/github-pages@84e8ace407055e7a40ba6670a8c697e1ce2dfafa # 0.20.1
