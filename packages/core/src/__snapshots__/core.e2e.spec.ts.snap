@@ -22,6 +22,7 @@ Symlinking dev dependencies...
 - Symlinking @eslint/js
 - Symlinking @prettier/plugin-oxc
 - Symlinking @types/jest
+- Symlinking @types/node
 - Symlinking eslint
 - Symlinking eslint-config-prettier
 - Symlinking eslint-plugin-jest
