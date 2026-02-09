@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.9.14...@ts-dev-tools/core@1.10.0) (2026-02-09)
+
+
+### Features
+
+* support yarn 4 ([f693bb9](https://github.com/escemi-tech/ts-dev-tools/commit/f693bb944bf83fa8cb8308ce84823078d67bce0a))
+
+
+
+
+
 ## [1.9.14](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.9.13...@ts-dev-tools/core@1.9.14) (2026-01-01)
 
 **Note:** Version bump only for package @ts-dev-tools/core
