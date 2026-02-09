@@ -102,6 +102,37 @@ pnpm ts-dev-tools install
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/escemi-tech/ts-dev-tools/issues). You can also take a look at the [contributing guide](CONTRIBUTING) and [Contributor Code of Conduct](CODE-OF-CONDUCT.md).
 
+### Developer setup
+
+```sh
+npm install
+```
+
+### Checks
+
+```sh
+npm run lint
+npm run test
+npm run build
+```
+
+Or run everything in one command:
+
+```sh
+npm run ci
+```
+
+### Clean cache
+
+For some reason, if you need to clean cache, you can run the following commands:
+
+```sh
+# Test cache
+rm -rf node_modules/.cache/ts-dev-tools
+# NX cache
+npx nx reset
+```
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
