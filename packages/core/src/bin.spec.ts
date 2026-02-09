@@ -13,7 +13,7 @@ describe("bin", () => {
   it("should display version", async () => {
     const result = await execBin("--version");
     expect(result.stderr).toBeFalsy();
-    expect(result.stdout).toMatch(/[0-9]{1}\.[0-9]{1}\.[0-9]{1}/);
+    expect(result.stdout).toMatch(/[0-9]+\.[0-9]+\.[0-9]+/);
     expect(result.code).toBe(0);
   }, 10000);
 

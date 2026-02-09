@@ -74,6 +74,7 @@ export class YarnPackageManagerAdapter extends AbstractPackageManagerAdapter {
         } catch {
             return false;
         }
+
     }
 
     async getNodeModulesPath(dirPath: string): Promise<string> {
@@ -87,6 +88,11 @@ export class YarnPackageManagerAdapter extends AbstractPackageManagerAdapter {
 
         for (const entry of entries) {
             if (!entry || typeof entry !== "object") {
+                continue;
+            }
+
+            const type = (entry as { type?: string }).type;
+            if (type === "error" || type === "warning") {
                 continue;
             }
 
@@ -107,12 +113,6 @@ export class YarnPackageManagerAdapter extends AbstractPackageManagerAdapter {
         if (workspaceListCount > 0) {
             return true;
         }
-
-        const parsedOutput = this.parseJsonObjectFromOutput(output);
-        if (parsedOutput && typeof parsedOutput === "object") {
-            return Object.keys(parsedOutput as Record<string, unknown>).length > 0;
-        }
-
         return false;
     }
 
@@ -137,22 +137,6 @@ export class YarnPackageManagerAdapter extends AbstractPackageManagerAdapter {
         return !!workspaces && Object.keys(workspaces).length > 0;
     }
 
-    private parseJsonObjectFromOutput(output: string): unknown {
-        const start = output.indexOf("{");
-        const end = output.lastIndexOf("}");
-
-        if (start < 0 || end <= start) {
-            return undefined;
-        }
-
-        const slice = output.slice(start, end + 1).trim();
-        try {
-            return JSON.parse(slice) as unknown;
-        } catch {
-            return undefined;
-        }
-    }
-
     private isWorkspaceListEntry(value: unknown): boolean {
         if (!value || typeof value !== "object") {
             return false;
@@ -174,6 +158,13 @@ export class YarnPackageManagerAdapter extends AbstractPackageManagerAdapter {
             const trees = data?.trees ?? (entry as { trees?: Array<{ name: string }> }).trees;
 
             if (!trees) {
+                const children = (entry as { children?: Record<string, unknown> }).children;
+                if (children) {
+                    const childKeys = Object.keys(children);
+                    if (childKeys.some((key) => key.startsWith(packageName + "@"))) {
+                        return true;
+                    }
+                }
                 continue;
             }
 

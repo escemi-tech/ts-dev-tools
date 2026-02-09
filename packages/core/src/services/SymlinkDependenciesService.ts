@@ -30,7 +30,8 @@ export class SymlinkDependenciesService {
 
     const pluginDependenciesPath = await SymlinkDependenciesService.getPluginDependenciesPath(
       absoluteProjectDir,
-      plugin
+      plugin,
+      pluginDependencies
     );
 
     if (projectDependencyPath === pluginDependenciesPath) {
@@ -67,7 +68,8 @@ export class SymlinkDependenciesService {
 
   private static async getPluginDependenciesPath(
     absoluteProjectDir: string,
-    plugin: Plugin
+    plugin: Plugin,
+    pluginDependencies: string[]
   ): Promise<string> {
     const pluginDependenciesPath = join(
       plugin.path,
@@ -75,7 +77,13 @@ export class SymlinkDependenciesService {
     );
 
     if (existsSync(pluginDependenciesPath)) {
-      return pluginDependenciesPath;
+      const hasAnyPluginDependency = pluginDependencies.some((pluginDependency) =>
+        existsSync(join(pluginDependenciesPath, pluginDependency))
+      );
+
+      if (hasAnyPluginDependency) {
+        return pluginDependenciesPath;
+      }
     }
 
     return await PackageManagerService.getNodeModulesPath(absoluteProjectDir);
