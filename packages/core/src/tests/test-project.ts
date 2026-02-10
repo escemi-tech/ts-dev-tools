@@ -3,15 +3,19 @@ import { join, resolve, relative } from "path";
 
 import { getTestCacheDirPath, testCacheDirExists } from "./test-cache";
 import { copyFolder, recreateFolderRecursive, deleteFolderRecursive } from "./file-system";
+import { getWorkspaceRootPath } from "./workspace-root";
 import { tmpdir } from "os";
 
-const rootDirPath = resolve(__dirname, "../../../..");
 const corePackageDirPath = resolve(__dirname, "..", "..");
-const testProjectDir = resolve("__tests__/test-project");
+
+const rootDirPath = getWorkspaceRootPath();
+const testProjectDir = join(corePackageDirPath, "__tests__", "test-project");
 const defaultPackageJsonPath = join(testProjectDir, "package.json");
+const defaultPackageLockPath = join(testProjectDir, "pnpm-lock.yaml");
 
 export const getPackageNameFromFilepath = (filepath: string): string => {
-  const relativeFilepath = relative(rootDirPath, filepath);
+  const normalizedFilepath = resolve(filepath);
+  const relativeFilepath = relative(rootDirPath, normalizedFilepath);
 
   const parts = relativeFilepath.split("/");
   if (parts.length < 2) {
@@ -27,7 +31,8 @@ export const getPackageNameFromFilepath = (filepath: string): string => {
 
 const getTestProjectDirPath = (filename: string) => {
   const testProjectRootDirPath = join(tmpdir(), "ts-dev-tools");
-  const relativeFilepath = relative(rootDirPath, filename);
+  const normalizedFilepath = resolve(filename);
+  const relativeFilepath = relative(rootDirPath, normalizedFilepath);
 
   const testProjectDirName = "test-" + relativeFilepath.toLowerCase().replace(/[^a-z0-9]/g, "-");
 
@@ -45,6 +50,7 @@ async function defaultProjectGenerator(testProjectDirPath: string): Promise<void
   symlinkSync(resolve(__dirname, ".."), tsDevToolsDistPath);
 
   copyFileSync(defaultPackageJsonPath, join(testProjectDirPath, "package.json"));
+  copyFileSync(defaultPackageLockPath, join(testProjectDirPath, "pnpm-lock.yaml"));
 }
 
 export type TestProjectGenerator = (testProjectDir: string) => Promise<void>;
