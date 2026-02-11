@@ -26,6 +26,7 @@ Symlinking dev dependencies...
 - Symlinking eslint
 - Symlinking eslint-config-prettier
 - Symlinking eslint-plugin-jest
+- Symlinking globals
 - Symlinking import-sort-style-module
 - Symlinking jest
 - Symlinking lint-staged
@@ -78,6 +79,7 @@ Symlinking dev dependencies...
 - Symlinking eslint
 - Symlinking eslint-config-prettier
 - Symlinking eslint-plugin-jest
+- Symlinking globals
 - Symlinking import-sort-style-module
 - Symlinking jest
 - Symlinking lint-staged

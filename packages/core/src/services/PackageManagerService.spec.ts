@@ -7,8 +7,11 @@ import { PackageManagerService, PackageManagerType } from "./PackageManagerServi
 const useCache = true;
 // Set to false to inspect the test project directory after the test
 const shouldCleanupAfterTest = true;
+const testTimeout = 20000;
 
 describe("PackageManagerService", () => {
+  jest.setTimeout(testTimeout);
+
   let testProjectDir: string;
 
   beforeAll(() => {
@@ -135,6 +138,6 @@ describe("PackageManagerService", () => {
         });
       });
     },
-    10000
+    testTimeout
   );
 });

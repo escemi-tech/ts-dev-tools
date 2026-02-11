@@ -111,6 +111,7 @@ Some dev dependencies are unnecessarily installed as their are already required 
   - @eslint/js
   - @types/node
   - eslint
+  - globals
   - typescript
   - typescript-eslint
 
