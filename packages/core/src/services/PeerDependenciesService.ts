@@ -73,11 +73,12 @@ export class PeerDependenciesService {
     const content = packageJson.getContent();
 
     const peerDependencies = content.peerDependencies || {};
-    const peerDependenciesMeta = content.peerDependenciesMeta || {};
+    const peerDependenciesMeta =
+      (content.peerDependenciesMeta as Record<string, { optional?: boolean }>) || {};
 
     return Object.keys(peerDependencies).map((name) => ({
       name,
-      optional: (peerDependenciesMeta[name] as { optional?: boolean })?.optional || false,
+      optional: peerDependenciesMeta[name]?.optional || false,
     }));
   }
 

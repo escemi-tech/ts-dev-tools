@@ -2,6 +2,25 @@
 
 exports[`SymlinkDependenciesService executeSymlinking should symlink dependencies 1`] = `
 "Symlinking dev dependencies...
-- Skipping symlinking core dependencies, already in node_modules
+- Symlinking @commitlint/cli
+- Symlinking @commitlint/config-conventional
+- Symlinking @eslint/js
+- Symlinking @prettier/plugin-oxc
+- Symlinking @types/jest
+- Symlinking @types/node
+- Symlinking eslint
+- Symlinking eslint-config-prettier
+- Symlinking eslint-plugin-jest
+- Symlinking globals
+- Symlinking import-sort-style-module
+- Symlinking jest
+- Symlinking lint-staged
+- Symlinking prettier
+- Symlinking prettier-plugin-import-sort
+- Symlinking pretty-quick
+- Symlinking ts-jest
+- Symlinking type-fest
+- Symlinking typescript
+- Symlinking typescript-eslint
 Symlinking dev dependencies done!"
 `;
