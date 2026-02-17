@@ -42,6 +42,13 @@ Symlinking dev dependencies...
 - Symlinking pretty-quick
 - Symlinking ts-jest
 Symlinking dev dependencies done!
+Resolving peer dependencies...
+- Symlinking peer dependency "jiti" required by "eslint"
+- Symlinking peer dependency "@jest/transform" required by "ts-jest"
+- Symlinking peer dependency "@jest/types" required by "ts-jest"
+- Symlinking peer dependency "babel-jest" required by "ts-jest"
+- Symlinking peer dependency "jest-util" required by "ts-jest"
+Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
   - typescript
@@ -92,6 +99,13 @@ Symlinking dev dependencies...
 - Symlinking pretty-quick
 - Symlinking ts-jest
 Symlinking dev dependencies done!
+Resolving peer dependencies...
+- Symlinking peer dependency "jiti" required by "eslint"
+- Symlinking peer dependency "@jest/transform" required by "ts-jest"
+- Symlinking peer dependency "@jest/types" required by "ts-jest"
+- Symlinking peer dependency "babel-jest" required by "ts-jest"
+- Symlinking peer dependency "jest-util" required by "ts-jest"
+Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
   - @eslint/js
