@@ -5,6 +5,7 @@ import { PROJECT_NAME } from "../constants";
 import { DuplicateDependenciesService } from "../services/DuplicateDependenciesService";
 import { MigrationsService } from "../services/MigrationsService";
 import { PackageJson } from "../services/PackageJson";
+import { PeerDependenciesService } from "../services/PeerDependenciesService";
 import { SymlinkDependenciesService } from "../services/SymlinkDependenciesService";
 
 export async function install({ cwd, dir = "." }: { cwd: string; dir: string }): Promise<void> {
@@ -31,6 +32,8 @@ export async function install({ cwd, dir = "." }: { cwd: string; dir: string }):
   await MigrationsService.executeMigrations(absoluteProjectDir, currentVersion);
 
   await SymlinkDependenciesService.executeSymlinking(absoluteProjectDir);
+
+  await PeerDependenciesService.executeResolution(absoluteProjectDir);
 
   DuplicateDependenciesService.executeDeduplication(absoluteProjectDir);
 
