@@ -45,11 +45,11 @@
   "dependencies": {
     "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@eslint/js": "^9.25.0",
+    "@eslint/js": "^10.0.1",
     "@prettier/plugin-oxc": "^0.1.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.0.1",
-    "eslint": "^9.25.0",
+    "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-jest": "^29.0.1",
     "import-sort-style-module": "^6.0.0",
