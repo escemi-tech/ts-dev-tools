@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.10.0...@ts-dev-tools/core@1.11.0) (2026-03-01)
+
+
+### Bug Fixes
+
+* Address code review comments - fix typos and remove unused imports ([145affb](https://github.com/escemi-tech/ts-dev-tools/commit/145affbe14d2cc40e6517d221321e8da69940d85))
+* **core:** yarn 4 support ([c052b8c](https://github.com/escemi-tech/ts-dev-tools/commit/c052b8c1e319ff6c3ffc9b8fc7c8e1dc5f15dd91))
+
+
+### Features
+
+* Add PeerDependenciesService to resolve and symlink missing peer dependencies ([2a8e55b](https://github.com/escemi-tech/ts-dev-tools/commit/2a8e55b6a5f34750a4be33dbe0b57744234bcb76))
+* Complete peer dependency resolution implementation with manual validation ([28507ef](https://github.com/escemi-tech/ts-dev-tools/commit/28507ef901534c74465af82b54bdc8ea5e681023))
+
+
+
+
+
 # [1.10.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.9.14...@ts-dev-tools/core@1.10.0) (2026-02-09)
 
 

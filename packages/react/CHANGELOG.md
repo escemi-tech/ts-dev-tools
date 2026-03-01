@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.16](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.9.15...@ts-dev-tools/react@1.9.16) (2026-03-01)
+
+
+### Bug Fixes
+
+* Address code review comments - fix typos and remove unused imports ([145affb](https://github.com/escemi-tech/ts-dev-tools/commit/145affbe14d2cc40e6517d221321e8da69940d85))
+
+
+
+
+
 ## [1.9.15](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.9.14...@ts-dev-tools/react@1.9.15) (2026-02-09)
 
 **Note:** Version bump only for package @ts-dev-tools/react
