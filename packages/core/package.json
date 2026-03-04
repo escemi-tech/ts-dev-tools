@@ -52,7 +52,7 @@
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-jest": "^29.0.1",
-    "globals": "^16.3.0",
+    "globals": "^17.4.0",
     "import-sort-style-module": "^6.0.0",
     "jest": "^30.0.0",
     "lint-staged": "^16.0.0",
