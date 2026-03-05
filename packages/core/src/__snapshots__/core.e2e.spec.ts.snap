@@ -87,6 +87,7 @@ Symlinking dev dependencies...
 - Symlinking prettier-plugin-import-sort
 - Symlinking pretty-quick
 - Symlinking ts-jest
+- Symlinking type-fest
 - Symlinking typescript-eslint
 Symlinking dev dependencies done!
 Resolving peer dependencies...

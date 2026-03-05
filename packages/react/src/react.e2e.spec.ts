@@ -34,20 +34,21 @@ describe(`E2E - ${packageToTest}`, () => {
       console.warn("Cleanup is disabled. Enable it one dev is done.");
     }
 
-    testProjectDirPackages = await createTestPackagesDir(__filename);
+    const testFilePath = resolve(__dirname, "react.e2e.spec.ts");
+    testProjectDirPackages = await createTestPackagesDir(testFilePath);
     const packagePath = resolve(testProjectDirPackages, "packages", packageToTest);
     packageToInstall = `${packagePath}`;
   }, 200000);
 
-  afterEach(async () => {
-    if (shouldCleanupAfterTest) {
-      await deleteTestProject(__filename);
-    }
-  });
-
   afterAll(async () => {
     if (shouldCleanupAfterTest) {
       await deleteFolderRecursive(testProjectDirPackages);
+    }
+  });
+
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
     }
   });
 

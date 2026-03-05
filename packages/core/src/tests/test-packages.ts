@@ -5,9 +5,10 @@ import { PluginService } from "../services/PluginService";
 import { createProjectForTestFile } from "./test-project";
 import { copyFolder } from "./file-system";
 import { safeExec } from "./cli";
+import { getWorkspaceRootPath } from "./workspace-root";
 
 async function createTestPackagesProject(projectDir: string): Promise<void> {
-  const originalPackagesPath = resolve(__dirname, "../../..");
+  const originalPackagesPath = resolve(getWorkspaceRootPath(), "packages");
   const projectDirPackages = resolve(projectDir, "packages");
 
   await copyFolder(originalPackagesPath, projectDirPackages);
@@ -43,6 +44,10 @@ async function createTestPackagesProject(projectDir: string): Promise<void> {
  */
 
 export async function createTestPackagesDir(filename: string): Promise<string> {
-  const testPackagesFileName = filename.replace(".spec.ts", `-test-packages.spec.ts`);
+  const normalizedFilename = resolve(filename);
+  const testPackagesFileName = normalizedFilename.replace(
+    ".spec.ts",
+    `-test-packages.spec.ts`
+  );
   return createProjectForTestFile(testPackagesFileName, false, createTestPackagesProject);
 }
