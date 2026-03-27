@@ -1,9 +1,12 @@
-import { copyFileSync, symlinkSync } from "fs";
-import { join, resolve, relative } from "path";
-
+import { copyFileSync, symlinkSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, relative, resolve } from "node:path";
+import {
+  copyFolder,
+  deleteFolderRecursive,
+  recreateFolderRecursive,
+} from "./file-system";
 import { getTestCacheDirPath, testCacheDirExists } from "./test-cache";
-import { copyFolder, recreateFolderRecursive, deleteFolderRecursive } from "./file-system";
-import { tmpdir } from "os";
 
 const rootDirPath = resolve(__dirname, "../../../..");
 const corePackageDirPath = resolve(__dirname, "..", "..");
@@ -15,12 +18,14 @@ export const getPackageNameFromFilepath = (filepath: string): string => {
 
   const parts = relativeFilepath.split("/");
   if (parts.length < 2) {
-    throw new Error("Invalid filepath: " + filepath);
+    throw new Error(`Invalid filepath: ${filepath}`);
   }
   const packageName = parts[1];
 
   if (!packageName) {
-    throw new Error("Package name could not be determined from the filepath: " + filepath);
+    throw new Error(
+      `Package name could not be determined from the filepath: ${filepath}`,
+    );
   }
   return packageName;
 };
@@ -29,22 +34,33 @@ const getTestProjectDirPath = (filename: string) => {
   const testProjectRootDirPath = join(tmpdir(), "ts-dev-tools");
   const relativeFilepath = relative(rootDirPath, filename);
 
-  const testProjectDirName = "test-" + relativeFilepath.toLowerCase().replace(/[^a-z0-9]/g, "-");
+  const testProjectDirName = `test-${relativeFilepath.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
 
   return join(testProjectRootDirPath, testProjectDirName);
 };
 
-async function defaultProjectGenerator(testProjectDirPath: string): Promise<void> {
+async function defaultProjectGenerator(
+  testProjectDirPath: string,
+): Promise<void> {
   // Fake node_modules
-  const corePackageRootPath = join(testProjectDirPath, "node_modules/@ts-dev-tools/core");
+  const corePackageRootPath = join(
+    testProjectDirPath,
+    "node_modules/@ts-dev-tools/core",
+  );
   await recreateFolderRecursive(corePackageRootPath);
-  copyFileSync(join(corePackageDirPath, "package.json"), join(corePackageRootPath, "package.json"));
+  copyFileSync(
+    join(corePackageDirPath, "package.json"),
+    join(corePackageRootPath, "package.json"),
+  );
 
   // Fake migrations
   const tsDevToolsDistPath = join(corePackageRootPath, "dist");
   symlinkSync(resolve(__dirname, ".."), tsDevToolsDistPath);
 
-  copyFileSync(defaultPackageJsonPath, join(testProjectDirPath, "package.json"));
+  copyFileSync(
+    defaultPackageJsonPath,
+    join(testProjectDirPath, "package.json"),
+  );
 }
 
 export type TestProjectGenerator = (testProjectDir: string) => Promise<void>;
@@ -53,7 +69,7 @@ export async function createTestProject(
   packageName: string,
   testDirPath: string,
   useCache: boolean,
-  testProjectGenerator: TestProjectGenerator = defaultProjectGenerator
+  testProjectGenerator: TestProjectGenerator = defaultProjectGenerator,
 ): Promise<string> {
   await recreateFolderRecursive(testDirPath);
 
@@ -80,11 +96,16 @@ export async function createTestProject(
 export async function createProjectForTestFile(
   filepath: string,
   useCache: boolean,
-  testProjectGenerator: TestProjectGenerator = defaultProjectGenerator
+  testProjectGenerator: TestProjectGenerator = defaultProjectGenerator,
 ): Promise<string> {
   const testDirPath = getTestProjectDirPath(filepath);
   const packageName = getPackageNameFromFilepath(filepath);
-  return createTestProject(packageName, testDirPath, useCache, testProjectGenerator);
+  return createTestProject(
+    packageName,
+    testDirPath,
+    useCache,
+    testProjectGenerator,
+  );
 }
 
 export async function deleteTestProject(filepath: string): Promise<void> {

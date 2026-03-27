@@ -1,21 +1,7 @@
-import { MigrationUpFunction } from "@ts-dev-tools/core/dist/services/MigrationsService";
-import { FileService } from "@ts-dev-tools/core/dist/services/FileService";
+import type { MigrationUpFunction } from "@ts-dev-tools/core/dist/services/MigrationsService";
 
-export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
-  const eslintConfigFilePath = `${absoluteProjectDir}/eslint.config.mjs`;
-  if (
-    FileService.fileExists(eslintConfigFilePath) &&
-    !FileService.getFileContent(eslintConfigFilePath).includes(
-      `import tsDevToolsCore from "@ts-dev-tools/core/dist/eslint-plugin-ts-dev-tools/index.js";`
-    )
-  ) {
-    return;
-  }
-
-  FileService.putFileContent(
-    eslintConfigFilePath,
-    `import { default as tsDevToolsReact } from "@ts-dev-tools/react/dist/eslint-plugin-ts-dev-tools/index.js";
-export default tsDevToolsReact.default;
-`
-  );
+export const up: MigrationUpFunction = async (
+  _absoluteProjectDir: string,
+): Promise<void> => {
+  // No-op: React package migrated from ESLint config generation to Biome.
 };

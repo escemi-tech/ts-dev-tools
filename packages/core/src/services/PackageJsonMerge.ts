@@ -1,56 +1,78 @@
-import { AnyJson, JsonArray, JsonFileData, PackageJsonContent } from "./PackageJson";
+import type {
+  AnyJson,
+  JsonArray,
+  JsonFileData,
+  PackageJsonContent,
+} from "./PackageJson";
 
 export class PackageJsonMerge {
-  static merge(source: PackageJsonContent, update: PackageJsonContent): PackageJsonContent {
+  static merge(
+    source: PackageJsonContent,
+    update: PackageJsonContent,
+  ): PackageJsonContent {
     return PackageJsonMerge.mergeObjects(source, update);
   }
 
   private static mergeValues(
     source: AnyJson | undefined,
-    update: AnyJson | undefined
+    update: AnyJson | undefined,
   ): AnyJson | undefined {
     if (source === undefined) {
       return update;
     }
 
     if (!PackageJsonMerge.typesEqual(source, update)) {
-      throw new Error(`Unable to merge package json value because types are different`);
+      throw new Error(
+        `Unable to merge package json value because types are different`,
+      );
     }
 
     // Deal with arrays
     if (Array.isArray(update)) {
-      return PackageJsonMerge.mergeArrays(source as JsonArray[], update as JsonArray[]);
+      return PackageJsonMerge.mergeArrays(
+        source as JsonArray[],
+        update as JsonArray[],
+      );
     }
 
     // Deal with objects
     if (typeof update === "object") {
       return PackageJsonMerge.mergeObjects(
         source as PackageJsonContent,
-        update as PackageJsonContent
+        update as PackageJsonContent,
       );
     }
 
     return update;
   }
 
-  private static mergeObjects(source: JsonFileData, update: JsonFileData): JsonFileData {
+  private static mergeObjects(
+    source: JsonFileData,
+    update: JsonFileData,
+  ): JsonFileData {
     for (const updateKey in update) {
-      if (!Object.prototype.hasOwnProperty.call(update, updateKey)) {
+      if (!Object.hasOwn(update, updateKey)) {
         continue;
       }
 
       const updateValue = update[updateKey];
 
-      const sourceValue = Object.prototype.hasOwnProperty.call(source, updateKey)
+      const sourceValue = Object.hasOwn(source, updateKey)
         ? source[updateKey]
         : undefined;
 
-      source[updateKey] = PackageJsonMerge.mergeValues(sourceValue, updateValue);
+      source[updateKey] = PackageJsonMerge.mergeValues(
+        sourceValue,
+        updateValue,
+      );
     }
     return source;
   }
 
-  private static mergeArrays(source: JsonArray[], update: JsonArray[]): JsonArray[] {
+  private static mergeArrays(
+    source: JsonArray[],
+    update: JsonArray[],
+  ): JsonArray[] {
     for (const item of update) {
       if (!source.includes(item)) {
         source.push(item);

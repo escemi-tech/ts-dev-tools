@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from "fs";
+import { copyFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 
 export class FileService {
   static fileExists(filePath: string): boolean {

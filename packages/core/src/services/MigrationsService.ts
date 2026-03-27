@@ -1,8 +1,8 @@
-import { existsSync, readdirSync, unlinkSync } from "fs";
-import { resolve } from "path";
+import { existsSync, readdirSync, unlinkSync } from "node:fs";
+import { resolve } from "node:path";
 
 import { PackageJson } from "../services/PackageJson";
-import { Plugin, PluginService } from "./PluginService";
+import { type Plugin, PluginService } from "./PluginService";
 
 export type Migration = { fullname: string; shortname: string; path: string };
 
@@ -13,9 +13,12 @@ export class MigrationsService {
 
   static async executeMigrations(
     absoluteProjectDir: string,
-    currentVersion: string | undefined
+    currentVersion: string | undefined,
   ): Promise<void> {
-    const migrations = MigrationsService.getAvailableMigrations(absoluteProjectDir, currentVersion);
+    const migrations = MigrationsService.getAvailableMigrations(
+      absoluteProjectDir,
+      currentVersion,
+    );
 
     const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
     const packageJsonBackupPath = packageJson.backup();
@@ -49,39 +52,50 @@ export class MigrationsService {
 
   private static getAvailableMigrations(
     absoluteProjectDir: string,
-    currentVersion: string | undefined
+    currentVersion: string | undefined,
   ): Migration[] {
-    const installedPlugins = PluginService.getInstalledPlugins(absoluteProjectDir);
+    const installedPlugins =
+      PluginService.getInstalledPlugins(absoluteProjectDir);
 
     const migrationFiles: Migration[] = [];
     for (const installedPlugin of installedPlugins) {
       migrationFiles.push(
-        ...MigrationsService.getPluginMigrations(installedPlugin, currentVersion)
+        ...MigrationsService.getPluginMigrations(
+          installedPlugin,
+          currentVersion,
+        ),
       );
     }
 
-    migrationFiles.sort(({ shortname: nameA }, { shortname: nameB }) => nameA.localeCompare(nameB));
+    migrationFiles.sort(({ shortname: nameA }, { shortname: nameB }) =>
+      nameA.localeCompare(nameB),
+    );
 
     return Array.from(new Set(migrationFiles));
   }
 
   private static getPluginMigrations(
     plugin: Plugin,
-    currentVersion: string | undefined
+    currentVersion: string | undefined,
   ): Migration[] {
     const migrationFiles = [];
 
-    const pluginMigrationsDirPath = resolve(plugin.path, MigrationsService.MIGRATION_BUILT_PATH);
+    const pluginMigrationsDirPath = resolve(
+      plugin.path,
+      MigrationsService.MIGRATION_BUILT_PATH,
+    );
     for (const migrationFile of readdirSync(pluginMigrationsDirPath)) {
       if (!migrationFile.match(/^[0-9]{14}-[-a-z]+\.(js|ts)$/)) {
         continue;
       }
 
-      const migrationName = MigrationsService.getMigrationNameFromFile(migrationFile);
-      const shouldApplyMigration = MigrationsService.migrationIsAfterCurrentVersion(
-        migrationName,
-        currentVersion
-      );
+      const migrationName =
+        MigrationsService.getMigrationNameFromFile(migrationFile);
+      const shouldApplyMigration =
+        MigrationsService.migrationIsAfterCurrentVersion(
+          migrationName,
+          currentVersion,
+        );
 
       if (!shouldApplyMigration) {
         continue;
@@ -101,7 +115,10 @@ export class MigrationsService {
     return migrationName;
   }
 
-  public static migrationIsAfterCurrentVersion(migrationName: string, currentVersion?: string) {
+  public static migrationIsAfterCurrentVersion(
+    migrationName: string,
+    currentVersion?: string,
+  ) {
     return !currentVersion || currentVersion.localeCompare(migrationName) < 0;
   }
 }
