@@ -24,10 +24,11 @@ describe("PackageJsonMerge", () => {
       const source = { test: ["test"] };
       const update = { test: "test" };
 
-      const getPackageJsonPathAction = () => PackageJsonMerge.merge(source, update);
+      const getPackageJsonPathAction = () =>
+        PackageJsonMerge.merge(source, update);
 
       expect(getPackageJsonPathAction).toThrow(
-        "Unable to merge package json value because types are different"
+        "Unable to merge package json value because types are different",
       );
     });
 

@@ -1,8 +1,15 @@
-import { lstatSync, mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
+import { lstatSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
-import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
-import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
+import {
+  getConsoleInfoContent,
+  mockConsoleInfo,
+  resetMockedConsoleInfo,
+} from "../tests/console";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../tests/test-project";
 import { PackageJson } from "./PackageJson";
 import { PeerDependenciesService } from "./PeerDependenciesService";
 import { PluginService } from "./PluginService";
@@ -52,14 +59,21 @@ describe("PeerDependenciesService", () => {
     });
 
     it("should symlink missing peer dependency from plugin dependency", async () => {
-      const pluginPath = join(testProjectDir, "node_modules", "@ts-dev-tools", "core");
-      const getInstalledPluginsSpy = jest.spyOn(PluginService, "getInstalledPlugins").mockReturnValue([
-        {
-          fullname: "@ts-dev-tools/core",
-          shortname: "core",
-          path: pluginPath,
-        },
-      ]);
+      const pluginPath = join(
+        testProjectDir,
+        "node_modules",
+        "@ts-dev-tools",
+        "core",
+      );
+      const getInstalledPluginsSpy = jest
+        .spyOn(PluginService, "getInstalledPlugins")
+        .mockReturnValue([
+          {
+            fullname: "@ts-dev-tools/core",
+            shortname: "core",
+            path: pluginPath,
+          },
+        ]);
 
       PackageJson.fromDirPath(testProjectDir).merge({
         devDependencies: {
@@ -74,8 +88,15 @@ describe("PeerDependenciesService", () => {
         },
       });
 
-      const fakeRequiredPath = join(testProjectDir, "node_modules", "fake-required");
-      const fakeRequiredNodeModulesPath = join(fakeRequiredPath, "node_modules");
+      const fakeRequiredPath = join(
+        testProjectDir,
+        "node_modules",
+        "fake-required",
+      );
+      const fakeRequiredNodeModulesPath = join(
+        fakeRequiredPath,
+        "node_modules",
+      );
       const fakePeerSourcePath = join(fakeRequiredNodeModulesPath, "fake-peer");
 
       mkdirSync(fakeRequiredPath, { recursive: true });
@@ -90,14 +111,14 @@ describe("PeerDependenciesService", () => {
             },
           },
           null,
-          2
-        )
+          2,
+        ),
       );
 
       mkdirSync(fakePeerSourcePath, { recursive: true });
       writeFileSync(
         join(fakePeerSourcePath, "package.json"),
-        JSON.stringify({ name: "fake-peer", version: "1.0.0" }, null, 2)
+        JSON.stringify({ name: "fake-peer", version: "1.0.0" }, null, 2),
       );
 
       await PeerDependenciesService.executeResolution(testProjectDir);
@@ -106,11 +127,15 @@ describe("PeerDependenciesService", () => {
 
       const consoleOutput = getConsoleInfoContent();
       expect(consoleOutput).toContain(
-        '- Symlinking peer dependency "fake-peer" required by "fake-required"'
+        '- Symlinking peer dependency "fake-peer" required by "fake-required"',
       );
       expect(consoleOutput).toContain("Resolving peer dependencies done!");
 
-      const fakePeerTargetPath = join(testProjectDir, "node_modules", "fake-peer");
+      const fakePeerTargetPath = join(
+        testProjectDir,
+        "node_modules",
+        "fake-peer",
+      );
       expect(lstatSync(fakePeerTargetPath).isSymbolicLink()).toBe(true);
     });
 
@@ -123,15 +148,24 @@ describe("PeerDependenciesService", () => {
     });
 
     it("should warn when required peer dependency source cannot be resolved", async () => {
-      const pluginPath = join(testProjectDir, "node_modules", "@ts-dev-tools", "core");
-      const getInstalledPluginsSpy = jest.spyOn(PluginService, "getInstalledPlugins").mockReturnValue([
-        {
-          fullname: "@ts-dev-tools/core",
-          shortname: "core",
-          path: pluginPath,
-        },
-      ]);
-      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => undefined);
+      const pluginPath = join(
+        testProjectDir,
+        "node_modules",
+        "@ts-dev-tools",
+        "core",
+      );
+      const getInstalledPluginsSpy = jest
+        .spyOn(PluginService, "getInstalledPlugins")
+        .mockReturnValue([
+          {
+            fullname: "@ts-dev-tools/core",
+            shortname: "core",
+            path: pluginPath,
+          },
+        ]);
+      const consoleWarnSpy = jest
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
 
       const corePackageJson = PackageJson.fromDirPath(pluginPath);
       corePackageJson.merge({
@@ -140,7 +174,11 @@ describe("PeerDependenciesService", () => {
         },
       });
 
-      const fakeRequiredPath = join(testProjectDir, "node_modules", "fake-required");
+      const fakeRequiredPath = join(
+        testProjectDir,
+        "node_modules",
+        "fake-required",
+      );
       mkdirSync(fakeRequiredPath, { recursive: true });
       writeFileSync(
         join(fakeRequiredPath, "package.json"),
@@ -153,14 +191,14 @@ describe("PeerDependenciesService", () => {
             },
           },
           null,
-          2
-        )
+          2,
+        ),
       );
 
       await PeerDependenciesService.executeResolution(testProjectDir);
 
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        '- Peer dependency "missing-required-peer" required by "fake-required" not found in plugin node_modules'
+        '- Peer dependency "missing-required-peer" required by "fake-required" not found in plugin node_modules',
       );
 
       consoleWarnSpy.mockRestore();
@@ -168,15 +206,24 @@ describe("PeerDependenciesService", () => {
     });
 
     it("should skip missing optional peer dependencies without warnings", async () => {
-      const pluginPath = join(testProjectDir, "node_modules", "@ts-dev-tools", "core");
-      const getInstalledPluginsSpy = jest.spyOn(PluginService, "getInstalledPlugins").mockReturnValue([
-        {
-          fullname: "@ts-dev-tools/core",
-          shortname: "core",
-          path: pluginPath,
-        },
-      ]);
-      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => undefined);
+      const pluginPath = join(
+        testProjectDir,
+        "node_modules",
+        "@ts-dev-tools",
+        "core",
+      );
+      const getInstalledPluginsSpy = jest
+        .spyOn(PluginService, "getInstalledPlugins")
+        .mockReturnValue([
+          {
+            fullname: "@ts-dev-tools/core",
+            shortname: "core",
+            path: pluginPath,
+          },
+        ]);
+      const consoleWarnSpy = jest
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
 
       const corePackageJson = PackageJson.fromDirPath(pluginPath);
       corePackageJson.merge({
@@ -185,7 +232,11 @@ describe("PeerDependenciesService", () => {
         },
       });
 
-      const fakeRequiredPath = join(testProjectDir, "node_modules", "fake-optional-required");
+      const fakeRequiredPath = join(
+        testProjectDir,
+        "node_modules",
+        "fake-optional-required",
+      );
       mkdirSync(fakeRequiredPath, { recursive: true });
       writeFileSync(
         join(fakeRequiredPath, "package.json"),
@@ -203,14 +254,14 @@ describe("PeerDependenciesService", () => {
             },
           },
           null,
-          2
-        )
+          2,
+        ),
       );
 
       await PeerDependenciesService.executeResolution(testProjectDir);
 
       const consoleOutput = getConsoleInfoContent();
-      expect(consoleOutput).not.toContain('missing-optional-peer');
+      expect(consoleOutput).not.toContain("missing-optional-peer");
       expect(consoleWarnSpy).not.toHaveBeenCalled();
 
       consoleWarnSpy.mockRestore();
@@ -218,15 +269,24 @@ describe("PeerDependenciesService", () => {
     });
 
     it("should symlink scoped peers resolved from nested node_modules", async () => {
-      const pluginPath = join(testProjectDir, "node_modules", "@ts-dev-tools", "core");
-      const getInstalledPluginsSpy = jest.spyOn(PluginService, "getInstalledPlugins").mockReturnValue([
-        {
-          fullname: "@ts-dev-tools/core",
-          shortname: "core",
-          path: pluginPath,
-        },
-      ]);
-      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => undefined);
+      const pluginPath = join(
+        testProjectDir,
+        "node_modules",
+        "@ts-dev-tools",
+        "core",
+      );
+      const getInstalledPluginsSpy = jest
+        .spyOn(PluginService, "getInstalledPlugins")
+        .mockReturnValue([
+          {
+            fullname: "@ts-dev-tools/core",
+            shortname: "core",
+            path: pluginPath,
+          },
+        ]);
+      const consoleWarnSpy = jest
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
 
       const corePackageJson = PackageJson.fromDirPath(pluginPath);
       corePackageJson.merge({
@@ -235,13 +295,21 @@ describe("PeerDependenciesService", () => {
         },
       });
 
-      const fakeRequiredPath = join(testProjectDir, "node_modules", "fake-required");
-      const fakeCarrierPath = join(testProjectDir, "node_modules", "fake-carrier");
+      const fakeRequiredPath = join(
+        testProjectDir,
+        "node_modules",
+        "fake-required",
+      );
+      const fakeCarrierPath = join(
+        testProjectDir,
+        "node_modules",
+        "fake-carrier",
+      );
       const fakeScopedPeerPath = join(
         fakeCarrierPath,
         "node_modules",
         "@peer-scope",
-        "fake-peer"
+        "fake-peer",
       );
 
       mkdirSync(fakeRequiredPath, { recursive: true });
@@ -256,29 +324,38 @@ describe("PeerDependenciesService", () => {
             },
           },
           null,
-          2
-        )
+          2,
+        ),
       );
 
       mkdirSync(fakeScopedPeerPath, { recursive: true });
       writeFileSync(
         join(fakeCarrierPath, "package.json"),
-        JSON.stringify({ name: "fake-carrier", version: "1.0.0" }, null, 2)
+        JSON.stringify({ name: "fake-carrier", version: "1.0.0" }, null, 2),
       );
       writeFileSync(
         join(fakeScopedPeerPath, "package.json"),
-        JSON.stringify({ name: "@peer-scope/fake-peer", version: "1.0.0" }, null, 2)
+        JSON.stringify(
+          { name: "@peer-scope/fake-peer", version: "1.0.0" },
+          null,
+          2,
+        ),
       );
 
       await PeerDependenciesService.executeResolution(testProjectDir);
 
       const consoleOutput = getConsoleInfoContent();
       expect(consoleOutput).toContain(
-        '- Symlinking peer dependency "@peer-scope/fake-peer" required by "fake-required"'
+        '- Symlinking peer dependency "@peer-scope/fake-peer" required by "fake-required"',
       );
       expect(consoleWarnSpy).not.toHaveBeenCalled();
 
-      const fakePeerTargetPath = join(testProjectDir, "node_modules", "@peer-scope", "fake-peer");
+      const fakePeerTargetPath = join(
+        testProjectDir,
+        "node_modules",
+        "@peer-scope",
+        "fake-peer",
+      );
       expect(lstatSync(fakePeerTargetPath).isSymbolicLink()).toBe(true);
 
       consoleWarnSpy.mockRestore();

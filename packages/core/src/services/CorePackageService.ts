@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { resolve } from "node:path";
 
 import { PackageJson } from "./PackageJson";
 
@@ -8,6 +8,8 @@ export class CorePackageService {
   }
 
   static getPackageName() {
-    return PackageJson.fromDirPath(CorePackageService.getPackageRootPath()).getPackageName();
+    return PackageJson.fromDirPath(
+      CorePackageService.getPackageRootPath(),
+    ).getPackageName();
   }
 }

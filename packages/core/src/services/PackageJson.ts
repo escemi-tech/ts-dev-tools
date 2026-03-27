@@ -1,11 +1,22 @@
-import { PackageJson as PackageJsonType } from "type-fest";
-
-import { PackageJsonMerge } from "./PackageJsonMerge";
+import { join } from "node:path";
+import type { PackageJson as PackageJsonType } from "type-fest";
 import { FileService } from "./FileService";
-import { join } from "path";
+import { PackageJsonMerge } from "./PackageJsonMerge";
 
-export type JsonArray = boolean[] | number[] | string[] | JsonFileData[] | Date[];
-export type AnyJson = boolean | number | string | JsonFileData | Date | JsonArray | JsonArray[];
+export type JsonArray =
+  | boolean[]
+  | number[]
+  | string[]
+  | JsonFileData[]
+  | Date[];
+export type AnyJson =
+  | boolean
+  | number
+  | string
+  | JsonFileData
+  | Date
+  | JsonArray
+  | JsonArray[];
 
 export type JsonFileData = {
   [key: string]: AnyJson | undefined;
@@ -31,7 +42,10 @@ export class PackageJson {
     if (this.content) {
       return this.content;
     }
-    return (this.content = JSON.parse(FileService.getFileContent(this.path)) as PackageJsonContent);
+    this.content = JSON.parse(
+      FileService.getFileContent(this.path),
+    ) as PackageJsonContent;
+    return this.content;
   }
 
   setContent(content: PackageJsonContent): void {
@@ -52,7 +66,9 @@ export class PackageJson {
   }
 
   getTsDevToolsVersion(): string | undefined {
-    const tsDevToolsConfig = this.getContent().tsDevTools as JsonFileData | undefined;
+    const tsDevToolsConfig = this.getContent().tsDevTools as
+      | JsonFileData
+      | undefined;
     const version = tsDevToolsConfig?.version as string | undefined;
     return version;
   }
@@ -69,7 +85,10 @@ export class PackageJson {
 
   getAllDependenciesPackageNames(): string[] {
     return Array.from(
-      new Set([...this.getDependenciesPackageNames(), ...this.getDevDependenciesPackageNames()])
+      new Set([
+        ...this.getDependenciesPackageNames(),
+        ...this.getDevDependenciesPackageNames(),
+      ]),
     );
   }
 
@@ -83,7 +102,7 @@ export class PackageJson {
   }
 
   backup(): string {
-    const backupPath = this.path + ".backup";
+    const backupPath = `${this.path}.backup`;
     FileService.copyFile(this.path, backupPath);
     return backupPath;
   }
@@ -94,7 +113,10 @@ export class PackageJson {
   }
 
   private write() {
-    FileService.putFileContent(this.path, JSON.stringify(this.content, null, 2));
+    FileService.putFileContent(
+      this.path,
+      JSON.stringify(this.content, null, 2),
+    );
   }
 
   static fromDirPath(dirPath: string): PackageJson {

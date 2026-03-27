@@ -1,9 +1,9 @@
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
-import { up } from "./20201111162698-init";
 import {
   createProjectForTestFile,
   deleteTestProject,
 } from "@ts-dev-tools/core/dist/tests/test-project";
+import { up } from "./20201111162698-init";
 
 // Set to false to avoid using the cache
 const useCache = true;
@@ -36,7 +36,8 @@ describe("Migration 20201111162698-init", () => {
     it("should apply migration", () => {
       up(testProjectDir);
 
-      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
+      const packageJsonContent =
+        PackageJson.fromDirPath(testProjectDir).getContent();
 
       expect(packageJsonContent).toMatchSnapshot();
     });
@@ -62,7 +63,8 @@ describe("Migration 20201111162698-init", () => {
 
       up(testProjectDir);
 
-      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
+      const packageJsonContent =
+        PackageJson.fromDirPath(testProjectDir).getContent();
 
       expect(packageJsonContent).toMatchSnapshot();
     });
