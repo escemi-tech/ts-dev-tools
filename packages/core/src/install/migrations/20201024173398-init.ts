@@ -1,14 +1,19 @@
 import { PROJECT_NAME } from "../../constants";
 import { GitService } from "../../services/GitService";
-import { MigrationUpFunction } from "../../services/MigrationsService";
+import type { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
 import { PackageManagerService } from "../../services/PackageManagerService";
 
-export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
+export const up: MigrationUpFunction = async (
+  absoluteProjectDir: string,
+): Promise<void> => {
   const jest = {
     preset: "ts-jest",
     testEnvironment: "node",
-    testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)"],
+    testMatch: [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)",
+    ],
     collectCoverageFrom: ["**/src/**/*.[jt]s?(x)"],
   };
 
@@ -60,7 +65,8 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
     },
   };
 
-  const packageManager = PackageManagerService.detectPackageManager(absoluteProjectDir);
+  const packageManager =
+    PackageManagerService.detectPackageManager(absoluteProjectDir);
 
   const scripts = {
     build: "tsc --noEmit",
@@ -90,14 +96,19 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
 
   if (isGitRepository) {
     const gitHooks = {
-      "pre-commit": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
+      "pre-commit":
+        "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
       "commit-msg": "npx --no-install commitlint --edit $1",
       "pre-push": `${packageManager} run lint && ${packageManager} run build && ${packageManager} run test`,
     };
 
     for (const gitHookName of Object.keys(gitHooks)) {
       const gitHookCommand = gitHooks[gitHookName as keyof typeof gitHooks];
-      await GitService.addGitHook(absoluteProjectDir, gitHookName, gitHookCommand);
+      await GitService.addGitHook(
+        absoluteProjectDir,
+        gitHookName,
+        gitHookCommand,
+      );
     }
   }
 };

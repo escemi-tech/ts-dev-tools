@@ -1,5 +1,5 @@
-import { existsSync } from "fs";
-import { resolve } from "path";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 
 import { PACKAGE_BASE_NAME } from "../constants";
 import { CorePackageService } from "./CorePackageService";
@@ -18,24 +18,26 @@ export class PluginService {
 
   static getInstalledPlugins(absoluteProjectDir: string): Plugin[] {
     const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
-    const allDependenciesPackageNames = packageJson.getAllDependenciesPackageNames();
+    const allDependenciesPackageNames =
+      packageJson.getAllDependenciesPackageNames();
     if (!allDependenciesPackageNames.length) {
       return [];
     }
 
     const pluginsFullname = allDependenciesPackageNames.filter((packageName) =>
-      PluginService.packageNameIsPlugin(packageName)
+      PluginService.packageNameIsPlugin(packageName),
     );
 
-    const sortPlugins = (pluginA: string, pluginB: string) => pluginA.localeCompare(pluginB);
+    const sortPlugins = (pluginA: string, pluginB: string) =>
+      pluginA.localeCompare(pluginB);
     pluginsFullname.sort(sortPlugins);
 
     const plugins = new Map<string, Plugin>();
-    for(const pluginFullname of pluginsFullname){
+    for (const pluginFullname of pluginsFullname) {
       const plugin = PluginService.getPluginFromFullname(pluginFullname);
       plugins.set(pluginFullname, plugin);
       const pluginParents = PluginService.getInstalledPlugins(plugin.path);
-      for(const pluginParent of pluginParents){
+      for (const pluginParent of pluginParents) {
         plugins.set(pluginParent.fullname, pluginParent);
       }
     }
@@ -55,7 +57,9 @@ export class PluginService {
     const path = resolve(corePackageRootPath, "../", shortname);
 
     if (!existsSync(path)) {
-      throw new Error(`Plugin "${fullname}" is required but cannot be found in ${path}.`);
+      throw new Error(
+        `Plugin "${fullname}" is required but cannot be found in ${path}.`,
+      );
     }
 
     return {

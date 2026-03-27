@@ -1,8 +1,12 @@
-import { spawn } from "child_process";
-import { existsSync, statSync } from "fs";
+import { spawn } from "node:child_process";
+import { existsSync, statSync } from "node:fs";
 
 export class CmdService {
-  static execCmd(args: string | string[], cwd?: string, silent = false): Promise<string> {
+  static execCmd(
+    args: string | string[],
+    cwd?: string,
+    silent = false,
+  ): Promise<string> {
     if (!args.length) {
       throw new Error("Command args must not be empty");
     }
@@ -32,7 +36,7 @@ export class CmdService {
       let output = "";
       let error = "";
 
-      child.on("exit", function (code) {
+      child.on("exit", (code) => {
         if (code) {
           return reject(error);
         }

@@ -1,7 +1,9 @@
-import { MigrationUpFunction } from "../../services/MigrationsService";
+import type { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
 
-export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
+export const up: MigrationUpFunction = async (
+  absoluteProjectDir: string,
+): Promise<void> => {
   const prettierConfig = {
     plugins: ["@prettier/plugin-oxc"],
   };

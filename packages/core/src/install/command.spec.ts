@@ -1,6 +1,13 @@
 import { PackageJson } from "../services/PackageJson";
-import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
-import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
+import {
+  getConsoleInfoContent,
+  mockConsoleInfo,
+  resetMockedConsoleInfo,
+} from "../tests/console";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../tests/test-project";
 import { install } from "./command";
 
 // Set to false to avoid using the cache
@@ -56,7 +63,7 @@ describe("Install command", () => {
     const installAction = () => install({ cwd: testProjectDir, dir: ".." });
 
     await expect(installAction()).rejects.toThrow(
-      "Unable to install ts-dev-tools in a different folder than current process"
+      "Unable to install ts-dev-tools in a different folder than current process",
     );
   });
 });

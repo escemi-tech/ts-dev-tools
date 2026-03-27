@@ -1,4 +1,7 @@
-import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../tests/test-project";
 import { PackageJson } from "./PackageJson";
 import { PluginService } from "./PluginService";
 
@@ -31,7 +34,8 @@ describe("PluginService", () => {
 
   describe("getInstalledPlugins", () => {
     it("should return an empty array if no plugin is installed", () => {
-      const installedPlugins = PluginService.getInstalledPlugins(testProjectDir);
+      const installedPlugins =
+        PluginService.getInstalledPlugins(testProjectDir);
 
       expect(installedPlugins).toEqual([]);
     });
@@ -43,7 +47,8 @@ describe("PluginService", () => {
           "@ts-dev-tools/core": "1.0.0",
         },
       });
-      const installedPlugins = PluginService.getInstalledPlugins(testProjectDir);
+      const installedPlugins =
+        PluginService.getInstalledPlugins(testProjectDir);
 
       expect(installedPlugins).toHaveLength(1);
       expect(installedPlugins[0]).toMatchObject({
@@ -61,7 +66,8 @@ describe("PluginService", () => {
         },
       });
 
-      const installedPlugins = PluginService.getInstalledPlugins(testProjectDir);
+      const installedPlugins =
+        PluginService.getInstalledPlugins(testProjectDir);
 
       expect(installedPlugins).toHaveLength(2);
       expect(installedPlugins[0]).toMatchObject({
@@ -84,7 +90,8 @@ describe("PluginService", () => {
           "@ts-dev-tools/core": "1.0.0",
         },
       });
-      const installedPlugins = PluginService.getInstalledPlugins(testProjectDir);
+      const installedPlugins =
+        PluginService.getInstalledPlugins(testProjectDir);
 
       expect(installedPlugins).toHaveLength(2);
       expect(installedPlugins[0]).toMatchObject({

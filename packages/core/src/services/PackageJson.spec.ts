@@ -1,8 +1,11 @@
-import { readFileSync } from "fs";
-import { join } from "path";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
-import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
-import { PackageJson, PackageJsonContent } from "./PackageJson";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../tests/test-project";
+import { PackageJson, type PackageJsonContent } from "./PackageJson";
 
 // Set to false to avoid using the cache
 const useCache = true;
@@ -33,10 +36,11 @@ describe("PackageJson", () => {
 
   describe("constructor", () => {
     it("should throws an error if package.json file does not exist", () => {
-      const getPackageJsonPathAction = () => new PackageJson("wrong/path/package.json");
+      const getPackageJsonPathAction = () =>
+        new PackageJson("wrong/path/package.json");
 
       expect(getPackageJsonPathAction).toThrow(
-        'Package.json "wrong/path/package.json" does not exist'
+        'Package.json "wrong/path/package.json" does not exist',
       );
     });
   });
@@ -45,14 +49,15 @@ describe("PackageJson", () => {
     it("should retrieve the package.json instance from the given directory path", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
 
-      expect(packageJson.getPath()).toEqual(testProjectDir + "/package.json");
+      expect(packageJson.getPath()).toEqual(`${testProjectDir}/package.json`);
     });
 
     it("should throws an error if no package.json exist for the given directory path", () => {
-      const getPackageJsonPathAction = () => PackageJson.fromDirPath("wrong/path");
+      const getPackageJsonPathAction = () =>
+        PackageJson.fromDirPath("wrong/path");
 
       expect(getPackageJsonPathAction).toThrow(
-        'Package.json "wrong/path/package.json" does not exist'
+        'Package.json "wrong/path/package.json" does not exist',
       );
     });
   });
@@ -77,8 +82,12 @@ describe("PackageJson", () => {
       const packageJsonContent = packageJson.getContent();
       expect(packageJsonContent).toEqual(newContent);
 
-      const realPackageJsonContent = readFileSync(packageJson.getPath()).toString();
-      expect(realPackageJsonContent).toEqual(JSON.stringify(newContent, null, 2));
+      const realPackageJsonContent = readFileSync(
+        packageJson.getPath(),
+      ).toString();
+      expect(realPackageJsonContent).toEqual(
+        JSON.stringify(newContent, null, 2),
+      );
     });
   });
 
@@ -170,14 +179,16 @@ describe("PackageJson", () => {
           "test-dependency": "1.0.0",
         },
       });
-      const dependenciesPackageNames = packageJson.getDependenciesPackageNames();
+      const dependenciesPackageNames =
+        packageJson.getDependenciesPackageNames();
 
       expect(dependenciesPackageNames).toEqual(["test-dependency"]);
     });
 
     it("should return an empty array when no dependencies are installed", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
-      const dependenciesPackageNames = packageJson.getDependenciesPackageNames();
+      const dependenciesPackageNames =
+        packageJson.getDependenciesPackageNames();
 
       expect(dependenciesPackageNames).toEqual([]);
     });
@@ -189,14 +200,16 @@ describe("PackageJson", () => {
           "test-dependency": "1.0.0",
         },
       });
-      const devDependenciesPackageNames = packageJson.getDevDependenciesPackageNames();
+      const devDependenciesPackageNames =
+        packageJson.getDevDependenciesPackageNames();
 
       expect(devDependenciesPackageNames).toEqual(["test-dependency"]);
     });
 
     it("should return an empty array when no dev dependencies are installed", () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
-      const devDependenciesPackageNames = packageJson.getDevDependenciesPackageNames();
+      const devDependenciesPackageNames =
+        packageJson.getDevDependenciesPackageNames();
 
       expect(devDependenciesPackageNames).toEqual([]);
     });

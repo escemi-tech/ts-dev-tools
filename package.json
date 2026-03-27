@@ -5,6 +5,9 @@
   "repository": "git@github.com:escemi-tech/ts-dev-tools.git",
   "author": "ESCEMI <contact@escemi.com>",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -21,6 +24,7 @@
     "ci": "npm run lint:fix && npm run build && npm run test:ci"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.8",
     "@commitlint/cli": "^20.0.0",
     "@commitlint/config-nx-scopes": "^20.0.0",
     "lerna": "^9.0.0",
@@ -33,8 +37,8 @@
     ]
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
+    "*.{js,ts,tsx,mjs,cjs,json}": [
+      "biome check --write"
     ]
   }
 }

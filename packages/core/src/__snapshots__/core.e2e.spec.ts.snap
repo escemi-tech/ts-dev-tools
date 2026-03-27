@@ -16,29 +16,18 @@ Applying migration "core - 20250623095500-add-prettier-oxc"...
 Migration "core - 20250623095500-add-prettier-oxc" applied!
 Applying migration "core - 20250623095600-remove-prettier-oxc"...
 Migration "core - 20250623095600-remove-prettier-oxc" applied!
+Applying migration "core - 20260311120000-migrate-to-biome"...
+Migration "core - 20260311120000-migrate-to-biome" applied!
 Symlinking dev dependencies...
+- Symlinking @biomejs/biome
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
-- Symlinking @eslint/js
-- Symlinking @prettier/plugin-oxc
 - Symlinking @types/jest
 - Symlinking @types/node
-- Symlinking eslint
-- Symlinking eslint-config-prettier
-- Symlinking eslint-plugin-jest
-- Symlinking globals
-- Symlinking import-sort-style-module
 - Symlinking jest
-- Symlinking lint-staged
-- Symlinking prettier
-- Symlinking prettier-plugin-import-sort
-- Symlinking pretty-quick
 - Symlinking ts-jest
-- Symlinking typescript-eslint
 Symlinking dev dependencies done!
 Resolving peer dependencies...
-- Symlinking peer dependency "jiti" required by "eslint"
-- Symlinking peer dependency "@typescript-eslint/eslint-plugin" required by "eslint-plugin-jest"
 - Symlinking peer dependency "@babel/core" required by "ts-jest"
 - Symlinking peer dependency "@jest/transform" required by "ts-jest"
 - Symlinking peer dependency "@jest/types" required by "ts-jest"
@@ -69,29 +58,18 @@ Applying migration "core - 20250623095500-add-prettier-oxc"...
 Migration "core - 20250623095500-add-prettier-oxc" applied!
 Applying migration "core - 20250623095600-remove-prettier-oxc"...
 Migration "core - 20250623095600-remove-prettier-oxc" applied!
+Applying migration "core - 20260311120000-migrate-to-biome"...
+Migration "core - 20260311120000-migrate-to-biome" applied!
 Symlinking dev dependencies...
+- Symlinking @biomejs/biome
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
-- Symlinking @eslint/js
-- Symlinking @prettier/plugin-oxc
 - Symlinking @types/jest
 - Symlinking @types/node
-- Symlinking eslint
-- Symlinking eslint-config-prettier
-- Symlinking eslint-plugin-jest
-- Symlinking globals
-- Symlinking import-sort-style-module
 - Symlinking jest
-- Symlinking lint-staged
-- Symlinking prettier
-- Symlinking prettier-plugin-import-sort
-- Symlinking pretty-quick
 - Symlinking ts-jest
-- Symlinking typescript-eslint
 Symlinking dev dependencies done!
 Resolving peer dependencies...
-- Symlinking peer dependency "jiti" required by "eslint"
-- Symlinking peer dependency "@typescript-eslint/eslint-plugin" required by "eslint-plugin-jest"
 - Symlinking peer dependency "@babel/core" required by "ts-jest"
 - Symlinking peer dependency "@jest/transform" required by "ts-jest"
 - Symlinking peer dependency "@jest/types" required by "ts-jest"
@@ -109,10 +87,11 @@ Installation done!"
 exports[`E2E - core Simple project Installs core package 2`] = `
 {
   "build": "tsc --noEmit",
+  "check": "biome check --write .",
   "dev": "vite",
-  "format": "prettier --cache --write '**/*.ts'",
+  "format": "biome format --write .",
   "jest": "jest --detectOpenHandles --forceExit",
-  "lint": "eslint "src/**/*.{ts,tsx}"",
+  "lint": "biome lint .",
   "prepare": "ts-dev-tools install",
   "preview": "vite preview",
   "test": "npm run jest --maxWorkers=50%",
@@ -124,15 +103,6 @@ exports[`E2E - core Simple project Installs core package 2`] = `
 
 exports[`E2E - core Simple project Installs core package 3`] = `
 {
-  "plugins": [],
-  "printWidth": 100,
-  "semi": true,
-  "trailingComma": "es5",
-}
-`;
-
-exports[`E2E - core Simple project Installs core package 4`] = `
-{
   "collectCoverageFrom": [
     "**/src/**/*.[jt]s?(x)",
   ],
@@ -143,4 +113,42 @@ exports[`E2E - core Simple project Installs core package 4`] = `
     "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)",
   ],
 }
+`;
+
+exports[`E2E - core Simple project Installs core package 4`] = `
+"{
+  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}
+"
 `;

@@ -1,5 +1,8 @@
 import { PackageJson } from "../../services/PackageJson";
-import { createProjectForTestFile, deleteTestProject } from "../../tests/test-project";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../../tests/test-project";
 import { up } from "./20250623095600-remove-prettier-oxc";
 
 // Set to false to avoid using the cache
@@ -42,7 +45,8 @@ describe("Migration 20250623095600-remove-prettier-oxc", () => {
       // Apply the migration to remove it
       await up(testProjectDir);
 
-      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
+      const packageJsonContent =
+        PackageJson.fromDirPath(testProjectDir).getContent();
 
       expect(packageJsonContent).toMatchSnapshot();
     });
@@ -59,7 +63,8 @@ describe("Migration 20250623095600-remove-prettier-oxc", () => {
       // Apply the migration
       await up(testProjectDir);
 
-      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
+      const packageJsonContent =
+        PackageJson.fromDirPath(testProjectDir).getContent();
 
       expect(packageJsonContent).toMatchSnapshot();
     });

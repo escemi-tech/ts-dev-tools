@@ -1,9 +1,12 @@
-import { existsSync } from "fs";
-import { join, resolve } from "path";
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 const rootDirPath = resolve(__dirname, "../../../..");
 
-export function getTestCacheDirPath(packageName: string, cacheName: string): string {
+export function getTestCacheDirPath(
+  packageName: string,
+  cacheName: string,
+): string {
   if (!packageName) {
     throw new Error("Package name must be provided");
   }
@@ -13,12 +16,15 @@ export function getTestCacheDirPath(packageName: string, cacheName: string): str
 
   const cacheDirPath = resolve(
     join(rootDirPath, "node_modules/.cache/ts-dev-tools", packageName),
-    cacheName.toLowerCase().replace(/[^a-z0-9]/g, "-")
+    cacheName.toLowerCase().replace(/[^a-z0-9]/g, "-"),
   );
   return cacheDirPath;
 }
 
-export function testCacheDirExists(packageName: string, cacheName: string): boolean {
+export function testCacheDirExists(
+  packageName: string,
+  cacheName: string,
+): boolean {
   const cacheDirPath = getTestCacheDirPath(packageName, cacheName);
   return existsSync(cacheDirPath);
 }

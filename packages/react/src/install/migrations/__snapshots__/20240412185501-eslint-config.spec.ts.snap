@@ -6,9 +6,3 @@ exports[`Migration 20240412185501-eslint-config Up should apply migration 1`] = 
   "version": "1.0.0",
 }
 `;
-
-exports[`Migration 20240412185501-eslint-config Up should apply migration 2`] = `
-"import { default as tsDevToolsReact } from "@ts-dev-tools/react/dist/eslint-plugin-ts-dev-tools/index.js";
-export default tsDevToolsReact.default;
-"
-`;

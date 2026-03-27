@@ -1,5 +1,8 @@
 import { PackageJson } from "../../services/PackageJson";
-import { createProjectForTestFile, deleteTestProject } from "../../tests/test-project";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../../tests/test-project";
 import { up } from "./20250623095500-add-prettier-oxc";
 
 // Set to false to avoid using the cache
@@ -31,7 +34,8 @@ describe("Migration 20250623095500-add-prettier-oxc", () => {
     it("should apply migration", async () => {
       await up(testProjectDir);
 
-      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
+      const packageJsonContent =
+        PackageJson.fromDirPath(testProjectDir).getContent();
 
       expect(packageJsonContent).toMatchSnapshot();
     });

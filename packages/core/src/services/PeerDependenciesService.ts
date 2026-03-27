@@ -1,8 +1,8 @@
-import { existsSync, mkdirSync, readdirSync, symlinkSync } from "fs";
-import { dirname, join } from "path";
+import { existsSync, mkdirSync, readdirSync, symlinkSync } from "node:fs";
+import { dirname, join } from "node:path";
 
 import { PackageJson } from "./PackageJson";
-import { Plugin, PluginService } from "./PluginService";
+import { type Plugin, PluginService } from "./PluginService";
 
 type PeerDependency = {
   name: string;
@@ -25,27 +25,30 @@ export class PeerDependenciesService {
   static async executeResolution(absoluteProjectDir: string): Promise<void> {
     console.info(`Resolving peer dependencies...`);
 
-    const installedPlugins = PluginService.getInstalledPlugins(absoluteProjectDir);
+    const installedPlugins =
+      PluginService.getInstalledPlugins(absoluteProjectDir);
     const missingPeers: MissingPeer[] = [];
     const packagesToInspect = PeerDependenciesService.getPackagesToInspect(
       absoluteProjectDir,
-      installedPlugins
+      installedPlugins,
     );
 
     for (const packageToInspect of packagesToInspect) {
-      const peers = PeerDependenciesService.getPackagePeerDependencies(packageToInspect.path);
+      const peers = PeerDependenciesService.getPackagePeerDependencies(
+        packageToInspect.path,
+      );
 
       for (const peer of peers) {
         const isResolvable = PeerDependenciesService.canResolveFromConsumerRoot(
           absoluteProjectDir,
-          peer.name
+          peer.name,
         );
 
         if (!isResolvable) {
           const sourcePath = PeerDependenciesService.resolvePeerSourcePath(
             absoluteProjectDir,
             packageToInspect.path,
-            peer.name
+            peer.name,
           );
 
           if (peer.optional && !existsSync(sourcePath)) {
@@ -62,13 +65,18 @@ export class PeerDependenciesService {
     }
 
     if (missingPeers.length > 0) {
-      PeerDependenciesService.symlinkMissingPeers(absoluteProjectDir, missingPeers);
+      PeerDependenciesService.symlinkMissingPeers(
+        absoluteProjectDir,
+        missingPeers,
+      );
     }
 
     console.info(`Resolving peer dependencies done!`);
   }
 
-  private static getPackagePeerDependencies(packageDirPath: string): PeerDependency[] {
+  private static getPackagePeerDependencies(
+    packageDirPath: string,
+  ): PeerDependency[] {
     const packageJson = PackageJson.fromDirPath(packageDirPath);
     const content = packageJson.getContent();
 
@@ -77,13 +85,15 @@ export class PeerDependenciesService {
 
     return Object.keys(peerDependencies).map((name) => ({
       name,
-      optional: (peerDependenciesMeta[name] as { optional?: boolean })?.optional || false,
+      optional:
+        (peerDependenciesMeta[name] as { optional?: boolean })?.optional ||
+        false,
     }));
   }
 
   private static getPackagesToInspect(
     absoluteProjectDir: string,
-    installedPlugins: Plugin[]
+    installedPlugins: Plugin[],
   ): PackageWithPath[] {
     const packages = new Map<string, PackageWithPath>();
 
@@ -93,13 +103,15 @@ export class PeerDependenciesService {
         path: plugin.path,
       });
 
-      const pluginDependencies = PackageJson.fromDirPath(plugin.path).getDependenciesPackageNames();
+      const pluginDependencies = PackageJson.fromDirPath(
+        plugin.path,
+      ).getDependenciesPackageNames();
 
       for (const dependencyName of pluginDependencies) {
         const dependencyPath = PeerDependenciesService.resolveDependencyPath(
           absoluteProjectDir,
           plugin.path,
-          dependencyName
+          dependencyName,
         );
 
         if (!dependencyPath) {
@@ -121,11 +133,19 @@ export class PeerDependenciesService {
   private static resolveDependencyPath(
     absoluteProjectDir: string,
     pluginPath: string,
-    dependencyName: string
+    dependencyName: string,
   ): string | undefined {
     const candidatePaths = [
-      join(absoluteProjectDir, PeerDependenciesService.DEPENDENCIES_FOLDER, dependencyName),
-      join(pluginPath, PeerDependenciesService.DEPENDENCIES_FOLDER, dependencyName),
+      join(
+        absoluteProjectDir,
+        PeerDependenciesService.DEPENDENCIES_FOLDER,
+        dependencyName,
+      ),
+      join(
+        pluginPath,
+        PeerDependenciesService.DEPENDENCIES_FOLDER,
+        dependencyName,
+      ),
     ];
 
     for (const candidatePath of candidatePaths) {
@@ -140,30 +160,34 @@ export class PeerDependenciesService {
   private static resolvePeerSourcePath(
     absoluteProjectDir: string,
     requiredByPath: string,
-    peerName: string
+    peerName: string,
   ): string {
     const projectNodeModulesPath = join(
       absoluteProjectDir,
-      PeerDependenciesService.DEPENDENCIES_FOLDER
+      PeerDependenciesService.DEPENDENCIES_FOLDER,
     );
 
-    const directResolution = PeerDependenciesService.resolvePackagePathFrom(requiredByPath, peerName);
+    const directResolution = PeerDependenciesService.resolvePackagePathFrom(
+      requiredByPath,
+      peerName,
+    );
     if (directResolution) {
       return directResolution;
     }
 
     const projectResolution = PeerDependenciesService.resolvePackagePathFrom(
       projectNodeModulesPath,
-      peerName
+      peerName,
     );
     if (projectResolution) {
       return projectResolution;
     }
 
-    const nestedResolution = PeerDependenciesService.resolveFromNestedNodeModules(
-      projectNodeModulesPath,
-      peerName
-    );
+    const nestedResolution =
+      PeerDependenciesService.resolveFromNestedNodeModules(
+        projectNodeModulesPath,
+        peerName,
+      );
     if (nestedResolution) {
       return nestedResolution;
     }
@@ -173,12 +197,17 @@ export class PeerDependenciesService {
 
   private static resolveFromNestedNodeModules(
     projectNodeModulesPath: string,
-    peerName: string
+    peerName: string,
   ): string | undefined {
-    const packageDirs = PeerDependenciesService.getTopLevelPackageDirs(projectNodeModulesPath);
+    const packageDirs = PeerDependenciesService.getTopLevelPackageDirs(
+      projectNodeModulesPath,
+    );
 
     for (const packageDir of packageDirs) {
-      const resolvedPath = PeerDependenciesService.resolvePackagePathFrom(packageDir, peerName);
+      const resolvedPath = PeerDependenciesService.resolvePackagePathFrom(
+        packageDir,
+        peerName,
+      );
       if (resolvedPath) {
         return resolvedPath;
       }
@@ -212,11 +241,17 @@ export class PeerDependenciesService {
     return packageDirs;
   }
 
-  private static resolvePackagePathFrom(fromPath: string, packageName: string): string | undefined {
+  private static resolvePackagePathFrom(
+    fromPath: string,
+    packageName: string,
+  ): string | undefined {
     try {
-      const packageJsonPath = require.resolve(join(packageName, "package.json"), {
-        paths: [fromPath],
-      });
+      const packageJsonPath = require.resolve(
+        join(packageName, "package.json"),
+        {
+          paths: [fromPath],
+        },
+      );
       return dirname(packageJsonPath);
     } catch {
       return undefined;
@@ -225,23 +260,23 @@ export class PeerDependenciesService {
 
   private static canResolveFromConsumerRoot(
     absoluteProjectDir: string,
-    packageName: string
+    packageName: string,
   ): boolean {
     const packagePath = join(
       absoluteProjectDir,
       PeerDependenciesService.DEPENDENCIES_FOLDER,
-      packageName
+      packageName,
     );
     return existsSync(packagePath);
   }
 
   private static symlinkMissingPeers(
     absoluteProjectDir: string,
-    missingPeers: MissingPeer[]
+    missingPeers: MissingPeer[],
   ): void {
     const projectDependencyPath = join(
       absoluteProjectDir,
-      PeerDependenciesService.DEPENDENCIES_FOLDER
+      PeerDependenciesService.DEPENDENCIES_FOLDER,
     );
 
     const uniqueMissingPeers = new Map<string, MissingPeer>();
@@ -255,14 +290,16 @@ export class PeerDependenciesService {
       const peerSourcePath = peer.sourcePath;
       if (!existsSync(peerSourcePath)) {
         console.warn(
-          `- Peer dependency "${peer.name}" required by "${peer.requiredBy}" not found in plugin node_modules`
+          `- Peer dependency "${peer.name}" required by "${peer.requiredBy}" not found in plugin node_modules`,
         );
         continue;
       }
 
       const peerTargetPath = join(projectDependencyPath, peer.name);
 
-      console.info(`- Symlinking peer dependency "${peer.name}" required by "${peer.requiredBy}"`);
+      console.info(
+        `- Symlinking peer dependency "${peer.name}" required by "${peer.requiredBy}"`,
+      );
       PeerDependenciesService.symlinkPeer(peerSourcePath, peerTargetPath);
     }
   }
