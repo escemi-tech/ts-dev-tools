@@ -27,7 +27,7 @@ export async function safeExec(cwd: string, cmd: string) {
     const error = [stderr, stdout].filter((error) => !!error).join("\n");
 
     throw new Error(
-      `An error occured while executing command "${cmd}": ${error}`,
+      `An error occurred while executing command "${cmd}": ${error}`,
     );
   }
   return stdout;

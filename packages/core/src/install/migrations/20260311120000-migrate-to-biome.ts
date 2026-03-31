@@ -10,7 +10,7 @@ import { PackageJson } from "../../services/PackageJson";
 const BIOME_CONFIG_FILE_NAME = "biome.json";
 const ESLINT_CONFIG_FILE_NAME = "eslint.config.mjs";
 const PRE_COMMIT_HOOK_NAME = "pre-commit";
-const BIOME_INIT_COMMAND = "npx @biomejs/biome init";
+const BIOME_INIT_COMMAND = "npx --no-install @biomejs/biome init";
 
 const OLD_PRE_COMMIT_COMMAND =
   "npx --no-install lint-staged && npx --no-install pretty-quick --staged";
@@ -96,15 +96,24 @@ function enableBiomeVcsIntegration(absoluteProjectDir: string): void {
     return;
   }
 
-  const biomeConfigContent = JSON.parse(
-    FileService.getFileContent(biomeConfigFilePath),
-  ) as {
+  let biomeConfigContent: {
     vcs?: {
       clientKind?: string;
       enabled?: boolean;
       useIgnoreFile?: boolean;
     };
   };
+
+  try {
+    biomeConfigContent = JSON.parse(
+      FileService.getFileContent(biomeConfigFilePath),
+    ) as typeof biomeConfigContent;
+  } catch {
+    console.warn(
+      `Could not parse ${BIOME_CONFIG_FILE_NAME}. Skipping VCS integration.`,
+    );
+    return;
+  }
 
   const existingVcs = biomeConfigContent.vcs ?? {};
 
@@ -185,7 +194,7 @@ function migrateViteReactTsAppFile(content: string): string {
 
 function addRelNoopenerToBlankTargetLinks(content: string): string {
   return content.replaceAll(
-    /target="_blank"(?!\s+rel=)/g,
+    /target="_blank"(?![^>]*\srel=)/g,
     'target="_blank" rel="noopener"',
   );
 }

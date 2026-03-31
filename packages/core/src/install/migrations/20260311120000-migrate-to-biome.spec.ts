@@ -23,10 +23,10 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
 
   beforeAll(() => {
     if (!useCache) {
-      console.warn("Cache is disabled. Enable it one dev is done.");
+      console.warn("Cache is disabled. Enable it once development is done.");
     }
     if (!shouldCleanupAfterTest) {
-      console.warn("Cleanup is disabled. Enable it one dev is done.");
+      console.warn("Cleanup is disabled. Enable it once development is done.");
     }
   });
 

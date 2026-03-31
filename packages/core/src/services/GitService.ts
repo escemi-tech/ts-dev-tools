@@ -30,7 +30,6 @@ export class GitService {
     gitHookName: string,
     gitHookCommand: string,
   ): Promise<void> {
-    const gitHookDirPath = join(absoluteProjectDir, ".git/hooks");
     const gitHookFilePath = GitService.getGitHookFilePath(
       absoluteProjectDir,
       gitHookName,

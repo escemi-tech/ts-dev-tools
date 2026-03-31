@@ -106,7 +106,11 @@ export abstract class AbstractPackageManagerAdapter
       let output = "";
       let error = "";
 
-      child.on("exit", (code) => {
+      child.on("error", (err) => {
+        reject(err);
+      });
+
+      child.on("close", (code) => {
         if (code) {
           return reject(output.length > 0 ? output : error);
         }
