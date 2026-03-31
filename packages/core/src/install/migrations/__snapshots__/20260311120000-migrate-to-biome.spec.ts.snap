@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tools eslint and prettier setup to biome 1`] = `
+{
+  "license": "MIT",
+  "scripts": {
+    "check": "biome check --write .",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tools eslint and prettier setup to biome 2`] = `
+"{
+  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}
+"
+`;
+
+exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tools eslint and prettier setup to biome 3`] = `
+"#!/bin/sh
+
+# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
+
+npx --no-install biome check --staged --write"
+`;
+
+exports[`Migration 20260311120000-migrate-to-biome Up should not overwrite an existing biome config 1`] = `
+"{
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}
+"
+`;

@@ -1,8 +1,10 @@
-import { MigrationUpFunction } from "../../services/MigrationsService";
+import type { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
 import { PackageManagerService } from "../../services/PackageManagerService";
 
-export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
+export const up: MigrationUpFunction = async (
+  absoluteProjectDir: string,
+): Promise<void> => {
   const nxDeps = ["@nrwl/workspace", "nx", "lerna"];
   const packageToInstall = "@commitlint/config-nx-scopes";
 
@@ -15,8 +17,16 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
   }
 
   // Ensure that package is installed
-  if (!(await PackageManagerService.isPackageInstalled(packageToInstall, absoluteProjectDir))) {
-    await PackageManagerService.addDevPackage(packageToInstall, absoluteProjectDir);
+  if (
+    !(await PackageManagerService.isPackageInstalled(
+      packageToInstall,
+      absoluteProjectDir,
+    ))
+  ) {
+    await PackageManagerService.addDevPackage(
+      packageToInstall,
+      absoluteProjectDir,
+    );
   }
 
   // Update commitlint config

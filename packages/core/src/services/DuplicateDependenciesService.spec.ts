@@ -1,5 +1,12 @@
-import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
-import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
+import {
+  getConsoleInfoContent,
+  mockConsoleInfo,
+  resetMockedConsoleInfo,
+} from "../tests/console";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../tests/test-project";
 import { DuplicateDependenciesService } from "./DuplicateDependenciesService";
 import { PackageJson } from "./PackageJson";
 

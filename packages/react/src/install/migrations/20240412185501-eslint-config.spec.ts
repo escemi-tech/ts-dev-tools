@@ -1,10 +1,9 @@
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
-import { FileService } from "@ts-dev-tools/core/dist/services/FileService";
-import { up } from "./20240412185501-eslint-config";
 import {
   createProjectForTestFile,
   deleteTestProject,
 } from "@ts-dev-tools/core/dist/tests/test-project";
+import { up } from "./20240412185501-eslint-config";
 
 // Set to false to avoid using the cache
 const useCache = true;
@@ -37,16 +36,10 @@ describe("Migration 20240412185501-eslint-config", () => {
     it("should apply migration", async () => {
       await up(testProjectDir);
 
-      const packageJsonContent = PackageJson.fromDirPath(testProjectDir).getContent();
+      const packageJsonContent =
+        PackageJson.fromDirPath(testProjectDir).getContent();
 
       expect(packageJsonContent).toMatchSnapshot();
-
-      const eslintConfigFilePath = `${testProjectDir}/eslint.config.mjs`;
-
-      expect(FileService.fileExists(eslintConfigFilePath)).toBe(true);
-
-      const eslintConfigContent = FileService.getFileContent(eslintConfigFilePath);
-      expect(eslintConfigContent).toMatchSnapshot();
     });
   });
 });

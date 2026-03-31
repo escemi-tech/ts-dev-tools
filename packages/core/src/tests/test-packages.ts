@@ -1,10 +1,10 @@
-import { readdirSync, lstatSync } from "fs";
-import { join, resolve } from "path";
+import { lstatSync, readdirSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { PackageJson } from "../services/PackageJson";
 import { PluginService } from "../services/PluginService";
-import { createProjectForTestFile } from "./test-project";
-import { copyFolder } from "./file-system";
 import { safeExec } from "./cli";
+import { copyFolder } from "./file-system";
+import { createProjectForTestFile } from "./test-project";
 
 async function createTestPackagesProject(projectDir: string): Promise<void> {
   const originalPackagesPath = resolve(__dirname, "../../..");
@@ -25,7 +25,9 @@ async function createTestPackagesProject(projectDir: string): Promise<void> {
       for (const packageName of Object.keys(content.dependencies)) {
         if (PluginService.packageNameIsPlugin(packageName)) {
           const pluginShortName = PluginService.getPluginShortname(packageName);
-          const dependencyPath = resolve(join(packagePath, "..", pluginShortName));
+          const dependencyPath = resolve(
+            join(packagePath, "..", pluginShortName),
+          );
           content.dependencies[packageName] = `file://${dependencyPath}`;
         }
       }
@@ -43,6 +45,13 @@ async function createTestPackagesProject(projectDir: string): Promise<void> {
  */
 
 export async function createTestPackagesDir(filename: string): Promise<string> {
-  const testPackagesFileName = filename.replace(".spec.ts", `-test-packages.spec.ts`);
-  return createProjectForTestFile(testPackagesFileName, false, createTestPackagesProject);
+  const testPackagesFileName = filename.replace(
+    ".spec.ts",
+    `-test-packages.spec.ts`,
+  );
+  return createProjectForTestFile(
+    testPackagesFileName,
+    false,
+    createTestPackagesProject,
+  );
 }

@@ -1,5 +1,12 @@
-import { getConsoleInfoContent, mockConsoleInfo, resetMockedConsoleInfo } from "../tests/console";
-import { createProjectForTestFile, deleteTestProject } from "../tests/test-project";
+import {
+  getConsoleInfoContent,
+  mockConsoleInfo,
+  resetMockedConsoleInfo,
+} from "../tests/console";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "../tests/test-project";
 import { PackageJson } from "./PackageJson";
 import { SymlinkDependenciesService } from "./SymlinkDependenciesService";
 

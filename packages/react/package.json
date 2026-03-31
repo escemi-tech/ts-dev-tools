@@ -20,6 +20,9 @@
   "bin": {
     "ts-dev-tools": "./node_modules/.bin/ts-dev-tools"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -36,8 +39,9 @@
     "test:unit": "npm run test -- --testPathPattern \".+spec\\.ts\"",
     "test:e2e": "npm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
     "test:coverage": "npm run test -- --coverage",
-    "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "lint:ci": "npm run lint -- --output-file eslint-report.json --format json"
+    "lint": "biome lint src",
+    "lint:fix": "biome check --write src",
+    "lint:ci": "biome check src"
   },
   "bugs": {
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
@@ -49,22 +53,8 @@
     "@ts-dev-tools/core": "^1.11.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint-plugin-react": "^7.37.5",
     "jest-environment-jsdom": "^30.3.0",
     "react-test-renderer": "^19.2.4"
-  },
-  "prettier": {
-    "semi": true,
-    "printWidth": 100,
-    "trailingComma": "es5",
-    "plugins": [
-      "@prettier/plugin-oxc"
-    ]
-  },
-  "importSort": {
-    ".js, .jsx, .ts, .tsx": {
-      "style": "module"
-    }
   },
   "jest": {
     "preset": "ts-jest",

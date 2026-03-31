@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { safeExec } from "./cli";
 
 export async function recreateFolderRecursive(path: string): Promise<void> {

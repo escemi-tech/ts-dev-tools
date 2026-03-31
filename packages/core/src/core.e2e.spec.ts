@@ -1,12 +1,16 @@
-import { resolve } from "path";
+import { resolve } from "node:path";
 
+import { FileService } from "./services/FileService";
 import { PackageJson } from "./services/PackageJson";
 import { exec, safeExec } from "./tests/cli";
-import { createProjectForTestFile, deleteTestProject } from "./tests/test-project";
-import { createTestMonorepoProject } from "./tests/test-project-monorepo";
-import { createTestPackagesDir } from "./tests/test-packages";
-import { deleteFolderRecursive } from "./tests/file-system";
 import { stripAnsi } from "./tests/console";
+import { deleteFolderRecursive } from "./tests/file-system";
+import { createTestPackagesDir } from "./tests/test-packages";
+import {
+  createProjectForTestFile,
+  deleteTestProject,
+} from "./tests/test-project";
+import { createTestMonorepoProject } from "./tests/test-project-monorepo";
 
 // Set to false to avoid using the cache
 const useCache = true;
@@ -14,10 +18,12 @@ const useCache = true;
 const shouldCleanupAfterTest = true;
 
 async function typescriptProjectGenerator(projectDir: string) {
-  await safeExec(projectDir, "npm create vite . -- --template vanilla-ts --no-interactive");
+  await safeExec(
+    projectDir,
+    "npm create vite . -- --template vanilla-ts --no-interactive",
+  );
   await safeExec(projectDir, "npm install");
 }
-
 
 const packageToTest = "core";
 
@@ -34,7 +40,11 @@ describe(`E2E - ${packageToTest}`, () => {
     }
 
     testProjectDirPackages = await createTestPackagesDir(__filename);
-    const packagePath = resolve(testProjectDirPackages, "packages", packageToTest);
+    const packagePath = resolve(
+      testProjectDirPackages,
+      "packages",
+      packageToTest,
+    );
     packageToInstall = `${packagePath}`;
   }, 200000);
 
@@ -57,15 +67,16 @@ describe(`E2E - ${packageToTest}`, () => {
       testProjectDir = await createProjectForTestFile(
         __filename,
         useCache,
-        typescriptProjectGenerator
+        typescriptProjectGenerator,
       );
     }, 200000);
 
     it(`Installs ${packageToTest} package`, async () => {
-      const { code: installPackageCode, stderr: installPackageStderr } = await exec(
-        testProjectDir,
-        `npm install --save-dev "${packageToInstall}"`
-      );
+      const { code: installPackageCode, stderr: installPackageStderr } =
+        await exec(
+          testProjectDir,
+          `npm install --save-dev "${packageToInstall}"`,
+        );
 
       expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);
@@ -83,20 +94,33 @@ describe(`E2E - ${packageToTest}`, () => {
       const packageJson = PackageJson.fromDirPath(testProjectDir);
       expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
       expect(packageJson.getContent().scripts).toMatchSnapshot();
-      expect(packageJson.getContent().prettier).toMatchSnapshot();
+      expect(packageJson.getContent().prettier).toBeUndefined();
       expect(packageJson.getContent().jest).toMatchSnapshot();
 
-      const { code: lintCode, stderr: lintStderr } = await exec(testProjectDir, "npm run lint");
+      const biomeConfigFilePath = `${testProjectDir}/biome.json`;
+      expect(FileService.fileExists(biomeConfigFilePath)).toBe(true);
+      expect(FileService.getFileContent(biomeConfigFilePath)).toMatchSnapshot();
+
+      const { code: lintCode, stderr: lintStderr } = await exec(
+        testProjectDir,
+        "npm run lint",
+      );
 
       expect(lintStderr).toBeFalsy();
       expect(lintCode).toBe(0);
 
-      const { code: buildCode, stderr: buildStderr } = await exec(testProjectDir, "npm run build");
+      const { code: buildCode, stderr: buildStderr } = await exec(
+        testProjectDir,
+        "npm run build",
+      );
 
       expect(buildStderr).toBeFalsy();
       expect(buildCode).toBe(0);
 
-      const { code: formatCode, stderr: formatStderr } = await exec(testProjectDir, "npm run format");
+      const { code: formatCode, stderr: formatStderr } = await exec(
+        testProjectDir,
+        "npm run format",
+      );
 
       expect(formatStderr).toBeFalsy();
       expect(formatCode).toBe(0);
@@ -110,15 +134,16 @@ describe(`E2E - ${packageToTest}`, () => {
       testProjectDir = await createTestMonorepoProject(
         __filename,
         useCache,
-        typescriptProjectGenerator
+        typescriptProjectGenerator,
       );
     }, 200000);
 
     it(`Installs ${packageToTest} package`, async () => {
-      const { code: installPackageCode, stderr: installPackageStderr } = await exec(
-        testProjectDir,
-        `npm install --save-dev "${packageToInstall}"`
-      );
+      const { code: installPackageCode, stderr: installPackageStderr } =
+        await exec(
+          testProjectDir,
+          `npm install --save-dev "${packageToInstall}"`,
+        );
 
       expect(installPackageStderr).toBeFalsy();
       expect(installPackageCode).toBe(0);

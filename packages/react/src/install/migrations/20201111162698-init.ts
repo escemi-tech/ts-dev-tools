@@ -1,8 +1,10 @@
-import { MigrationUpFunction } from "@ts-dev-tools/core/dist/services/MigrationsService";
+import type { MigrationUpFunction } from "@ts-dev-tools/core/dist/services/MigrationsService";
 import { PackageJson } from "@ts-dev-tools/core/dist/services/PackageJson";
 import { PackageJsonMerge } from "@ts-dev-tools/core/dist/services/PackageJsonMerge";
 
-export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promise<void> => {
+export const up: MigrationUpFunction = async (
+  absoluteProjectDir: string,
+): Promise<void> => {
   const eslintConfig = {
     env: {
       browser: true,
@@ -30,7 +32,8 @@ export const up: MigrationUpFunction = async (absoluteProjectDir: string): Promi
   });
 
   const extendsPlugin = "plugin:react/recommended";
-  const eslintConfigExtends = (content?.eslintConfig as { extends: string[] }).extends;
+  const eslintConfigExtends = (content?.eslintConfig as { extends: string[] })
+    .extends;
   if (!eslintConfigExtends.includes(extendsPlugin)) {
     const prettierIndex = eslintConfigExtends.indexOf("prettier");
 

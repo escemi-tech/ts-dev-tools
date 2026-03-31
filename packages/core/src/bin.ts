@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { dirname, join } from "path";
+import { dirname, join } from "node:path";
 
 import { PROJECT_NAME } from "./constants";
 import { install } from "./install/command";
@@ -22,7 +22,9 @@ async function bin() {
       });
       break;
     case ["--version", "-v"].includes(arg):
-      console.info(PackageJson.fromDirPath(join(__dirname, "..")).getPackageVersion());
+      console.info(
+        PackageJson.fromDirPath(join(__dirname, "..")).getPackageVersion(),
+      );
       break;
     default:
       console.info(`Usage

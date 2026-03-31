@@ -1,9 +1,9 @@
-import { existsSync, mkdirSync, symlinkSync } from "fs";
-import { join } from "path";
+import { existsSync, mkdirSync, symlinkSync } from "node:fs";
+import { join } from "node:path";
 
 import { PackageJson } from "./PackageJson";
-import { Plugin, PluginService } from "./PluginService";
 import { PackageManagerService } from "./PackageManagerService";
+import { type Plugin, PluginService } from "./PluginService";
 
 export class SymlinkDependenciesService {
   static DEPENDENCIES_FOLDER = "node_modules";
@@ -11,44 +11,59 @@ export class SymlinkDependenciesService {
   static async executeSymlinking(absoluteProjectDir: string): Promise<void> {
     console.info(`Symlinking dev dependencies...`);
 
-    const installedPlugins = PluginService.getInstalledPlugins(absoluteProjectDir);
+    const installedPlugins =
+      PluginService.getInstalledPlugins(absoluteProjectDir);
 
     for (const plugin of installedPlugins) {
-      await SymlinkDependenciesService.symlinkPluginDependencies(absoluteProjectDir, plugin);
+      await SymlinkDependenciesService.symlinkPluginDependencies(
+        absoluteProjectDir,
+        plugin,
+      );
     }
 
     console.info(`Symlinking dev dependencies done!`);
   }
 
-  private static async symlinkPluginDependencies(absoluteProjectDir: string, plugin: Plugin) {
-    const pluginDependencies = SymlinkDependenciesService.getPluginDependencies(plugin);
+  private static async symlinkPluginDependencies(
+    absoluteProjectDir: string,
+    plugin: Plugin,
+  ) {
+    const pluginDependencies =
+      SymlinkDependenciesService.getPluginDependencies(plugin);
 
     const projectDependencyPath = join(
       absoluteProjectDir,
-      SymlinkDependenciesService.DEPENDENCIES_FOLDER
+      SymlinkDependenciesService.DEPENDENCIES_FOLDER,
     );
 
-    const pluginDependenciesPath = await SymlinkDependenciesService.getPluginDependenciesPath(
-      absoluteProjectDir,
-      plugin,
-      pluginDependencies
-    );
+    const pluginDependenciesPath =
+      await SymlinkDependenciesService.getPluginDependenciesPath(
+        absoluteProjectDir,
+        plugin,
+        pluginDependencies,
+      );
 
     if (projectDependencyPath === pluginDependenciesPath) {
       console.info(
-        `- Skipping symlinking ${plugin.shortname} dependencies, already in node_modules`
+        `- Skipping symlinking ${plugin.shortname} dependencies, already in node_modules`,
       );
       return;
     }
 
     for (const pluginDependency of pluginDependencies) {
-      const pluginDependencyPath = join(pluginDependenciesPath, pluginDependency);
+      const pluginDependencyPath = join(
+        pluginDependenciesPath,
+        pluginDependency,
+      );
 
       if (!existsSync(pluginDependencyPath)) {
         continue;
       }
 
-      const projectPluginDependencyPath = join(projectDependencyPath, pluginDependency);
+      const projectPluginDependencyPath = join(
+        projectDependencyPath,
+        pluginDependency,
+      );
       if (existsSync(projectPluginDependencyPath)) {
         continue;
       }
@@ -56,7 +71,7 @@ export class SymlinkDependenciesService {
       console.info(`- Symlinking ${pluginDependency}`);
       SymlinkDependenciesService.symlinkDependency(
         pluginDependencyPath,
-        projectPluginDependencyPath
+        projectPluginDependencyPath,
       );
     }
   }
@@ -69,16 +84,17 @@ export class SymlinkDependenciesService {
   private static async getPluginDependenciesPath(
     absoluteProjectDir: string,
     plugin: Plugin,
-    pluginDependencies: string[]
+    pluginDependencies: string[],
   ): Promise<string> {
     const pluginDependenciesPath = join(
       plugin.path,
-      SymlinkDependenciesService.DEPENDENCIES_FOLDER
+      SymlinkDependenciesService.DEPENDENCIES_FOLDER,
     );
 
     if (existsSync(pluginDependenciesPath)) {
-      const hasAnyPluginDependency = pluginDependencies.some((pluginDependency) =>
-        existsSync(join(pluginDependenciesPath, pluginDependency))
+      const hasAnyPluginDependency = pluginDependencies.some(
+        (pluginDependency) =>
+          existsSync(join(pluginDependenciesPath, pluginDependency)),
       );
 
       if (hasAnyPluginDependency) {
@@ -91,9 +107,12 @@ export class SymlinkDependenciesService {
 
   private static symlinkDependency(
     pluginDependencyPath: string,
-    projectPluginDependencyPath: string
+    projectPluginDependencyPath: string,
   ): void {
-    const pluginDependencyParentFolder = join(projectPluginDependencyPath, "..");
+    const pluginDependencyParentFolder = join(
+      projectPluginDependencyPath,
+      "..",
+    );
     if (!existsSync(pluginDependencyParentFolder)) {
       mkdirSync(pluginDependencyParentFolder, { recursive: true });
     }

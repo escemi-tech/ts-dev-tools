@@ -1,11 +1,11 @@
-import { resolve as resolvePath } from "path";
+import { resolve as resolvePath } from "node:path";
 
 import { exec } from "./tests/cli";
 
 function execBin(cmd?: string) {
   return exec(
     resolvePath("./__tests__/test-project"),
-    `ts-node ${resolvePath("./src/bin.ts")} ${cmd || ""}`.trim()
+    `ts-node ${resolvePath("./src/bin.ts")} ${cmd || ""}`.trim(),
   );
 }
 

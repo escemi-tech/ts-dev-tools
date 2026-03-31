@@ -12,7 +12,9 @@ Migration "core - 20240617094000-config-nx-scopes" applied!
 Applying migration "core - 20250623095500-add-prettier-oxc"...
 Migration "core - 20250623095500-add-prettier-oxc" applied!
 Applying migration "core - 20250623095600-remove-prettier-oxc"...
-Migration "core - 20250623095600-remove-prettier-oxc" applied!"
+Migration "core - 20250623095600-remove-prettier-oxc" applied!
+Applying migration "core - 20260311120000-migrate-to-biome"...
+Migration "core - 20260311120000-migrate-to-biome" applied!"
 `;
 
 exports[`MigrationsService executeMigrations should execute migrations when no version is provided 1`] = `
@@ -29,5 +31,7 @@ Migration "core - 20240617094000-config-nx-scopes" applied!
 Applying migration "core - 20250623095500-add-prettier-oxc"...
 Migration "core - 20250623095500-add-prettier-oxc" applied!
 Applying migration "core - 20250623095600-remove-prettier-oxc"...
-Migration "core - 20250623095600-remove-prettier-oxc" applied!"
+Migration "core - 20250623095600-remove-prettier-oxc" applied!
+Applying migration "core - 20260311120000-migrate-to-biome"...
+Migration "core - 20260311120000-migrate-to-biome" applied!"
 `;
