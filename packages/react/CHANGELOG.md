@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.9.17...@ts-dev-tools/react@1.10.0) (2026-04-01)
+
+
+### Features
+
+* upgrade deps minor versions ([054e31b](https://github.com/escemi-tech/ts-dev-tools/commit/054e31b5aeed34ead4a58c1d10c1e2111fa2a239))
+
+
+
+
+
 ## [1.9.17](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.9.16...@ts-dev-tools/react@1.9.17) (2026-03-05)
 
 **Note:** Version bump only for package @ts-dev-tools/react
