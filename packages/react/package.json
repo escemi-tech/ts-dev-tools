@@ -51,7 +51,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint-plugin-react": "^7.37.5",
     "jest-environment-jsdom": "^30.3.0",
-    "react-test-renderer": "^19.2.4"
+    "react-test-renderer": "^19.2.5"
   },
   "prettier": {
     "semi": true,
