@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@commitlint/cli": "^20.5.0",
-    "@commitlint/config-conventional": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.3",
     "@eslint/js": "^10.0.1",
     "@prettier/plugin-oxc": "^0.1.4",
     "@types/jest": "^30.0.0",
