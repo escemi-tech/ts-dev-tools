@@ -43,8 +43,8 @@
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
   },
   "dependencies": {
-    "@commitlint/cli": "^20.5.0",
-    "@commitlint/config-conventional": "^20.5.3",
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
     "@eslint/js": "^10.0.1",
     "@prettier/plugin-oxc": "^0.1.4",
     "@types/jest": "^30.0.0",
