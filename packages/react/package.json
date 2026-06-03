@@ -51,10 +51,10 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@ts-dev-tools/core": "^1.12.2",
-    "@types/react": "^19.2.15",
+    "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
     "jest-environment-jsdom": "^30.4.1",
-    "react-test-renderer": "^19.2.6"
+    "react-test-renderer": "^19.2.7"
   },
   "jest": {
     "preset": "ts-jest",
