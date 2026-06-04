@@ -1,6 +1,6 @@
 {
   "name": "@ts-dev-tools/core",
-  "version": "1.12.3",
+  "version": "1.12.4",
   "description": "TS dev tools Core",
   "keywords": [
     "linter",
@@ -48,10 +48,10 @@
   },
   "dependencies": {
     "@biomejs/biome": "^2.4.8",
-    "@vitest/coverage-v8": "^4.1.6",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.2",
     "@types/node": "^25.9.1",
+    "@vitest/coverage-v8": "^4.1.6",
     "typescript": "^6.0.3",
     "vitest": "^4.1.6"
   },

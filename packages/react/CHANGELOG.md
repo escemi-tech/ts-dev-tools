@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.4](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.10.3...@ts-dev-tools/react@1.10.4) (2026-06-04)
+
+
+### Bug Fixes
+
+* minor issues regarding biome and vitest integration ([b66972d](https://github.com/escemi-tech/ts-dev-tools/commit/b66972de4afa261005a4a92f7eeefca8f3add0f7))
+
+
+
+
+
 ## [1.10.3](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.10.2...@ts-dev-tools/react@1.10.3) (2026-06-03)
 
 **Note:** Version bump only for package @ts-dev-tools/react
