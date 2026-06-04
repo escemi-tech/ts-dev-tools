@@ -53,7 +53,7 @@
     "@ts-dev-tools/core": "^1.12.3",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
-    "jsdom": "^27.1.0",
+    "jsdom": "^29.1.1",
     "react-test-renderer": "^19.2.7"
   }
 }
