@@ -44,10 +44,10 @@ Using **ts-dev-tools** you should just have to update it and you'll have all the
 
 ### _1_. Choose the plugin that fits with you need
 
-| Name                                              | Description                                                                 |
-| ------------------------------------------------- | --------------------------------------------------------------------------- |
-| [@ts-dev-tools/core](./packages/core/README.md)   | Common Typescript tools (Eslint and prettier, lint-staged and pretty-quick) |
-| [@ts-dev-tools/react](./packages/react/README.md) | Dev tools for a for [ReactJS](https://reactjs.org/) project                 |
+| Name                                              | Description                                                 |
+| ------------------------------------------------- | ----------------------------------------------------------- |
+| [@ts-dev-tools/core](./packages/core/README.md)   | Common Typescript tools (Biome, git hooks, and Vitest)      |
+| [@ts-dev-tools/react](./packages/react/README.md) | Dev tools for a for [ReactJS](https://reactjs.org/) project |
 
 ### _2_. Install
 

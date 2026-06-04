@@ -12,10 +12,9 @@
 
 ### Inherit from [`@ts-dev-tools/core`](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/)
 
-### 👕 Linter
+### 👕 Code quality
 
-- Enable `browser` env for [eslint](https://eslint.org/docs/user-guide/configuring#specifying-environments)
-- Install and configure [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+- Reuse the [Biome](https://biomejs.dev/) linting and formatting workflow from [@ts-dev-tools/core](https://github.com/escemi-tech/ts-dev-tools/tree/main/packages/core)
 
 ### 🧪 Tests
 

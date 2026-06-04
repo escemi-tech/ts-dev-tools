@@ -13,15 +13,16 @@
 ### 📦 Package scripts
 
 - `test`: Run tests with [Vitest](https://vitest.dev/)
-- `lint`: Run linter with [eslint](https://eslint.org/)
+- `format`: Format code with [Biome](https://biomejs.dev/)
+- `lint`: Run linter with [Biome](https://biomejs.dev/)
+- `check`: Run Biome checks and apply safe fixes
 - `prepare`: Self install / update
 
 ### ⚡ Git hooks
 
 #### `pre-commit`
 
-- Run linter against staged git files with [lint-staged](https://github.com/okonet/lint-staged)
-- Run prettier against changed files with [pretty-quick](https://github.com/azz/pretty-quick#readme)
+- Run [Biome](https://biomejs.dev/) checks against staged git files
 
 #### `commit-msg`
 
@@ -33,21 +34,11 @@
 - Execute Typescript compiler with [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 - Run tests
 
-### 👕 Linter
+### 👕 Code quality
 
-- Install and configure [eslint](https://eslint.org/) with recommended [rules](https://eslint.org/docs/rules/)
-- Configure Eslint to works with [typescript](https://github.com/typescript-eslint/typescript-eslint#readme)
-- Install and configure the following Eslint plugins:
-  - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import): ES2015+ (ES6+) import/export syntax
-  - [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node#readme): Additional ESLint's rules for Node.js
-  - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise#readme): Enforce best practices for JavaScript promises.
-
-### 💄 Prettier
-
-- Install and configure [Prettier](https://prettier.io/)
-- Configure Prettier to works with [Eslint](https://github.com/prettier/eslint-config-prettier)
-- Install and configure the following Prettier plugins:
-  - [prettier-plugin-import-sort](https://github.com/ggascoigne/prettier-plugin-import-sort#readme): sort imports using [import-sort](https://github.com/renke/import-sort) for javascript and typescript files.
+- Install and configure [Biome](https://biomejs.dev/) for linting and formatting
+- Enable Biome recommended rules and VCS integration
+- Organize imports with Biome assist actions
 
 ### 🧪 Tests
 
