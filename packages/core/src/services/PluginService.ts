@@ -12,6 +12,8 @@ export type Plugin = {
 };
 
 export class PluginService {
+  private constructor() {}
+
   static packageNameIsPlugin(packageName: string) {
     return packageName.match(new RegExp(`^${PACKAGE_BASE_NAME}/.*$`));
   }

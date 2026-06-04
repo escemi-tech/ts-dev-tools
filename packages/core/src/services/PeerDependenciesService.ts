@@ -20,6 +20,8 @@ type PackageWithPath = {
 };
 
 export class PeerDependenciesService {
+  private constructor() {}
+
   static DEPENDENCIES_FOLDER = "node_modules";
 
   static async executeResolution(absoluteProjectDir: string): Promise<void> {

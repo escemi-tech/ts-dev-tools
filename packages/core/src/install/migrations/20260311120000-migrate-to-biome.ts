@@ -14,7 +14,8 @@ const BIOME_INIT_COMMAND = "npx @biomejs/biome init";
 
 const OLD_PRE_COMMIT_COMMAND =
   "npx --no-install lint-staged && npx --no-install pretty-quick --staged";
-const NEW_PRE_COMMIT_COMMAND = "npx --no-install biome check --staged --write";
+const NEW_PRE_COMMIT_COMMAND =
+  "npx --no-install biome check --error-on-warnings --staged --write";
 
 const MANAGED_ESLINT_MARKERS = [
   "tsDevToolsCore",
@@ -73,8 +74,8 @@ export const up: MigrationUpFunction = async (
   packageJsonContent.scripts = {
     ...packageJsonContent.scripts,
     format: "biome format --write .",
-    lint: "biome lint .",
-    check: "biome check --write .",
+    lint: "biome lint --error-on-warnings .",
+    check: "biome check --error-on-warnings --write .",
   };
 
   packageJson.setContent(packageJsonContent);

@@ -9,6 +9,8 @@ import { YarnPackageManagerAdapter } from "./package-manager/YarnPackageManagerA
 export { PackageManagerType } from "./package-manager/PackageManagerType";
 
 export class PackageManagerService {
+  private constructor() {}
+
   static detectPackageManager(dirPath: string): PackageManagerType {
     if (existsSync(join(dirPath, "yarn.lock"))) {
       return PackageManagerType.yarn;

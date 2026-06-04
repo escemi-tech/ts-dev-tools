@@ -4,6 +4,8 @@ import { type Plugin, PluginService } from "./PluginService";
 type DuplicateDependencies = Map<string, Set<string>>;
 
 export class DuplicateDependenciesService {
+  private constructor() {}
+
   static executeDeduplication(absoluteProjectDir: string): void {
     console.info(`Checking for duplicate dev dependencies...`);
 

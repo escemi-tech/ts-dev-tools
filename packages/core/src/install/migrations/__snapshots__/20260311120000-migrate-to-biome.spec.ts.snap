@@ -4,9 +4,9 @@ exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-
 {
   "license": "MIT",
   "scripts": {
-    "check": "biome check --write .",
+    "check": "biome check --error-on-warnings --write .",
     "format": "biome format --write .",
-    "lint": "biome lint .",
+    "lint": "biome lint --error-on-warnings .",
   },
   "version": "1.0.0",
 }
@@ -55,7 +55,7 @@ exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-
 
 # Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
 
-npx --no-install biome check --staged --write"
+npx --no-install biome check --error-on-warnings --staged --write"
 `;
 
 exports[`Migration 20260311120000-migrate-to-biome > Up > should not overwrite an existing biome config 1`] = `

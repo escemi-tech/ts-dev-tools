@@ -2,6 +2,8 @@ import { spawn } from "node:child_process";
 import { existsSync, statSync } from "node:fs";
 
 export class CmdService {
+  private constructor() {}
+
   static execCmd(
     args: string | string[],
     cwd?: string,
