@@ -1,9 +1,10 @@
 import { PackageJson } from "../../services/PackageJson";
+import { PackageManagerService } from "../../services/PackageManagerService";
 import {
   createProjectForTestFile,
   deleteTestProject,
 } from "../../tests/test-project";
-import { up } from "./20201024173398-init";
+import { hooks, up } from "./20201024173398-init";
 
 // Set to false to avoid using the cache
 const useCache = true;
@@ -40,6 +41,34 @@ describe("Migration 20201024173398-init", () => {
         PackageJson.fromDirPath(testProjectDir).getContent();
 
       expect(packageJsonContent).toMatchSnapshot();
+    });
+  });
+
+  describe("hooks", () => {
+    it("should export the managed hooks with a package-manager-aware pre-push command", () => {
+      const detectPackageManagerSpy = vi
+        .spyOn(PackageManagerService, "detectPackageManager")
+        .mockReturnValue("yarn");
+
+      try {
+        expect(hooks[0]).toEqual({
+          name: "pre-commit",
+          command:
+            "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
+        });
+        expect(hooks[1]).toEqual({
+          name: "commit-msg",
+          command: "npx --no-install commitlint --edit $1",
+        });
+        expect(typeof hooks[2]?.command).toBe("function");
+        expect(
+          (hooks[2]?.command as (absoluteProjectDir: string) => string)(
+            testProjectDir,
+          ),
+        ).toBe("yarn run lint && yarn run build && yarn run test");
+      } finally {
+        detectPackageManagerSpy.mockRestore();
+      }
     });
   });
 });

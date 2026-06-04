@@ -1,12 +1,21 @@
 import { existsSync, readdirSync, unlinkSync } from "node:fs";
 import { resolve } from "node:path";
-
 import { PackageJson } from "../services/PackageJson";
+import {
+  type AppliedManagedGitHook,
+  HooksService,
+  type ManagedGitHook,
+} from "./HooksService";
 import { type Plugin, PluginService } from "./PluginService";
 
 export type Migration = { fullname: string; shortname: string; path: string };
 
 export type MigrationUpFunction = (absoluteProjectDir: string) => Promise<void>;
+
+type MigrationModule = {
+  hooks?: ManagedGitHook[];
+  up: MigrationUpFunction;
+};
 
 export class MigrationsService {
   private constructor() {}
@@ -17,22 +26,41 @@ export class MigrationsService {
     absoluteProjectDir: string,
     currentVersion: string | undefined,
   ): Promise<void> {
-    const migrations = MigrationsService.getAvailableMigrations(
-      absoluteProjectDir,
-      currentVersion,
-    );
+    const migrations = MigrationsService.getMigrations(absoluteProjectDir);
 
     const packageJson = PackageJson.fromDirPath(absoluteProjectDir);
     const packageJsonBackupPath = packageJson.backup();
+    const consolidatedManagedGitHooks = new Map<
+      string,
+      AppliedManagedGitHook
+    >();
 
     try {
       for (const migration of migrations) {
+        const migrationModule = (await import(
+          migration.path
+        )) as MigrationModule;
+
+        HooksService.consolidateManagedGitHooks(
+          absoluteProjectDir,
+          migrationModule.hooks ?? [],
+          consolidatedManagedGitHooks,
+        );
+
+        const shouldApplyMigration =
+          MigrationsService.migrationIsAfterCurrentVersion(
+            migration.shortname,
+            currentVersion,
+          );
+
+        if (!shouldApplyMigration) {
+          continue;
+        }
+
         console.info(`Applying migration "${migration.fullname}"...`);
 
-        const { up } = await import(migration.path);
-
         // Apply migration
-        await up(absoluteProjectDir);
+        await migrationModule.up(absoluteProjectDir);
 
         // Upgrade current version
         PackageJson.fromDirPath(absoluteProjectDir).merge({
@@ -41,6 +69,11 @@ export class MigrationsService {
 
         console.info(`Migration "${migration.fullname}" applied!`);
       }
+
+      await HooksService.applyManagedGitHooks(
+        absoluteProjectDir,
+        Array.from(consolidatedManagedGitHooks.values()),
+      );
     } catch (error) {
       // Rollback package.json
       packageJson.restore(packageJsonBackupPath);
@@ -52,20 +85,14 @@ export class MigrationsService {
     }
   }
 
-  private static getAvailableMigrations(
-    absoluteProjectDir: string,
-    currentVersion: string | undefined,
-  ): Migration[] {
+  private static getMigrations(absoluteProjectDir: string): Migration[] {
     const installedPlugins =
       PluginService.getInstalledPlugins(absoluteProjectDir);
 
     const migrationFiles: Migration[] = [];
     for (const installedPlugin of installedPlugins) {
       migrationFiles.push(
-        ...MigrationsService.getPluginMigrations(
-          installedPlugin,
-          currentVersion,
-        ),
+        ...MigrationsService.getPluginMigrations(installedPlugin),
       );
     }
 
@@ -76,10 +103,7 @@ export class MigrationsService {
     return Array.from(new Set(migrationFiles));
   }
 
-  private static getPluginMigrations(
-    plugin: Plugin,
-    currentVersion: string | undefined,
-  ): Migration[] {
+  private static getPluginMigrations(plugin: Plugin): Migration[] {
     const migrationFiles = [];
 
     const pluginMigrationsDirPath = resolve(
@@ -93,15 +117,6 @@ export class MigrationsService {
 
       const migrationName =
         MigrationsService.getMigrationNameFromFile(migrationFile);
-      const shouldApplyMigration =
-        MigrationsService.migrationIsAfterCurrentVersion(
-          migrationName,
-          currentVersion,
-        );
-
-      if (!shouldApplyMigration) {
-        continue;
-      }
 
       migrationFiles.push({
         shortname: migrationName,

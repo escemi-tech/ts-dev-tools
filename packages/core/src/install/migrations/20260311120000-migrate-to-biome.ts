@@ -3,7 +3,7 @@ import { dirname, join, relative } from "node:path";
 
 import { CmdService } from "../../services/CmdService";
 import { FileService } from "../../services/FileService";
-import { GitService } from "../../services/GitService";
+import type { ManagedGitHook } from "../../services/HooksService";
 import type { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
 
@@ -12,10 +12,15 @@ const ESLINT_CONFIG_FILE_NAME = "eslint.config.mjs";
 const PRE_COMMIT_HOOK_NAME = "pre-commit";
 const BIOME_INIT_COMMAND = "npx @biomejs/biome init";
 
-const OLD_PRE_COMMIT_COMMAND =
-  "npx --no-install lint-staged && npx --no-install pretty-quick --staged";
 const NEW_PRE_COMMIT_COMMAND =
   "npx --no-install biome check --error-on-warnings --staged --write";
+
+export const hooks: ManagedGitHook[] = [
+  {
+    name: PRE_COMMIT_HOOK_NAME,
+    command: NEW_PRE_COMMIT_COMMAND,
+  },
+];
 
 const MANAGED_ESLINT_MARKERS = [
   "tsDevToolsCore",
@@ -83,7 +88,6 @@ export const up: MigrationUpFunction = async (
   enableBiomeVcsIntegration(absoluteProjectDir);
   migrateCommonViteStarterFiles(absoluteProjectDir);
   deleteManagedEslintConfig(absoluteProjectDir, hasManagedEslintConfigFile);
-  updateManagedPreCommitHook(absoluteProjectDir);
 };
 
 async function runBiomeInit(absoluteProjectDir: string): Promise<void> {
@@ -149,7 +153,7 @@ function getBiomeVcsRoot(absoluteProjectDir: string): string | undefined {
     return undefined;
   }
 
-  return relative(absoluteProjectDir, vcsRootPath) || undefined;
+  return relative(absoluteProjectDir, vcsRootPath);
 }
 
 function getEnclosingVcsRootPath(
@@ -292,13 +296,4 @@ function deleteManagedEslintConfig(
   }
 
   unlinkSync(eslintConfigFilePath);
-}
-
-function updateManagedPreCommitHook(absoluteProjectDir: string): void {
-  GitService.updateGitHook(
-    absoluteProjectDir,
-    PRE_COMMIT_HOOK_NAME,
-    OLD_PRE_COMMIT_COMMAND,
-    NEW_PRE_COMMIT_COMMAND,
-  );
 }
