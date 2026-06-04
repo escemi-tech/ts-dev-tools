@@ -6,6 +6,8 @@ import { PackageManagerService } from "./PackageManagerService";
 import { type Plugin, PluginService } from "./PluginService";
 
 export class SymlinkDependenciesService {
+  private constructor() {}
+
   static DEPENDENCIES_FOLDER = "node_modules";
 
   static async executeSymlinking(absoluteProjectDir: string): Promise<void> {

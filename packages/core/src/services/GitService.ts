@@ -12,6 +12,8 @@ import { PROJECT_NAME, PROJECT_URL } from "../constants";
 import { CmdService } from "./CmdService";
 
 export class GitService {
+  private constructor() {}
+
   static GIT_HOOK_MODE = 0o755;
   static GIT_HOOK_TEMPLATE = `#!/bin/sh
 

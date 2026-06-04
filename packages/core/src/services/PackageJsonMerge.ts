@@ -6,6 +6,8 @@ import type {
 } from "./PackageJson";
 
 export class PackageJsonMerge {
+  private constructor() {}
+
   static merge(
     source: PackageJsonContent,
     update: PackageJsonContent,

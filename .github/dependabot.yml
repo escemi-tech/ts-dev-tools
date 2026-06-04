@@ -9,36 +9,34 @@ updates:
       day: friday
       time: "04:00"
     groups:
-      npm-eslint-dependencies:
+      npm-biome-dependencies:
         patterns:
-          - "eslint"
-          - "eslint-*"
-          - "@eslint/*"
-          - "typescript-eslint"
+          - "@biomejs/*"
       npm-commitlint-dependencies:
         patterns:
           - "@commitlint/*"
-      npm-prettier-dependencies:
+      npm-typescript-dependencies:
         patterns:
-          - "prettier-*"
-          - "prettier"
-          - "@prettier/*"
+          - "typescript"
+          - "ts-node"
+          - "@types/node"
       npm-react-dependencies:
         patterns:
           - "react"
           - "react-*"
+          - "react-dom"
           - "@types/react"
           - "@types/react-*"
-      npm-testing-library-dependencies:
+      npm-testing-dependencies:
         patterns:
           - "@testing-library/*"
-      npm-jest-dependencies:
+          - "vitest"
+          - "@vitest/*"
+          - "jsdom"
+      npm-workspace-tooling-dependencies:
         patterns:
-          - "jest"
-          - "@types/jest"
-          - "@types/jest-*"
-          - "ts-jest"
-          - "jest-*"
+          - "lerna"
+          - "rimraf"
 
   - package-ecosystem: github-actions
     directory: "/"

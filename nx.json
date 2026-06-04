@@ -1,24 +1,16 @@
 {
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "{projectRoot}/dist"
-      ],
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist"],
       "cache": true
     },
     "test:unit": {
-      "outputs": [
-        "{projectRoot}/src/**/__snapshots__"
-      ],
+      "outputs": ["{projectRoot}/src/**/__snapshots__"],
       "cache": true
     },
     "test:e2e": {
-      "outputs": [
-        "{projectRoot}/src/**/__snapshots__"
-      ],
+      "outputs": ["{projectRoot}/src/**/__snapshots__"],
       "cache": true
     },
     "test:coverage": {
@@ -31,25 +23,18 @@
     "lint": {
       "cache": true
     },
-    "jest": {
+    "lint:ci": {
       "cache": true
     },
     "test": {
       "cache": true,
-      "outputs": [
-        "{projectRoot}/src/**/__snapshots__"
-      ]
+      "outputs": ["{projectRoot}/src/**/__snapshots__"]
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [],
-    "production": [
-      "default"
-    ]
+    "production": ["default"]
   }
 }

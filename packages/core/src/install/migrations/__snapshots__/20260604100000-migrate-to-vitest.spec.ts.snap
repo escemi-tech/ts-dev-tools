@@ -10,9 +10,9 @@ exports[`Migration 20260604100000-migrate-to-vitest > should migrate generated J
   "license": "MIT",
   "scripts": {
     "build": "tsc --noEmit",
-    "check": "biome check --write .",
+    "check": "biome check --error-on-warnings --write .",
     "format": "biome format --write .",
-    "lint": "biome lint .",
+    "lint": "biome lint --error-on-warnings .",
     "prepare": "ts-dev-tools install",
     "test": "vitest run",
     "test:ci": "npm run test:cov",

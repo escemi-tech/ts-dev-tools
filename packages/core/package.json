@@ -39,9 +39,9 @@
     "test:unit": "vitest run spec.ts",
     "test:e2e": "vitest run e2e.spec.ts",
     "test:coverage": "vitest run --coverage",
-    "lint": "biome lint src",
+    "lint": "biome lint --error-on-warnings src",
     "lint:fix": "biome check --write src",
-    "lint:ci": "biome check src"
+    "lint:ci": "biome check --error-on-warnings src"
   },
   "bugs": {
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"

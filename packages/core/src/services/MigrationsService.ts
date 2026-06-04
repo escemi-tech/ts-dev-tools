@@ -9,6 +9,8 @@ export type Migration = { fullname: string; shortname: string; path: string };
 export type MigrationUpFunction = (absoluteProjectDir: string) => Promise<void>;
 
 export class MigrationsService {
+  private constructor() {}
+
   static MIGRATION_BUILT_PATH = "dist/install/migrations";
 
   static async executeMigrations(

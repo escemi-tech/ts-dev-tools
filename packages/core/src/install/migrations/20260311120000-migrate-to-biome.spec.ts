@@ -11,7 +11,10 @@ import { join } from "node:path";
 import { CmdService } from "../../services/CmdService";
 import { FileService } from "../../services/FileService";
 import { GitService } from "../../services/GitService";
-import { PackageJson } from "../../services/PackageJson";
+import {
+  PackageJson,
+  type PackageJsonContent,
+} from "../../services/PackageJson";
 import {
   createProjectForTestFile,
   deleteTestProject,
@@ -174,9 +177,9 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
         PackageJson.fromDirPath(testProjectDir).getContent();
       expect(migratedPackageJson.eslintConfig).toBeUndefined();
       expect(migratedPackageJson.scripts).toMatchObject({
-        check: "biome check --write .",
+        check: "biome check --error-on-warnings --write .",
         format: "biome format --write .",
-        lint: "biome lint .",
+        lint: "biome lint --error-on-warnings .",
       });
     });
 
@@ -228,9 +231,9 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
       expect(
         PackageJson.fromDirPath(testProjectDir).getContent().scripts,
       ).toMatchObject({
-        check: "biome check --write .",
+        check: "biome check --error-on-warnings --write .",
         format: "biome format --write .",
-        lint: "biome lint .",
+        lint: "biome lint --error-on-warnings .",
       });
     });
 
@@ -316,7 +319,7 @@ export default tsDevToolsCore;
         .spyOn(PackageJson.prototype, "setContent")
         .mockImplementation(function mockSetContent(
           this: PackageJson,
-          content,
+          content: PackageJsonContent,
         ) {
           originalSetContent.call(this, content);
           if (existsSync(eslintConfigFilePath)) {

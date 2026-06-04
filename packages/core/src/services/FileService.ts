@@ -1,6 +1,8 @@
 import { copyFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 
 export class FileService {
+  private constructor() {}
+
   static fileExists(filePath: string): boolean {
     return existsSync(filePath);
   }
