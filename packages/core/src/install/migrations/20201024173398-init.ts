@@ -1,8 +1,31 @@
 import { PROJECT_NAME } from "../../constants";
-import { GitService } from "../../services/GitService";
+import type { ManagedGitHook } from "../../services/HooksService";
 import type { MigrationUpFunction } from "../../services/MigrationsService";
 import { PackageJson } from "../../services/PackageJson";
 import { PackageManagerService } from "../../services/PackageManagerService";
+
+function getPackageManagerCommand(absoluteProjectDir: string): string {
+  return PackageManagerService.detectPackageManager(absoluteProjectDir);
+}
+
+export const hooks: ManagedGitHook[] = [
+  {
+    name: "pre-commit",
+    command:
+      "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
+  },
+  {
+    name: "commit-msg",
+    command: "npx --no-install commitlint --edit $1",
+  },
+  {
+    name: "pre-push",
+    command: (absoluteProjectDir: string) => {
+      const packageManager = getPackageManagerCommand(absoluteProjectDir);
+      return `${packageManager} run lint && ${packageManager} run build && ${packageManager} run test`;
+    },
+  },
+];
 
 export const up: MigrationUpFunction = async (
   absoluteProjectDir: string,
@@ -90,25 +113,4 @@ export const up: MigrationUpFunction = async (
     scripts,
     jest,
   });
-
-  // Install Git hooks (only if we are in a git repository)
-  const isGitRepository = await GitService.isGitRepository(absoluteProjectDir);
-
-  if (isGitRepository) {
-    const gitHooks = {
-      "pre-commit":
-        "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
-      "commit-msg": "npx --no-install commitlint --edit $1",
-      "pre-push": `${packageManager} run lint && ${packageManager} run build && ${packageManager} run test`,
-    };
-
-    for (const gitHookName of Object.keys(gitHooks)) {
-      const gitHookCommand = gitHooks[gitHookName as keyof typeof gitHooks];
-      await GitService.addGitHook(
-        absoluteProjectDir,
-        gitHookName,
-        gitHookCommand,
-      );
-    }
-  }
 };

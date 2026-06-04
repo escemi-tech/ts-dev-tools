@@ -1,16 +1,8 @@
-import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  rmSync,
-  unlinkSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, rmSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 
 import { CmdService } from "../../services/CmdService";
 import { FileService } from "../../services/FileService";
-import { GitService } from "../../services/GitService";
 import {
   PackageJson,
   type PackageJsonContent,
@@ -19,10 +11,8 @@ import {
   createProjectForTestFile,
   deleteTestProject,
 } from "../../tests/test-project";
-import { up } from "./20260311120000-migrate-to-biome";
+import { hooks, up } from "./20260311120000-migrate-to-biome";
 
-const OLD_PRE_COMMIT_COMMAND =
-  "npx --no-install lint-staged && npx --no-install pretty-quick --staged";
 const BIOME_SCHEMA_URL_PATTERN =
   /https:\/\/biomejs\.dev\/schemas\/[^"]+\/schema\.json/;
 
@@ -92,20 +82,6 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
       `,
       );
 
-      const preCommitHookPath = join(
-        testProjectDir,
-        ".git",
-        "hooks",
-        "pre-commit",
-      );
-      writeFileSync(
-        preCommitHookPath,
-        GitService.GIT_HOOK_TEMPLATE.replace(
-          "%gitHookCommand%",
-          OLD_PRE_COMMIT_COMMAND,
-        ),
-      );
-
       await up(testProjectDir);
 
       expect(
@@ -121,7 +97,6 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
       ).toMatchSnapshot();
 
       expect(existsSync(eslintConfigFilePath)).toBe(false);
-      expect(readFileSync(preCommitHookPath, "utf-8")).toMatchSnapshot();
     });
 
     it("should keep custom eslint config files", async () => {
@@ -482,6 +457,18 @@ export default tsDevToolsCore;
           "",
         ].join("\n"),
       );
+    });
+  });
+
+  describe("hooks", () => {
+    it("should export the managed pre-commit hook", () => {
+      expect(hooks).toEqual([
+        {
+          name: "pre-commit",
+          command:
+            "npx --no-install biome check --error-on-warnings --staged --write",
+        },
+      ]);
     });
   });
 });

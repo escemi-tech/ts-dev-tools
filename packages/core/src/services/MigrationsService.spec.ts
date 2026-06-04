@@ -1,3 +1,6 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import {
   getConsoleInfoContent,
   mockConsoleInfo,
@@ -7,6 +10,8 @@ import {
   createProjectForTestFile,
   deleteTestProject,
 } from "../tests/test-project";
+import { GitService } from "./GitService";
+import { HooksService } from "./HooksService";
 import { MigrationsService } from "./MigrationsService";
 import { PackageJson } from "./PackageJson";
 
@@ -72,6 +77,87 @@ describe("MigrationsService", () => {
 
       await expect(executeMigrationsAction()).resolves.toBeUndefined();
       expect(getConsoleInfoContent()).toMatchSnapshot();
+    });
+
+    it("should apply consolidated managed git hooks even when no migration needs to run", async () => {
+      vi.spyOn(GitService, "isGitRepository").mockResolvedValue(true);
+
+      PackageJson.fromDirPath(testProjectDir).merge({
+        devDependencies: {
+          "@ts-dev-tools/core": "1.0.0",
+        },
+      });
+
+      const executeMigrationsAction = () =>
+        MigrationsService.executeMigrations(
+          testProjectDir,
+          "20260604100000-migrate-to-vitest",
+        );
+
+      await expect(executeMigrationsAction()).resolves.toBeUndefined();
+
+      const preCommitHookPath = join(
+        testProjectDir,
+        ".git",
+        "hooks",
+        "pre-commit",
+      );
+      const commitMsgHookPath = join(
+        testProjectDir,
+        ".git",
+        "hooks",
+        "commit-msg",
+      );
+      const prePushHookPath = join(testProjectDir, ".git", "hooks", "pre-push");
+
+      expect(existsSync(preCommitHookPath)).toBe(true);
+      expect(readFileSync(preCommitHookPath, "utf-8")).toBe(`#!/bin/sh
+
+# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
+
+npx --no-install biome check --error-on-warnings --staged --write`);
+
+      expect(existsSync(commitMsgHookPath)).toBe(true);
+      expect(readFileSync(commitMsgHookPath, "utf-8")).toBe(`#!/bin/sh
+
+# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
+
+npx --no-install commitlint --edit $1`);
+
+      expect(existsSync(prePushHookPath)).toBe(true);
+      expect(readFileSync(prePushHookPath, "utf-8")).toBe(`#!/bin/sh
+
+# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
+
+npm run lint && npm run build && npm run test`);
+    });
+
+    it("should restore package.json and rethrow when applying managed hooks fails", async () => {
+      PackageJson.fromDirPath(testProjectDir).merge({
+        devDependencies: {
+          "@ts-dev-tools/core": "1.0.0",
+        },
+      });
+
+      const restoreSpy = vi.spyOn(PackageJson.prototype, "restore");
+      const applyManagedGitHooksError = new Error("Could not apply hooks");
+      const applyManagedGitHooksSpy = vi
+        .spyOn(HooksService, "applyManagedGitHooks")
+        .mockRejectedValue(applyManagedGitHooksError);
+
+      try {
+        await expect(
+          MigrationsService.executeMigrations(
+            testProjectDir,
+            "20260604100000-migrate-to-vitest",
+          ),
+        ).rejects.toThrow("Could not apply hooks");
+
+        expect(restoreSpy).toHaveBeenCalledTimes(1);
+      } finally {
+        applyManagedGitHooksSpy.mockRestore();
+        restoreSpy.mockRestore();
+      }
     });
   });
 

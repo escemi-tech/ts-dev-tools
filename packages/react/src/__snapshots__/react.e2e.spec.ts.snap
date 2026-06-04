@@ -34,9 +34,9 @@ Symlinking dev dependencies...
 - Symlinking jsdom
 - Symlinking react-test-renderer
 - Symlinking @biomejs/biome
-- Symlinking @vitest/coverage-v8
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
+- Symlinking @vitest/coverage-v8
 - Symlinking vitest
 Symlinking dev dependencies done!
 Resolving peer dependencies...
@@ -83,9 +83,9 @@ Symlinking dev dependencies...
 - Symlinking jsdom
 - Symlinking react-test-renderer
 - Symlinking @biomejs/biome
-- Symlinking @vitest/coverage-v8
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
+- Symlinking @vitest/coverage-v8
 - Symlinking vitest
 Symlinking dev dependencies done!
 Resolving peer dependencies...

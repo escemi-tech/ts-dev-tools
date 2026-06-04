@@ -50,14 +50,6 @@ exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-
 "
 `;
 
-exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-tools eslint and prettier setup to biome 3`] = `
-"#!/bin/sh
-
-# Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
-
-npx --no-install biome check --error-on-warnings --staged --write"
-`;
-
 exports[`Migration 20260311120000-migrate-to-biome > Up > should not overwrite an existing biome config 1`] = `
 "{
   "vcs": {
