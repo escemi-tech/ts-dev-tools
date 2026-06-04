@@ -56,15 +56,15 @@ describe(`E2E - ${packageToTest}`, () => {
     packageToInstall = `${packagePath}`;
   }, 200000);
 
-  afterEach(async () => {
-    if (shouldCleanupAfterTest) {
-      await deleteTestProject(__filename);
-    }
-  });
-
   afterAll(async () => {
     if (shouldCleanupAfterTest) {
       await deleteFolderRecursive(testProjectDirPackages);
+    }
+  });
+
+  afterEach(async () => {
+    if (shouldCleanupAfterTest) {
+      await deleteTestProject(__filename);
     }
   });
 
