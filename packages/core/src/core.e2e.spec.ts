@@ -105,7 +105,13 @@ describe(`E2E - ${packageToTest}`, () => {
       expect(packageJson.getTsDevToolsVersion()).not.toBeFalsy();
       expect(packageJson.getContent().scripts).toMatchSnapshot();
       expect(packageJson.getContent().prettier).toBeUndefined();
-      expect(packageJson.getContent().jest).toMatchSnapshot();
+      expect(packageJson.getContent().jest).toBeUndefined();
+
+      const vitestConfigFilePath = `${testProjectDir}/vitest.config.ts`;
+      expect(FileService.fileExists(vitestConfigFilePath)).toBe(true);
+      expect(
+        FileService.getFileContent(vitestConfigFilePath),
+      ).toMatchSnapshot();
 
       const biomeConfigFilePath = `${testProjectDir}/biome.json`;
       expect(FileService.fileExists(biomeConfigFilePath)).toBe(true);

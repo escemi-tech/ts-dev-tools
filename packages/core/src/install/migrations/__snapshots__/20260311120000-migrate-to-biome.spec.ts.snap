@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tools eslint and prettier setup to biome 1`] = `
+exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-tools eslint and prettier setup to biome 1`] = `
 {
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,7 @@ exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tool
 }
 `;
 
-exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tools eslint and prettier setup to biome 2`] = `
+exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-tools eslint and prettier setup to biome 2`] = `
 "{
   "$schema": "https://biomejs.dev/schemas/__VERSION__/schema.json",
   "vcs": {
@@ -50,7 +50,7 @@ exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tool
 "
 `;
 
-exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tools eslint and prettier setup to biome 3`] = `
+exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-tools eslint and prettier setup to biome 3`] = `
 "#!/bin/sh
 
 # Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
@@ -58,7 +58,7 @@ exports[`Migration 20260311120000-migrate-to-biome Up should migrate ts-dev-tool
 npx --no-install biome check --staged --write"
 `;
 
-exports[`Migration 20260311120000-migrate-to-biome Up should not overwrite an existing biome config 1`] = `
+exports[`Migration 20260311120000-migrate-to-biome > Up > should not overwrite an existing biome config 1`] = `
 "{
   "vcs": {
     "enabled": true,

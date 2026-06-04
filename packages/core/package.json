@@ -34,11 +34,11 @@
     "start": "npm link && tsc -w",
     "stop": "npm unlink",
     "build": "rimraf dist && tsc",
-    "jest": "jest --detectOpenHandles --forceExit",
-    "test": "npm run jest -- --maxWorkers=50%",
-    "test:unit": "npm run test -- --testPathPattern \".+spec\\.ts\"",
-    "test:e2e": "npm run test -- --testPathPattern \".+e2e\\.spec\\.ts\"",
-    "test:coverage": "npm run test -- --coverage",
+    "vitest": "vitest",
+    "test": "vitest run",
+    "test:unit": "vitest run spec.ts",
+    "test:e2e": "vitest run e2e.spec.ts",
+    "test:coverage": "vitest run --coverage",
     "lint": "biome lint src",
     "lint:fix": "biome check --write src",
     "lint:ci": "biome check src"
@@ -48,30 +48,14 @@
   },
   "dependencies": {
     "@biomejs/biome": "^2.4.8",
+    "@vitest/coverage-v8": "^4.1.6",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.2",
-    "@types/jest": "^30.0.0",
     "@types/node": "^25.9.1",
-    "jest": "^30.4.2",
-    "ts-jest": "^29.4.11",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
   },
   "devDependencies": {
     "ts-node": "^10.9.2"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/src/**/__tests__/**/*.[jt]s?(x)",
-      "**/src/**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)"
-    ],
-    "collectCoverageFrom": [
-      "**/src/**/*.[jt]s?(x)"
-    ],
-    "reporters": [
-      "default",
-      "github-actions"
-    ]
   }
 }

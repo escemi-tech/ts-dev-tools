@@ -1,5 +1,4 @@
 import { join } from "node:path";
-import type { PackageJson as PackageJsonType } from "type-fest";
 import { FileService } from "./FileService";
 import { PackageJsonMerge } from "./PackageJsonMerge";
 
@@ -21,7 +20,42 @@ export type AnyJson =
 export type JsonFileData = {
   [key: string]: AnyJson | undefined;
 };
-export type PackageJsonContent = JsonFileData & PackageJsonType;
+
+type PackageNameVersionMap = Record<string, string>;
+
+type PackageJsonKnownFields = {
+  author?: JsonFileData | string;
+  bin?: PackageNameVersionMap | string;
+  bugs?: JsonFileData | string;
+  commitlint?: JsonFileData;
+  dependencies?: PackageNameVersionMap;
+  description?: string;
+  devDependencies?: PackageNameVersionMap;
+  directories?: PackageNameVersionMap;
+  engines?: PackageNameVersionMap;
+  eslintConfig?: JsonFileData;
+  files?: string[];
+  homepage?: string;
+  importSort?: JsonFileData;
+  keywords?: string[];
+  license?: string;
+  lintStaged?: JsonFileData;
+  main?: string;
+  name?: string;
+  peerDependencies?: PackageNameVersionMap;
+  peerDependenciesMeta?: Record<string, { optional?: boolean }>;
+  prettier?: JsonFileData;
+  private?: boolean;
+  publishConfig?: JsonFileData;
+  repository?: JsonFileData | string;
+  scripts?: PackageNameVersionMap;
+  tsDevTools?: JsonFileData;
+  types?: string;
+  version?: string;
+  workspaces?: JsonArray | JsonFileData;
+};
+
+export type PackageJsonContent = JsonFileData & PackageJsonKnownFields;
 
 export class PackageJson {
   private static readonly PACKAGE_JSON_FILE_NAME = "package.json";

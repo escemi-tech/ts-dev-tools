@@ -196,7 +196,7 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
       const invalidBiomeConfig = '{\n  "vcs":\n';
       FileService.putFileContent(biomeConfigFilePath, invalidBiomeConfig);
 
-      const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
       try {
         await expect(up(testProjectDir)).resolves.toBeUndefined();
@@ -214,9 +214,7 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
     });
 
     it("should continue when biome init does not create a config file", async () => {
-      const execCmdSpy = jest
-        .spyOn(CmdService, "execCmd")
-        .mockResolvedValue("");
+      const execCmdSpy = vi.spyOn(CmdService, "execCmd").mockResolvedValue("");
 
       try {
         await expect(up(testProjectDir)).resolves.toBeUndefined();
@@ -314,7 +312,7 @@ export default tsDevToolsCore;
       );
 
       const originalSetContent = PackageJson.prototype.setContent;
-      const setContentSpy = jest
+      const setContentSpy = vi
         .spyOn(PackageJson.prototype, "setContent")
         .mockImplementation(function mockSetContent(
           this: PackageJson,

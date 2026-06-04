@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`E2E - react Monorepo project Installs react package 1`] = `
+exports[`E2E - react > Monorepo project > Installs react package 1`] = `
 "Installing ts-dev-tools...
 Applying migration "core - 20201024173398-init"...
 Migration "core - 20201024173398-init" applied!
@@ -22,25 +22,24 @@ Applying migration "core - 20250623095600-remove-prettier-oxc"...
 Migration "core - 20250623095600-remove-prettier-oxc" applied!
 Applying migration "core - 20260311120000-migrate-to-biome"...
 Migration "core - 20260311120000-migrate-to-biome" applied!
+Applying migration "core - 20260604100000-migrate-to-vitest"...
+Migration "core - 20260604100000-migrate-to-vitest" applied!
+Applying migration "react - 20260604100001-migrate-to-vitest"...
+Migration "react - 20260604100001-migrate-to-vitest" applied!
 Symlinking dev dependencies...
 - Symlinking @testing-library/dom
 - Symlinking @testing-library/jest-dom
 - Symlinking @testing-library/react
 - Symlinking @ts-dev-tools/core
-- Symlinking jest-environment-jsdom
+- Symlinking jsdom
 - Symlinking react-test-renderer
 - Symlinking @biomejs/biome
+- Symlinking @vitest/coverage-v8
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
-- Symlinking @types/jest
-- Symlinking jest
-- Symlinking ts-jest
+- Symlinking vitest
 Symlinking dev dependencies done!
 Resolving peer dependencies...
-- Symlinking peer dependency "@jest/transform" required by "ts-jest"
-- Symlinking peer dependency "@jest/types" required by "ts-jest"
-- Symlinking peer dependency "babel-jest" required by "ts-jest"
-- Symlinking peer dependency "jest-util" required by "ts-jest"
 Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
@@ -50,7 +49,7 @@ Check for duplicate dev dependencies done!
 Installation done!"
 `;
 
-exports[`E2E - react Simple project Installs react package 1`] = `
+exports[`E2E - react > Simple project > Installs react package 1`] = `
 "Installing ts-dev-tools...
 Applying migration "core - 20201024173398-init"...
 Migration "core - 20201024173398-init" applied!
@@ -72,25 +71,24 @@ Applying migration "core - 20250623095600-remove-prettier-oxc"...
 Migration "core - 20250623095600-remove-prettier-oxc" applied!
 Applying migration "core - 20260311120000-migrate-to-biome"...
 Migration "core - 20260311120000-migrate-to-biome" applied!
+Applying migration "core - 20260604100000-migrate-to-vitest"...
+Migration "core - 20260604100000-migrate-to-vitest" applied!
+Applying migration "react - 20260604100001-migrate-to-vitest"...
+Migration "react - 20260604100001-migrate-to-vitest" applied!
 Symlinking dev dependencies...
 - Symlinking @testing-library/dom
 - Symlinking @testing-library/jest-dom
 - Symlinking @testing-library/react
 - Symlinking @ts-dev-tools/core
-- Symlinking jest-environment-jsdom
+- Symlinking jsdom
 - Symlinking react-test-renderer
 - Symlinking @biomejs/biome
+- Symlinking @vitest/coverage-v8
 - Symlinking @commitlint/cli
 - Symlinking @commitlint/config-conventional
-- Symlinking @types/jest
-- Symlinking jest
-- Symlinking ts-jest
+- Symlinking vitest
 Symlinking dev dependencies done!
 Resolving peer dependencies...
-- Symlinking peer dependency "@jest/transform" required by "ts-jest"
-- Symlinking peer dependency "@jest/types" required by "ts-jest"
-- Symlinking peer dependency "babel-jest" required by "ts-jest"
-- Symlinking peer dependency "jest-util" required by "ts-jest"
 Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
@@ -105,38 +103,46 @@ Check for duplicate dev dependencies done!
 Installation done!"
 `;
 
-exports[`E2E - react Simple project Installs react package 2`] = `
+exports[`E2E - react > Simple project > Installs react package 2`] = `
 {
   "build": "tsc --noEmit",
   "check": "biome check --write .",
   "dev": "vite",
   "format": "biome format --write .",
-  "jest": "jest --detectOpenHandles --forceExit",
   "lint": "biome lint .",
   "prepare": "ts-dev-tools install",
   "preview": "vite preview",
-  "test": "npm run jest --maxWorkers=50%",
-  "test:ci": "npm run test:cov --runInBand",
-  "test:cov": "npm run test --coverage",
-  "test:watch": "npm run jest --watch --maxWorkers=25%",
+  "test": "vitest run",
+  "test:ci": "npm run test:cov",
+  "test:cov": "vitest run --coverage",
+  "test:watch": "vitest",
+  "vitest": "vitest",
 }
 `;
 
-exports[`E2E - react Simple project Installs react package 3`] = `
-{
-  "collectCoverageFrom": [
-    "**/src/**/*.[jt]s?(x)",
-  ],
-  "preset": "ts-jest",
-  "testEnvironment": "jsdom",
-  "testMatch": [
-    "**/__tests__/**/*.[jt]s?(x)",
-    "**/?(*.)+(spec|test)?(.*).+(ts|tsx|js)",
-  ],
-}
+exports[`E2E - react > Simple project > Installs react package 3`] = `
+"import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    coverage: {
+      include: ["src/**/*.{ts,tsx,js,jsx}"],
+      provider: "v8",
+    },
+    environment: "jsdom",
+    globals: true,
+    setupFiles: ["./vitest.setup.ts"],
+  },
+});
+"
 `;
 
-exports[`E2E - react Simple project Installs react package 4`] = `
+exports[`E2E - react > Simple project > Installs react package 4`] = `
+"import "@testing-library/jest-dom/vitest";
+"
+`;
+
+exports[`E2E - react > Simple project > Installs react package 5`] = `
 "{
   "$schema": "https://biomejs.dev/schemas/__VERSION__/schema.json",
   "vcs": {

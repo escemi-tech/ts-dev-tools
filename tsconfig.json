@@ -9,7 +9,7 @@
     "strict": true,
     "types": [
       "node",
-      "jest"
+      "vitest/globals"
     ],
     "esModuleInterop": true,
     "skipLibCheck": true,

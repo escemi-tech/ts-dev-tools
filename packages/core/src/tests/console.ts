@@ -1,7 +1,9 @@
+import type { Mock } from "vitest";
+
 const info = console.info;
 
 export function mockConsoleInfo(): void {
-  console.info = jest.fn();
+  console.info = vi.fn();
 }
 
 export function resetMockedConsoleInfo(): void {
@@ -9,7 +11,7 @@ export function resetMockedConsoleInfo(): void {
 }
 
 export function getConsoleInfoContent(): string {
-  const calls = (console.info as jest.Mock)?.mock.calls;
+  const calls = (console.info as Mock)?.mock.calls;
 
   return calls.flat().join("\n");
 }

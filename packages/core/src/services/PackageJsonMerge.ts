@@ -10,7 +10,7 @@ export class PackageJsonMerge {
     source: PackageJsonContent,
     update: PackageJsonContent,
   ): PackageJsonContent {
-    return PackageJsonMerge.mergeObjects(source, update);
+    return PackageJsonMerge.mergeObjects(source, update) as PackageJsonContent;
   }
 
   private static mergeValues(

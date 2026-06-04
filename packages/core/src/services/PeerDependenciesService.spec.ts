@@ -65,7 +65,7 @@ describe("PeerDependenciesService", () => {
         "@ts-dev-tools",
         "core",
       );
-      const getInstalledPluginsSpy = jest
+      const getInstalledPluginsSpy = vi
         .spyOn(PluginService, "getInstalledPlugins")
         .mockReturnValue([
           {
@@ -154,7 +154,7 @@ describe("PeerDependenciesService", () => {
         "@ts-dev-tools",
         "core",
       );
-      const getInstalledPluginsSpy = jest
+      const getInstalledPluginsSpy = vi
         .spyOn(PluginService, "getInstalledPlugins")
         .mockReturnValue([
           {
@@ -163,7 +163,7 @@ describe("PeerDependenciesService", () => {
             path: pluginPath,
           },
         ]);
-      const consoleWarnSpy = jest
+      const consoleWarnSpy = vi
         .spyOn(console, "warn")
         .mockImplementation(() => undefined);
 
@@ -212,7 +212,7 @@ describe("PeerDependenciesService", () => {
         "@ts-dev-tools",
         "core",
       );
-      const getInstalledPluginsSpy = jest
+      const getInstalledPluginsSpy = vi
         .spyOn(PluginService, "getInstalledPlugins")
         .mockReturnValue([
           {
@@ -221,7 +221,7 @@ describe("PeerDependenciesService", () => {
             path: pluginPath,
           },
         ]);
-      const consoleWarnSpy = jest
+      const consoleWarnSpy = vi
         .spyOn(console, "warn")
         .mockImplementation(() => undefined);
 
@@ -275,7 +275,7 @@ describe("PeerDependenciesService", () => {
         "@ts-dev-tools",
         "core",
       );
-      const getInstalledPluginsSpy = jest
+      const getInstalledPluginsSpy = vi
         .spyOn(PluginService, "getInstalledPlugins")
         .mockReturnValue([
           {
@@ -284,7 +284,7 @@ describe("PeerDependenciesService", () => {
             path: pluginPath,
           },
         ]);
-      const consoleWarnSpy = jest
+      const consoleWarnSpy = vi
         .spyOn(console, "warn")
         .mockImplementation(() => undefined);
 

@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Migration 20260604100000-migrate-to-vitest > should migrate generated Jest config and scripts to Vitest 1`] = `
+{
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional",
+    ],
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "check": "biome check --write .",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "prepare": "ts-dev-tools install",
+    "test": "vitest run",
+    "test:ci": "npm run test:cov",
+    "test:cov": "vitest run --coverage",
+    "test:watch": "vitest",
+    "vitest": "vitest",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`Migration 20260604100000-migrate-to-vitest > should migrate generated Jest config and scripts to Vitest 2`] = `
+"import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    coverage: {
+      include: ["src/**/*.{ts,tsx,js,jsx}"],
+      provider: "v8",
+    },
+    environment: "node",
+    globals: true,
+  },
+});
+"
+`;

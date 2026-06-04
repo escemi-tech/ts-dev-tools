@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Migration 20240617094000-config-nx-scopes Up should apply migration 1`] = `
+exports[`Migration 20240617094000-config-nx-scopes > Up > should apply migration 1`] = `
 {
   "license": "MIT",
   "version": "1.0.0",

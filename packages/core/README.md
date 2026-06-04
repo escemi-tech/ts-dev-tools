@@ -12,7 +12,7 @@
 
 ### 📦 Package scripts
 
-- `test`: Run tests with [jest](https://jestjs.io/)
+- `test`: Run tests with [Vitest](https://vitest.dev/)
 - `lint`: Run linter with [eslint](https://eslint.org/)
 - `prepare`: Self install / update
 
@@ -38,9 +38,7 @@
 - Install and configure [eslint](https://eslint.org/) with recommended [rules](https://eslint.org/docs/rules/)
 - Configure Eslint to works with [typescript](https://github.com/typescript-eslint/typescript-eslint#readme)
 - Install and configure the following Eslint plugins:
-
   - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import): ES2015+ (ES6+) import/export syntax
-  - [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest#readme): Rules for Jest
   - [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node#readme): Additional ESLint's rules for Node.js
   - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise#readme): Enforce best practices for JavaScript promises.
 
@@ -53,13 +51,13 @@
 
 ### 🧪 Tests
 
-- Install and configure [Jest](https://jestjs.io/)
-- Install and configure [ts-jest](https://kulshekhar.github.io/ts-jest) to make Jest and Typescript work together
+- Install and configure [Vitest](https://vitest.dev/)
+- Install and configure [@vitest/coverage-v8](https://www.npmjs.com/package/@vitest/coverage-v8) for coverage reports
 
 ### 📖 Types
 
 - [@types/node](https://www.npmjs.com/package/@types/node)
-- [@types/jest](https://www.npmjs.com/package/@types/jest)
+- [vitest/globals](https://vitest.dev/config/#globals)
 
 ---
 

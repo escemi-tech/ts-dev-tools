@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Install command should run fresh installation without error 1`] = `
+exports[`Install command > should run fresh installation without error 1`] = `
 "Installing ts-dev-tools...
 Symlinking dev dependencies...
 Symlinking dev dependencies done!
@@ -12,7 +12,7 @@ Check for duplicate dev dependencies done!
 Installation done!"
 `;
 
-exports[`Install command should run update without error 1`] = `
+exports[`Install command > should run update without error 1`] = `
 "Updating ts-dev-tools installation...
 Symlinking dev dependencies...
 Symlinking dev dependencies done!

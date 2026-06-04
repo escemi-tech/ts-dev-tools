@@ -16,7 +16,7 @@ const shouldCleanupAfterTest = true;
 const testTimeout = 20000;
 
 describe("PackageManagerService", () => {
-  jest.setTimeout(testTimeout);
+  vi.setConfig({ testTimeout });
 
   let testProjectDir: string;
 

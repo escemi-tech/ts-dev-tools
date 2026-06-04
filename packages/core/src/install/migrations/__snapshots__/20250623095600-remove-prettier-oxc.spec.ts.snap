@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Migration 20250623095600-remove-prettier-oxc Up should keep other plugins when removing @prettier/plugin-oxc 1`] = `
+exports[`Migration 20250623095600-remove-prettier-oxc > Up > should keep other plugins when removing @prettier/plugin-oxc 1`] = `
 {
   "license": "MIT",
   "prettier": {
@@ -12,7 +12,7 @@ exports[`Migration 20250623095600-remove-prettier-oxc Up should keep other plugi
 }
 `;
 
-exports[`Migration 20250623095600-remove-prettier-oxc Up should remove only @prettier/plugin-oxc from plugins array 1`] = `
+exports[`Migration 20250623095600-remove-prettier-oxc > Up > should remove only @prettier/plugin-oxc from plugins array 1`] = `
 {
   "license": "MIT",
   "prettier": {
