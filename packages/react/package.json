@@ -51,7 +51,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@ts-dev-tools/core": "^1.12.4",
-    "@types/react": "^19.2.16",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "jsdom": "^29.1.1",
     "react-test-renderer": "^19.2.7"
