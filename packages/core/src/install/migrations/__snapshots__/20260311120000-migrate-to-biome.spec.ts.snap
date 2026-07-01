@@ -30,7 +30,7 @@ exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
   "javascript": {
