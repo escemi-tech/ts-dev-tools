@@ -466,7 +466,7 @@ export default tsDevToolsCore;
         {
           name: "pre-commit",
           command:
-            "npx --no-install biome check --error-on-warnings --staged --write",
+            "npx --no-install biome check --error-on-warnings --staged --write --no-errors-on-unmatched",
         },
       ]);
     });
