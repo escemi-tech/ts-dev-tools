@@ -13,7 +13,7 @@ const PRE_COMMIT_HOOK_NAME = "pre-commit";
 const BIOME_INIT_COMMAND = "npx @biomejs/biome init";
 
 const NEW_PRE_COMMIT_COMMAND =
-  "npx --no-install biome check --error-on-warnings --staged --write";
+  "npx --no-install biome check --error-on-warnings --staged --write --no-errors-on-unmatched";
 
 export const hooks: ManagedGitHook[] = [
   {

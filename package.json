@@ -40,5 +40,6 @@
     "*.{js,ts,tsx,mjs,cjs,json}": [
       "biome check --write"
     ]
-  }
+  },
+  "allowScripts": {}
 }
