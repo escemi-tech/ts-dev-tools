@@ -458,6 +458,94 @@ export default tsDevToolsCore;
         ].join("\n"),
       );
     });
+
+    it("should migrate the current vite react-ts starter links to biome-compatible code", async () => {
+      const sourceDirPath = join(testProjectDir, "src");
+      mkdirSync(sourceDirPath, { recursive: true });
+
+      const appFilePath = join(sourceDirPath, "App.tsx");
+      FileService.putFileContent(
+        appFilePath,
+        [
+          "function App() {",
+          "  return (",
+          "    <>",
+          '      <a href="https://vite.dev/" target="_blank">',
+          "        Explore Vite",
+          "      </a>",
+          '      <a href="https://react.dev/" target="_blank">',
+          '        <img className="button-icon" src={reactLogo} alt="" />',
+          "        Learn more",
+          "      </a>",
+          "    </>",
+          "  )",
+          "}",
+          "",
+          "export default App",
+          "",
+        ].join("\n"),
+      );
+
+      await up(testProjectDir);
+
+      expect(FileService.getFileContent(appFilePath)).toBe(
+        [
+          "function App() {",
+          "  return (",
+          "    <>",
+          '      <a href="https://vite.dev/" target="_blank" rel="noopener">',
+          "        Explore Vite",
+          "      </a>",
+          '      <a href="https://react.dev/" target="_blank" rel="noopener">',
+          '        <img className="button-icon" src={reactLogo} alt="" />',
+          "        Explore React docs",
+          "      </a>",
+          "    </>",
+          "  )",
+          "}",
+          "",
+          "export default App",
+          "",
+        ].join("\n"),
+      );
+    });
+
+    it("should migrate common vite svg assets to biome-compatible code", async () => {
+      const publicDirPath = join(testProjectDir, "public");
+      mkdirSync(publicDirPath, { recursive: true });
+
+      const faviconFilePath = join(publicDirPath, "favicon.svg");
+      FileService.putFileContent(
+        faviconFilePath,
+        '<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0"/></svg>',
+      );
+
+      const iconsFilePath = join(publicDirPath, "icons.svg");
+      FileService.putFileContent(
+        iconsFilePath,
+        [
+          '<svg xmlns="http://www.w3.org/2000/svg">',
+          '  <symbol id="documentation-icon"></symbol>',
+          "</svg>",
+          "",
+        ].join("\n"),
+      );
+
+      await up(testProjectDir);
+
+      expect(FileService.getFileContent(faviconFilePath)).toBe(
+        '<svg xmlns="http://www.w3.org/2000/svg"><title>Vite favicon</title><path d="M0 0"/></svg>',
+      );
+      expect(FileService.getFileContent(iconsFilePath)).toBe(
+        [
+          '<svg xmlns="http://www.w3.org/2000/svg">',
+          "  <title>Vite icon sprite</title>",
+          '  <symbol id="documentation-icon"></symbol>',
+          "</svg>",
+          "",
+        ].join("\n"),
+      );
+    });
   });
 
   describe("hooks", () => {

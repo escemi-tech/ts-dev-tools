@@ -1,6 +1,6 @@
 import { copyFileSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
 import {
   copyFolder,
   deleteFolderRecursive,
@@ -73,7 +73,7 @@ export async function createTestProject(
 ): Promise<string> {
   await recreateFolderRecursive(testDirPath);
 
-  const cacheName = testProjectGenerator.name;
+  const cacheName = `${basename(testDirPath)}-${testProjectGenerator.name}`;
   const testCacheDirPath = getTestCacheDirPath(packageName, cacheName);
   if (useCache && testCacheDirExists(packageName, cacheName)) {
     await copyFolder(testCacheDirPath, testDirPath);

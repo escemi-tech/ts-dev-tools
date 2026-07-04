@@ -160,7 +160,7 @@ exports[`E2E - react > Simple project > Installs react package 5`] = `
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
   "javascript": {

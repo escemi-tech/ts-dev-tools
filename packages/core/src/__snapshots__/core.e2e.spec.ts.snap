@@ -127,7 +127,7 @@ exports[`E2E - core > Simple project > Installs core package 4`] = `
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
   "javascript": {

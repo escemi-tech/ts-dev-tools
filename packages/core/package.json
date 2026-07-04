@@ -47,13 +47,13 @@
     "url": "https://github.com/escemi-tech/ts-dev-tools/issues"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.4.8",
-    "@commitlint/cli": "^21.0.1",
-    "@commitlint/config-conventional": "^21.0.2",
+    "@biomejs/biome": "^2.5.2",
+    "@commitlint/cli": "^21.2.0",
+    "@commitlint/config-conventional": "^21.2.0",
     "@types/node": "^26.1.0",
-    "@vitest/coverage-v8": "^4.1.6",
+    "@vitest/coverage-v8": "^4.1.9",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.9"
   },
   "devDependencies": {
     "ts-node": "^10.9.2"
