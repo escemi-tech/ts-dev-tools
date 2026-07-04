@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.10.4...@ts-dev-tools/react@1.11.0) (2026-07-04)
+
+
+### Features
+
+* apply hooks on installation ([0be49f9](https://github.com/escemi-tech/ts-dev-tools/commit/0be49f945c05c15982e05d248ecbc56f5971810a))
+* upgrade npm deps ([2945e54](https://github.com/escemi-tech/ts-dev-tools/commit/2945e541a11beaa51c49195d259ebcaaa41b7742))
+
+
+
+
+
 ## [1.10.4](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.10.3...@ts-dev-tools/react@1.10.4) (2026-06-04)
 
 

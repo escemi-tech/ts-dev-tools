@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.12.4...@ts-dev-tools/core@1.13.0) (2026-07-04)
+
+
+### Bug Fixes
+
+* allows scripts ([8ea0e92](https://github.com/escemi-tech/ts-dev-tools/commit/8ea0e92b875babc2fccae55a89c3803ecbbdebf4))
+* **core:** update pre-commit command to handle unmatched errors ([c8d73ba](https://github.com/escemi-tech/ts-dev-tools/commit/c8d73ba8c776427075d5dd65b9120b75297ea937))
+
+
+### Features
+
+* apply hooks on installation ([0be49f9](https://github.com/escemi-tech/ts-dev-tools/commit/0be49f945c05c15982e05d248ecbc56f5971810a))
+* upgrade npm deps ([2945e54](https://github.com/escemi-tech/ts-dev-tools/commit/2945e541a11beaa51c49195d259ebcaaa41b7742))
+
+
+
+
+
 ## [1.12.4](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.12.3...@ts-dev-tools/core@1.12.4) (2026-06-04)
 
 
