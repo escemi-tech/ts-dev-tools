@@ -57,6 +57,8 @@ if (!rootElement) {
 createRoot(rootElement).render(`;
 const VITE_REACT_BUTTON_PATTERN = "<button onClick={";
 const VITE_REACT_BUTTON_REPLACEMENT = '<button type="button" onClick={';
+const VITE_REACT_DOCS_LINK_TEXT_PATTERN =
+  /(href="https:\/\/react\.dev\/"[^>]*>[\s\S]*?)Learn more([\s\S]*?<\/a>)/;
 
 export const up: MigrationUpFunction = async (
   absoluteProjectDir: string,
@@ -188,6 +190,14 @@ function migrateCommonViteStarterFiles(absoluteProjectDir: string): void {
     join(absoluteProjectDir, "src", "App.tsx"),
     migrateViteReactTsAppFile,
   );
+  updateFileContent(
+    join(absoluteProjectDir, "public", "favicon.svg"),
+    (content) => addTitleToSvg(content, "Vite favicon"),
+  );
+  updateFileContent(
+    join(absoluteProjectDir, "public", "icons.svg"),
+    (content) => addTitleToSvg(content, "Vite icon sprite"),
+  );
 }
 
 function updateFileContent(
@@ -230,9 +240,16 @@ function migrateViteReactTsMainFile(content: string): string {
 
 function migrateViteReactTsAppFile(content: string): string {
   return replaceExactPattern(
-    addRelNoopenerToBlankTargetLinks(content),
+    replaceReactDocsLinkText(addRelNoopenerToBlankTargetLinks(content)),
     VITE_REACT_BUTTON_PATTERN,
     VITE_REACT_BUTTON_REPLACEMENT,
+  );
+}
+
+function replaceReactDocsLinkText(content: string): string {
+  return content.replace(
+    VITE_REACT_DOCS_LINK_TEXT_PATTERN,
+    "$1Explore React docs$2",
   );
 }
 
@@ -241,6 +258,25 @@ function addRelNoopenerToBlankTargetLinks(content: string): string {
     /target="_blank"(?![^>]*\srel=)/g,
     'target="_blank" rel="noopener"',
   );
+}
+
+function addTitleToSvg(content: string, title: string): string {
+  if (content.includes("<title>")) {
+    return content;
+  }
+
+  const openingTagMatch = content.match(/^<svg\b[^>]*>/);
+
+  if (!openingTagMatch) {
+    return content;
+  }
+
+  const [openingTag] = openingTagMatch;
+  const titleMarkup = content.includes("\n")
+    ? `${openingTag}\n  <title>${title}</title>`
+    : `${openingTag}<title>${title}</title>`;
+
+  return content.replace(openingTag, titleMarkup);
 }
 
 function replaceExactPattern(
