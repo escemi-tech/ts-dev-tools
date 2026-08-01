@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.11.0...@ts-dev-tools/react@1.11.1) (2026-08-01)
+
+**Note:** Version bump only for package @ts-dev-tools/react
+
+
+
+
+
 # [1.11.0](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/react@1.10.4...@ts-dev-tools/react@1.11.0) (2026-07-04)
 
 
