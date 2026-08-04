@@ -63,13 +63,13 @@ npm install --save-dev @ts-dev-tools/core
 Or
 
 ```sh
-yarn add --dev @ts-dev-tools/core
+pnpm add -D @ts-dev-tools/core
 ```
 
 Or
 
 ```sh
-pnpm add -D @ts-dev-tools/core
+yarn add --dev @ts-dev-tools/core
 ```
 
 ### _2_. Enable ts-dev-tools
@@ -81,13 +81,13 @@ npm exec ts-dev-tools install
 Or
 
 ```sh
-yarn ts-dev-tools install
+pnpm ts-dev-tools install
 ```
 
 Or
 
 ```sh
-pnpm ts-dev-tools install
+yarn ts-dev-tools install
 ```
 
 ⚠️ If your package is using yarn, is not private and you're publishing it on a registry like npmjs.com, you need to disable postinstall script using [pinst](https://github.com/typicode/pinst). Otherwise, postinstall will run when someone installs your package and result in an error.

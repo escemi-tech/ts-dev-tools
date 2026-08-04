@@ -3,6 +3,7 @@ dist/
 coverage/
 **/eslint-report.json
 **/yarn-error.log
+.pnpm-store
 .nx
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md

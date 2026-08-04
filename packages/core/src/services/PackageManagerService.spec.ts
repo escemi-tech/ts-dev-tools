@@ -1,3 +1,4 @@
+import { existsSync, unlinkSync, writeFileSync } from "node:fs";
 import { safeExec } from "../tests/cli";
 import {
   createProjectForTestFile,
@@ -40,15 +41,28 @@ describe("PackageManagerService", () => {
       }
     });
 
-    it("should retrieve the default package manager when no one is detectable", () => {
-      const packageManager =
-        PackageManagerService.detectPackageManager(testProjectDir);
+    it("should throw an error when no package manager is detectable", () => {
+      const lockFiles = ["package-lock.json", "yarn.lock", "pnpm-lock.yaml"];
+      for (const lockFile of lockFiles) {
+        const lockFilePath = `${testProjectDir}/${lockFile}`;
+        if (existsSync(lockFilePath)) {
+          unlinkSync(lockFilePath);
+        }
+      }
 
-      expect(packageManager).toEqual(PackageManagerType.npm);
+      expect(() => {
+        PackageManagerService.detectPackageManager(testProjectDir);
+      }).toThrow(
+        `Could not detect package manager in directory: ${testProjectDir}. No lock file found.`,
+      );
     });
   });
 
-  describe.each([PackageManagerType.npm, PackageManagerType.yarn])(
+  describe.each([
+    PackageManagerType.npm,
+    PackageManagerType.yarn,
+    PackageManagerType.pnpm,
+  ])(
     `with package manager %s`,
     (packageManagerType) => {
       const packageTypeTestFileName = __filename.replace(
@@ -61,11 +75,35 @@ describe("PackageManagerService", () => {
           packageTypeTestFileName,
           useCache,
         );
-        await safeExec(testProjectDir, `${packageManagerType} init --yes`);
-        await safeExec(
-          testProjectDir,
-          `${packageManagerType} install --silent`,
-        );
+
+        const lockFiles = ["package-lock.json", "yarn.lock", "pnpm-lock.yaml"];
+        for (const lockFile of lockFiles) {
+          const lockFilePath = `${testProjectDir}/${lockFile}`;
+          if (existsSync(lockFilePath)) {
+            unlinkSync(lockFilePath);
+          }
+        }
+
+        if (packageManagerType === PackageManagerType.pnpm) {
+          const packageJsonPath = `${testProjectDir}/package.json`;
+          if (!existsSync(packageJsonPath)) {
+            await safeExec(testProjectDir, `${packageManagerType} init`);
+          }
+          writeFileSync(
+            `${testProjectDir}/pnpm-lock.yaml`,
+            "lockfileVersion: '9.0'\n",
+          );
+          await safeExec(
+            testProjectDir,
+            `${packageManagerType} install --silent`,
+          );
+        } else {
+          await safeExec(testProjectDir, `${packageManagerType} init --yes`);
+          await safeExec(
+            testProjectDir,
+            `${packageManagerType} install --silent`,
+          );
+        }
       });
 
       afterEach(async () => {
@@ -125,7 +163,19 @@ describe("PackageManagerService", () => {
           const testPackageDir = `${testProjectDir}/packages/test-package`;
 
           await safeExec(testProjectDir, `mkdir -p ${testPackageDir}`);
-          await safeExec(testPackageDir, `${packageManagerType} init --yes`);
+
+          if (packageManagerType === PackageManagerType.pnpm) {
+            // For pnpm, also create a pnpm-workspace.yaml file
+            writeFileSync(
+              `${testProjectDir}/pnpm-workspace.yaml`,
+              'packages:\n  - "packages/*"\n',
+            );
+            // pnpm init doesn't support --yes flag
+            await safeExec(testPackageDir, `${packageManagerType} init`);
+          } else {
+            await safeExec(testPackageDir, `${packageManagerType} init --yes`);
+          }
+
           await safeExec(testProjectDir, `${packageManagerType} install`);
 
           const isMonorepo =

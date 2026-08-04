@@ -9,6 +9,8 @@ export class CmdService {
     cwd?: string,
     silent = false,
   ): Promise<string> {
+    const useShell = !Array.isArray(args);
+
     if (!args.length) {
       throw new Error("Command args must not be empty");
     }
@@ -30,8 +32,8 @@ export class CmdService {
     return new Promise((resolve, reject) => {
       const child = spawn(cmd, args as string[], {
         stdio: silent ? "pipe" : "inherit",
-        shell: true,
-        windowsVerbatimArguments: true,
+        shell: useShell,
+        windowsVerbatimArguments: useShell,
         cwd,
       });
 

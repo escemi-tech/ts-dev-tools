@@ -31,8 +31,8 @@
     "url": "git+https://github.com/escemi-tech/ts-dev-tools.git"
   },
   "scripts": {
-    "start": "npm link && tsc -w",
-    "stop": "npm unlink",
+    "start": "pnpm link && tsc -w",
+    "stop": "pnpm unlink",
     "build": "rimraf dist && tsc",
     "vitest": "vitest",
     "test": "vitest run",
