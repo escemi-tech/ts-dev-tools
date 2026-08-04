@@ -129,7 +129,7 @@ npx --no-install commitlint --edit $1`);
 
 # Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
 
-npm run lint && npm run build && npm run test`);
+pnpm run lint && pnpm run build && pnpm run test`);
     });
 
     it("should restore package.json and rethrow when applying managed hooks fails", async () => {

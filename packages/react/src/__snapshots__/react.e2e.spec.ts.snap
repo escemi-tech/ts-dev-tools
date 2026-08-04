@@ -40,6 +40,7 @@ Symlinking dev dependencies...
 - Symlinking vitest
 Symlinking dev dependencies done!
 Resolving peer dependencies...
+- Symlinking peer dependency "jsdom" required by "vitest"
 Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
@@ -89,10 +90,12 @@ Symlinking dev dependencies...
 - Symlinking vitest
 Symlinking dev dependencies done!
 Resolving peer dependencies...
+- Symlinking peer dependency "jsdom" required by "vitest"
 Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
   - @types/node
+  - vitest
   - typescript
 
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/react":
@@ -113,7 +116,7 @@ exports[`E2E - react > Simple project > Installs react package 2`] = `
   "prepare": "ts-dev-tools install",
   "preview": "vite preview",
   "test": "vitest run",
-  "test:ci": "npm run test:cov",
+  "test:ci": "pnpm run test:cov",
   "test:cov": "vitest run --coverage",
   "test:watch": "vitest",
   "vitest": "vitest",
