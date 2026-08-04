@@ -115,7 +115,7 @@ describe("MigrationsService", () => {
 
 # Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
 
-npx --no-install biome check --error-on-warnings --staged --write`);
+npx --no-install biome check --error-on-warnings --staged --write --no-errors-on-unmatched`);
 
       expect(existsSync(commitMsgHookPath)).toBe(true);
       expect(readFileSync(commitMsgHookPath, "utf-8")).toBe(`#!/bin/sh

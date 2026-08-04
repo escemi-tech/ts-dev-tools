@@ -1,6 +1,6 @@
 {
   "name": "@ts-dev-tools/react",
-  "version": "1.10.4",
+  "version": "1.11.1",
   "description": "TS dev tools for React",
   "keywords": [
     "linter",
@@ -51,10 +51,10 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@ts-dev-tools/core": "workspace:*",
-    "@types/react": "^19.2.16",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "jsdom": "^29.1.1",
-    "react-test-renderer": "^19.2.7"
+    "react-test-renderer": "^19.2.8"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",

@@ -36,6 +36,13 @@ async function generateProjectInMonorepoProject(
     projectDir,
     `npm exec lerna -- init --no-progress --skipInstall`,
   );
+
+  PackageJson.fromDirPath(projectDir).merge({
+    allowScripts: {
+      nx: true,
+    },
+  });
+
   await safeExec(projectDir, "npm install");
 }
 

@@ -24,6 +24,7 @@ export type JsonFileData = {
 type PackageNameVersionMap = Record<string, string>;
 
 type PackageJsonKnownFields = {
+  allowScripts?: Record<string, boolean>;
   author?: JsonFileData | string;
   bin?: PackageNameVersionMap | string;
   bugs?: JsonFileData | string;
