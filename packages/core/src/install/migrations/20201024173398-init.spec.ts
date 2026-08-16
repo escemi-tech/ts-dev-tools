@@ -60,12 +60,17 @@ describe("Migration 20201024173398-init", () => {
           name: "commit-msg",
           command: "npx --no-install commitlint --edit $1",
         });
-        expect(typeof hooks[2]?.command).toBe("function");
-        expect(
-          (hooks[2]?.command as (absoluteProjectDir: string) => string)(
-            testProjectDir,
-          ),
-        ).toBe("yarn run lint && yarn run build && yarn run test");
+        const prePushCommand = hooks[2]?.command;
+        expect(typeof prePushCommand).toBe("function");
+        if (typeof prePushCommand !== "function") {
+          throw new TypeError(
+            "Expected the pre-push hook command to be a function",
+          );
+        }
+
+        expect(prePushCommand(testProjectDir)).toBe(
+          "yarn run lint && yarn run build && yarn run test",
+        );
       } finally {
         detectPackageManagerSpy.mockRestore();
       }

@@ -32,7 +32,7 @@ export const up: MigrationUpFunction = async (
   });
 
   const extendsPlugin = "plugin:react/recommended";
-  const eslintConfigExtends = (content?.eslintConfig as { extends: string[] })
+  const eslintConfigExtends = (content.eslintConfig as { extends: string[] })
     .extends;
   if (!eslintConfigExtends.includes(extendsPlugin)) {
     const prettierIndex = eslintConfigExtends.indexOf("prettier");
