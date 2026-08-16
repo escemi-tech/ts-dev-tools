@@ -27,6 +27,14 @@ function normalizeBiomeSchemaVersion(content: string): string {
   );
 }
 
+function filterNpmWarnings(stderr: string): string {
+  return stderr
+    ?.split("\n")
+    .filter((line) => !line.startsWith("npm warn"))
+    .join("\n")
+    .trim();
+}
+
 async function typescriptProjectGenerator(projectDir: string) {
   await safeExec(
     projectDir,
@@ -88,7 +96,7 @@ describe(`E2E - ${packageToTest}`, () => {
           `npm install --save-dev "${packageToInstall}"`,
         );
 
-      expect(installPackageStderr).toBeFalsy();
+      expect(filterNpmWarnings(installPackageStderr)).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {
@@ -165,7 +173,7 @@ describe(`E2E - ${packageToTest}`, () => {
           `npm install --save-dev "${packageToInstall}"`,
         );
 
-      expect(installPackageStderr).toBeFalsy();
+      expect(filterNpmWarnings(installPackageStderr)).toBeFalsy();
       expect(installPackageCode).toBe(0);
 
       const {

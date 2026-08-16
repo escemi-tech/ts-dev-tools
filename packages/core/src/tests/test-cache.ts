@@ -1,7 +1,9 @@
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-const rootDirPath = resolve(__dirname, "../../../..");
+import { getWorkspaceRootPath } from "./workspace-root";
+
+const rootDirPath = getWorkspaceRootPath();
 
 export function getTestCacheDirPath(
   packageName: string,

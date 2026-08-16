@@ -15,7 +15,7 @@ exports[`Migration 20260604100000-migrate-to-vitest > should migrate generated J
     "lint": "biome lint --error-on-warnings .",
     "prepare": "ts-dev-tools install",
     "test": "vitest run",
-    "test:ci": "npm run test:cov",
+    "test:ci": "pnpm run test:cov",
     "test:cov": "vitest run --coverage",
     "test:watch": "vitest",
     "vitest": "vitest",

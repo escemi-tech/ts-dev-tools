@@ -2,6 +2,12 @@
 
 exports[`SymlinkDependenciesService > executeSymlinking > should symlink dependencies 1`] = `
 "Symlinking dev dependencies...
-- Skipping symlinking core dependencies, already in node_modules
+- Symlinking @biomejs/biome
+- Symlinking @commitlint/cli
+- Symlinking @commitlint/config-conventional
+- Symlinking @types/node
+- Symlinking @vitest/coverage-v8
+- Symlinking typescript
+- Symlinking vitest
 Symlinking dev dependencies done!"
 `;

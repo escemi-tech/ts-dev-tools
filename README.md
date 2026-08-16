@@ -14,6 +14,8 @@
 
 ## Opinionated and advisable packages to configure tools to develop a Typescript project
 
+> ✨ Works with npm, yarn, and pnpm package managers
+
 ---
 
 ## Why **ts-dev-tools** ?
@@ -105,21 +107,21 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 ### Developer setup
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### Checks
 
 ```sh
-npm run lint
-npm run test
-npm run build
+pnpm run lint
+pnpm run test
+pnpm run build
 ```
 
 Or run everything in one command:
 
 ```sh
-npm run ci
+pnpm run ci
 ```
 
 ### Clean cache
