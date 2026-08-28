@@ -52,7 +52,7 @@
     "@testing-library/react": "^16.3.2",
     "@ts-dev-tools/core": "^1.13.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
+    "@types/react-dom": "^19.2.5",
     "jsdom": "^30.0.1",
     "react-test-renderer": "^19.2.8"
   }
