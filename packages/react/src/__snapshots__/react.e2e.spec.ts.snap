@@ -43,6 +43,9 @@ Resolving peer dependencies...
 Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
+  - @types/node
+  - @vitest/coverage-v8
+  - vitest
   - typescript
 
 Check for duplicate dev dependencies done!
@@ -93,6 +96,8 @@ Resolving peer dependencies done!
 Checking for duplicate dev dependencies...
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/core":
   - @types/node
+  - @vitest/coverage-v8
+  - vitest
   - typescript
 
 Some dev dependencies are unnecessarily installed as their are already required by "@ts-dev-tools/react":
