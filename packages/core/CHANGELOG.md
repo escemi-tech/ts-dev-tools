@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/escemi-tech/ts-dev-tools/compare/%40ts-dev-tools%2Fcore%401.13.1...%40ts-dev-tools%2Fcore%401.13.2) (2026-09-01)
+
+**Note:** Version bump only for package @ts-dev-tools/core
+
+
+
+
+
 ## [1.13.1](https://github.com/escemi-tech/ts-dev-tools/compare/@ts-dev-tools/core@1.13.0...@ts-dev-tools/core@1.13.1) (2026-08-01)
 
 **Note:** Version bump only for package @ts-dev-tools/core
