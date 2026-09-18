@@ -4,6 +4,8 @@ updates:
     open-pull-requests-limit: 20
     versioning-strategy: widen
     directory: "/"
+    cooldown:
+      default-days: 7
     schedule:
       interval: weekly
       day: friday
@@ -40,6 +42,8 @@ updates:
 
   - package-ecosystem: github-actions
     directory: "/"
+    cooldown:
+      default-days: 7
     schedule:
       interval: weekly
       day: friday
@@ -52,7 +56,13 @@ updates:
   - package-ecosystem: "devcontainers"
     open-pull-requests-limit: 20
     directory: "/"
+    cooldown:
+      default-days: 7
     schedule:
       interval: weekly
       day: friday
       time: "04:00"
+    groups:
+      devcontainers-dependencies:
+        patterns:
+          - "*"

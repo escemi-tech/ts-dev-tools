@@ -42,6 +42,8 @@ Using **ts-dev-tools** you should just have to update it and you'll have all the
 
 ## Usage
 
+Vitest 5 requires Node.js >= 22.12.0.
+
 ### _1_. Choose the plugin that fits with you need
 
 | Name                                              | Description                                                 |
@@ -68,6 +70,8 @@ Or
 ```sh
 pnpm add -D @ts-dev-tools/core
 ```
+
+Vitest 5 stores generated artifacts under `.vitest/`. Add that directory to your `.gitignore` if it is not already ignored.
 
 ### _3_. Enable ts-dev-tools
 
