@@ -1,6 +1,7 @@
 node_modules/
 dist/
 coverage/
+.vitest/
 **/eslint-report.json
 **/yarn-error.log
 .nx

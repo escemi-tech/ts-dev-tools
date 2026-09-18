@@ -34,6 +34,8 @@
 
 ## Usage
 
+Vitest 5 requires Node.js >= 22.12.0.
+
 ### _1_. Install
 
 ```sh
@@ -45,6 +47,8 @@ Or
 ```sh
 yarn add --dev @ts-dev-tools/react
 ```
+
+Vitest 5 stores generated artifacts under `.vitest/`. Add that directory to your `.gitignore` if it is not already ignored.
 
 ### _2_. Enable ts-dev-tools
 
