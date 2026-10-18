@@ -65,6 +65,7 @@ Symlinking dev dependencies...
 - Symlinking @commitlint/config-conventional
 - Symlinking @types/node
 - Symlinking @vitest/coverage-v8
+- Symlinking bin-links
 - Symlinking vitest
 Symlinking dev dependencies done!
 Resolving peer dependencies...

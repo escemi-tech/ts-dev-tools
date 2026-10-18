@@ -1,8 +1,15 @@
-import { existsSync, mkdirSync, symlinkSync } from "node:fs";
-import { join } from "node:path";
+import {
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  realpathSync,
+  symlinkSync,
+} from "node:fs";
+import { createRequire } from "node:module";
+import { basename, join } from "node:path";
+import binLinks from "bin-links";
 
 import { PackageJson } from "./PackageJson";
-import { PackageManagerService } from "./PackageManagerService";
 import { type Plugin, PluginService } from "./PluginService";
 
 export class SymlinkDependenciesService {
@@ -12,6 +19,7 @@ export class SymlinkDependenciesService {
 
   static async executeSymlinking(absoluteProjectDir: string): Promise<void> {
     console.info(`Symlinking dev dependencies...`);
+    binLinks.resetSeen();
 
     const installedPlugins =
       PluginService.getInstalledPlugins(absoluteProjectDir);
@@ -38,42 +46,31 @@ export class SymlinkDependenciesService {
       SymlinkDependenciesService.DEPENDENCIES_FOLDER,
     );
 
-    const pluginDependenciesPath =
-      await SymlinkDependenciesService.getPluginDependenciesPath(
-        absoluteProjectDir,
-        plugin,
-        pluginDependencies,
-      );
-
-    if (projectDependencyPath === pluginDependenciesPath) {
-      console.info(
-        `- Skipping symlinking ${plugin.shortname} dependencies, already in node_modules`,
-      );
-      return;
-    }
-
     for (const pluginDependency of pluginDependencies) {
-      const pluginDependencyPath = join(
-        pluginDependenciesPath,
-        pluginDependency,
-      );
-
-      if (!existsSync(pluginDependencyPath)) {
-        continue;
-      }
-
       const projectPluginDependencyPath = join(
         projectDependencyPath,
         pluginDependency,
       );
-      if (existsSync(projectPluginDependencyPath)) {
-        continue;
+      if (!existsSync(projectPluginDependencyPath)) {
+        const pluginDependencyPath =
+          SymlinkDependenciesService.getPluginDependencyPath(
+            plugin,
+            pluginDependency,
+          );
+        if (!pluginDependencyPath) {
+          continue;
+        }
+
+        console.info(`- Symlinking ${pluginDependency}`);
+        SymlinkDependenciesService.symlinkDependency(
+          pluginDependencyPath,
+          projectPluginDependencyPath,
+        );
       }
 
-      console.info(`- Symlinking ${pluginDependency}`);
-      SymlinkDependenciesService.symlinkDependency(
-        pluginDependencyPath,
+      await SymlinkDependenciesService.symlinkExecutables(
         projectPluginDependencyPath,
+        join(projectDependencyPath, ".bin"),
       );
     }
   }
@@ -83,28 +80,50 @@ export class SymlinkDependenciesService {
     return pluginPackageJson.getDependenciesPackageNames();
   }
 
-  private static async getPluginDependenciesPath(
-    absoluteProjectDir: string,
+  private static getPluginDependencyPath(
     plugin: Plugin,
-    pluginDependencies: string[],
-  ): Promise<string> {
-    const pluginDependenciesPath = join(
-      plugin.path,
-      SymlinkDependenciesService.DEPENDENCIES_FOLDER,
+    dependencyName: string,
+  ): string | undefined {
+    const pluginRequire = createRequire(
+      join(realpathSync(plugin.path), "package.json"),
     );
-
-    if (existsSync(pluginDependenciesPath)) {
-      const hasAnyPluginDependency = pluginDependencies.some(
-        (pluginDependency) =>
-          existsSync(join(pluginDependenciesPath, pluginDependency)),
+    return pluginRequire.resolve
+      .paths(dependencyName)
+      ?.map((searchPath) => join(searchPath, dependencyName))
+      .find((dependencyPath) =>
+        existsSync(join(dependencyPath, "package.json")),
       );
+  }
 
-      if (hasAnyPluginDependency) {
-        return pluginDependenciesPath;
-      }
+  private static async symlinkExecutables(
+    dependencyPath: string,
+    binDirectory: string,
+  ): Promise<void> {
+    const pkg = PackageJson.fromDirPath(dependencyPath).getContent();
+    const declaredBins =
+      typeof pkg.bin === "string"
+        ? { [basename(pkg.name ?? dependencyPath)]: pkg.bin }
+        : (pkg.bin ?? {});
+    const bin = Object.fromEntries(
+      Object.entries(declaredBins).filter(([name]) => {
+        const extensions =
+          process.platform === "win32" ? ["", ".cmd", ".ps1"] : [""];
+        return extensions.every(
+          (extension) =>
+            !lstatSync(join(binDirectory, `${name}${extension}`), {
+              throwIfNoEntry: false,
+            }),
+        );
+      }),
+    );
+    if (Object.keys(bin).length === 0) {
+      return;
     }
-
-    return await PackageManagerService.getNodeModulesPath(absoluteProjectDir);
+    await binLinks({
+      path: dependencyPath,
+      pkg: { ...pkg, bin },
+      force: false,
+    });
   }
 
   private static symlinkDependency(
