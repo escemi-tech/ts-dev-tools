@@ -18,6 +18,11 @@
 - `check`: Run Biome checks and apply safe fixes
 - `prepare`: Self install / update
 
+Setup exposes plugin dependencies and their executables in the project's
+`node_modules` and `node_modules/.bin`, including nested dependencies. Existing
+project dependencies and commands are preserved. Running setup again restores
+missing executable links. Setup errors return a nonzero exit status.
+
 ### ⚡ Git hooks
 
 #### `pre-commit`

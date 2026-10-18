@@ -6,7 +6,7 @@ import { PROJECT_NAME } from "./constants";
 import { install } from "./install/command";
 import { PackageJson } from "./services/PackageJson";
 
-async function bin() {
+export async function bin() {
   const [, , arg, ...params] = process.argv;
   switch (true) {
     case arg === "install":
@@ -33,6 +33,12 @@ async function bin() {
   }
 }
 
-bin()
-  .then()
-  .catch((error) => console.error(error));
+export function handleBinError(error: unknown): void {
+  console.error(error);
+  process.exitCode = 1;
+}
+
+/* v8 ignore next 3 -- CLI entry point wiring, exercised through subprocess e2e tests */
+if (require.main === module) {
+  bin().catch(handleBinError);
+}
