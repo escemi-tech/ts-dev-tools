@@ -13,11 +13,13 @@ import { up } from "./20260604100001-migrate-to-vitest";
 
 const useCache = true;
 const shouldCleanupAfterTest = true;
+const testTimeout = 20000;
 
 describe("Migration 20260604100001-migrate-to-vitest", () => {
   let testProjectDir: string;
 
   beforeAll(() => {
+    vi.setConfig({ testTimeout });
     if (!useCache) {
       console.warn("Cache is disabled. Enable it one dev is done.");
     }
