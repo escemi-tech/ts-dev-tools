@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/escemi-tech/ts-dev-tools/compare/%40ts-dev-tools%2Freact%401.11.3...%40ts-dev-tools%2Freact%401.12.0) (2026-10-19)
+
+### Bug Fixes
+
+* **core:** enhance bin links creation ([8dbc03d](https://github.com/escemi-tech/ts-dev-tools/commit/8dbc03d6160a44eb4981565697d292fc0b5a5a37))
+
+### Features
+
+* add support for pnpm ([f60ad4b](https://github.com/escemi-tech/ts-dev-tools/commit/f60ad4b3a967b7761e96c5fb063cdb771cfb3808))
+
+
 ## [1.11.3](https://github.com/escemi-tech/ts-dev-tools/compare/%40ts-dev-tools%2Freact%401.11.2...%40ts-dev-tools%2Freact%401.11.3) (2026-10-01)
 
 **Note:** Version bump only for package @ts-dev-tools/react
