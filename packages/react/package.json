@@ -18,7 +18,7 @@
     "/dist"
   ],
   "bin": {
-    "ts-dev-tools": "./node_modules/.bin/ts-dev-tools"
+    "ts-dev-tools": "dist/bin.js"
   },
   "engines": {
     "node": ">=22.12.0"

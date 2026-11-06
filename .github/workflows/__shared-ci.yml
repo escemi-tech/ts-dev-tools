@@ -3,6 +3,9 @@ name: Shared - Continuous Integration for common tasks
 on:
   workflow_call:
     outputs:
+      package-tarball-artifacts:
+        description: Validated package tarballs indexed by workspace directory
+        value: ${{ jobs.continuous-integration.outputs.package-tarball-artifacts }}
       build-artifact-id:
         description: "The ID of the build artifact"
         value: ${{ jobs.continuous-integration.outputs.build-artifact-id }}
@@ -11,7 +14,7 @@ permissions: {}
 
 jobs:
   continuous-integration:
-    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@df348077afa4e79725151d50606e9dc63f86dcb6 # 0.24.4
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@02a04ad25ceaacdf3b7200e45fb7fec07fadf4fa # 2.1.0
     permissions:
       contents: read
       id-token: write
@@ -19,6 +22,10 @@ jobs:
       pull-requests: write
       security-events: write
     with:
+      package: |
+        {
+          "tests": "ts-dev-tools --help\nts-dev-tools --version\n"
+        }
       build: '{"artifact":"packages/*/dist"}'
       test: |
         {"coverage": "codecov"}

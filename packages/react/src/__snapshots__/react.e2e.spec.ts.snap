@@ -150,7 +150,7 @@ exports[`E2E - react > Simple project > Installs react package 4`] = `
 
 exports[`E2E - react > Simple project > Installs react package 5`] = `
 "{
-  "$schema": "https://biomejs.dev/schemas/__VERSION__/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",

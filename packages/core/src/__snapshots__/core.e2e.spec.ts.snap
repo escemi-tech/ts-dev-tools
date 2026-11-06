@@ -114,7 +114,7 @@ export default defineConfig({
 
 exports[`E2E - core > Simple project > Installs core package 4`] = `
 "{
-  "$schema": "https://biomejs.dev/schemas/__VERSION__/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",

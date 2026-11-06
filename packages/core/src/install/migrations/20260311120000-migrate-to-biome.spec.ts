@@ -13,20 +13,10 @@ import {
 } from "../../tests/test-project";
 import { hooks, up } from "./20260311120000-migrate-to-biome";
 
-const BIOME_SCHEMA_URL_PATTERN =
-  /https:\/\/biomejs\.dev\/schemas\/[^"]+\/schema\.json/;
-
 // Set to false to avoid using the cache
 const useCache = true;
 // Set to false to inspect the test project directory after the test
 const shouldCleanupAfterTest = true;
-
-function normalizeBiomeSchemaVersion(content: string): string {
-  return content.replace(
-    BIOME_SCHEMA_URL_PATTERN,
-    "https://biomejs.dev/schemas/__VERSION__/schema.json",
-  );
-}
 
 describe("Migration 20260311120000-migrate-to-biome", () => {
   let testProjectDir: string;
@@ -91,10 +81,9 @@ describe("Migration 20260311120000-migrate-to-biome", () => {
       const biomeConfigFilePath = join(testProjectDir, "biome.json");
       expect(FileService.fileExists(biomeConfigFilePath)).toBe(true);
       expect(
-        normalizeBiomeSchemaVersion(
-          FileService.getFileContent(biomeConfigFilePath),
-        ),
-      ).toMatchSnapshot();
+        JSON.parse(FileService.getFileContent(biomeConfigFilePath)).$schema,
+      ).toBe("./node_modules/@biomejs/biome/configuration_schema.json");
+      expect(FileService.getFileContent(biomeConfigFilePath)).toMatchSnapshot();
 
       expect(existsSync(eslintConfigFilePath)).toBe(false);
     });
