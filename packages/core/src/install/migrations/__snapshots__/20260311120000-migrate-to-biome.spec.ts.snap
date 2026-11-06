@@ -14,7 +14,7 @@ exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-
 
 exports[`Migration 20260311120000-migrate-to-biome > Up > should migrate ts-dev-tools eslint and prettier setup to biome 2`] = `
 "{
-  "$schema": "https://biomejs.dev/schemas/__VERSION__/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",

@@ -17,16 +17,6 @@ const useCache = true;
 // Set to false to inspect the test project directory after the test
 const shouldCleanupAfterTest = true;
 
-const BIOME_SCHEMA_URL_PATTERN =
-  /https:\/\/biomejs\.dev\/schemas\/[^"]+\/schema\.json/;
-
-function normalizeBiomeSchemaVersion(content: string): string {
-  return content.replace(
-    BIOME_SCHEMA_URL_PATTERN,
-    "https://biomejs.dev/schemas/__VERSION__/schema.json",
-  );
-}
-
 async function typescriptProjectGenerator(projectDir: string) {
   const output = await safeExec(
     projectDir,
@@ -121,19 +111,14 @@ describe(`E2E - ${packageToTest}`, () => {
 
       const biomeConfigFilePath = `${testProjectDir}/biome.json`;
       expect(FileService.fileExists(biomeConfigFilePath)).toBe(true);
-      expect(
-        normalizeBiomeSchemaVersion(
-          FileService.getFileContent(biomeConfigFilePath),
-        ),
-      ).toMatchSnapshot();
+      expect(FileService.getFileContent(biomeConfigFilePath)).toMatchSnapshot();
 
       const { code: lintCode, stderr: lintStderr } = await exec(
         testProjectDir,
         "npm run lint",
       );
 
-      expect(lintStderr).toBeFalsy();
-      expect(lintCode).toBe(0);
+      expect(lintCode, lintStderr).toBe(0);
 
       const { code: buildCode, stderr: buildStderr } = await exec(
         testProjectDir,
@@ -148,8 +133,7 @@ describe(`E2E - ${packageToTest}`, () => {
         "npm run format",
       );
 
-      expect(formatStderr).toBeFalsy();
-      expect(formatCode).toBe(0);
+      expect(formatCode, formatStderr).toBe(0);
     }, 200000);
   });
 

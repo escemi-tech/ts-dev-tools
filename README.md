@@ -152,3 +152,8 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 This project is [MIT](LICENSE) licensed.
+
+
+## Maintainer documentation
+
+See the [documentation index](docs/README.md) for release setup and operation.

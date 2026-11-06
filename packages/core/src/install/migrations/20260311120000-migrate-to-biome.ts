@@ -10,7 +10,6 @@ import { PackageJson } from "../../services/PackageJson";
 const BIOME_CONFIG_FILE_NAME = "biome.json";
 const ESLINT_CONFIG_FILE_NAME = "eslint.config.mjs";
 const PRE_COMMIT_HOOK_NAME = "pre-commit";
-const BIOME_INIT_COMMAND = "npx @biomejs/biome init";
 
 const NEW_PRE_COMMIT_COMMAND =
   "npx --no-install biome check --error-on-warnings --staged --write --no-errors-on-unmatched";
@@ -93,7 +92,21 @@ export const up: MigrationUpFunction = async (
 };
 
 async function runBiomeInit(absoluteProjectDir: string): Promise<void> {
-  await CmdService.execCmd(BIOME_INIT_COMMAND, absoluteProjectDir, true);
+  await CmdService.execCmd(
+    [process.execPath, require.resolve("@biomejs/biome/bin/biome"), "init"],
+    absoluteProjectDir,
+    true,
+  );
+
+  const configPath = join(absoluteProjectDir, BIOME_CONFIG_FILE_NAME);
+  if (FileService.fileExists(configPath)) {
+    const config = JSON.parse(FileService.getFileContent(configPath));
+    config.$schema = "./node_modules/@biomejs/biome/configuration_schema.json";
+    FileService.putFileContent(
+      configPath,
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+  }
 }
 
 function enableBiomeVcsIntegration(absoluteProjectDir: string): void {
