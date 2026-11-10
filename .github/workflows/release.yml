@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   prepare:
-    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/prepare-package-release.yml@02a04ad25ceaacdf3b7200e45fb7fec07fadf4fa # 2.1.0
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/prepare-package-release.yml@fbd3522b68c55a6314aadbededaa487825ba9b35 # 3.0.0
     permissions:
       actions: write
       contents: write
@@ -43,7 +43,7 @@ jobs:
 
   release:
     needs: [prepare, validate]
-    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/release.yml@02a04ad25ceaacdf3b7200e45fb7fec07fadf4fa # 2.1.0
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/release.yml@fbd3522b68c55a6314aadbededaa487825ba9b35 # 3.0.0
     permissions:
       actions: read
       contents: write
@@ -72,12 +72,12 @@ jobs:
           persist-credentials: false
 
       - id: prepare-deploy
-        uses: hoverkraft-tech/ci-github-publish/actions/deploy/jekyll@b942fb00f3115ca70f98f45f2289cc9838eb9312 # 3.0.0
+        uses: hoverkraft-tech/ci-github-publish/actions/deploy/jekyll@4193622a365c0ab0bcbd6645895fd2c3126b72ba # 3.0.2
         with:
           pages: |
             packages/*/README.md
 
       - id: deployment
-        uses: hoverkraft-tech/ci-github-publish/actions/deploy/github-pages@b942fb00f3115ca70f98f45f2289cc9838eb9312 # 3.0.0
+        uses: hoverkraft-tech/ci-github-publish/actions/deploy/github-pages@4193622a365c0ab0bcbd6645895fd2c3126b72ba # 3.0.2
         with:
           build-path: ${{ steps.prepare-deploy.outputs.build-path }}
