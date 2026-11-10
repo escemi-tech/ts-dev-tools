@@ -1,7 +1,7 @@
 name: "Pull Request - Semantic Lint"
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - edited
@@ -9,8 +9,22 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   main:
-    uses: hoverkraft-tech/ci-github-common/.github/workflows/semantic-pull-request.yml@90211d735aa0289702ddbd7eb95b218020ccadad # 2.0.2
+    name: main / ☑️ Validate PR title
+    runs-on: ubuntu-latest
     permissions:
       contents: read
+    steps:
+      - name: Checkout repository configuration
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install repository commitlint presets
+        uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@fbd3522b68c55a6314aadbededaa487825ba9b35 # 3.0.0
+      - name: Validate title
+        uses: hoverkraft-tech/ci-github-common/actions/quality/lint-pull-request-title@66882b24f9f13e45a6541896a5a7c638cb91c94c # 4.0.0

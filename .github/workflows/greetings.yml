@@ -3,14 +3,16 @@ name: Greetings
 on:
   issues:
     types: [opened]
-  pull_request_target:
+  pull_request:
+    types: [opened]
     branches: [main]
 
 permissions: {}
 
 jobs:
   greetings:
-    uses: hoverkraft-tech/ci-github-common/.github/workflows/greetings.yml@90211d735aa0289702ddbd7eb95b218020ccadad # 2.0.2
+    if: ${{ github.event_name == 'issues' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]') }}
+    uses: hoverkraft-tech/ci-github-common/.github/workflows/greetings.yml@66882b24f9f13e45a6541896a5a7c638cb91c94c # 4.0.0
     permissions:
       contents: read
       issues: write
