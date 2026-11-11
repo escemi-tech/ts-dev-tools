@@ -25,6 +25,6 @@ jobs:
         with:
           persist-credentials: false
       - name: Install repository commitlint presets
-        uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@fbd3522b68c55a6314aadbededaa487825ba9b35 # 3.0.0
+        uses: hoverkraft-tech/ci-github-nodejs/actions/setup-node@18eb770c5d63c9b9809c367a91c55fb02c138ad4 # 3.0.1
       - name: Validate title
         uses: hoverkraft-tech/ci-github-common/actions/quality/lint-pull-request-title@66882b24f9f13e45a6541896a5a7c638cb91c94c # 4.0.0
