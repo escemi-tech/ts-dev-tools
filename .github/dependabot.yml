@@ -1,6 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: npm
+    commit-message:
+      prefix: build
     open-pull-requests-limit: 20
     versioning-strategy: widen
     directory: "/"
@@ -41,6 +43,8 @@ updates:
           - "rimraf"
 
   - package-ecosystem: github-actions
+    commit-message:
+      prefix: build
     directory: "/"
     cooldown:
       default-days: 7
@@ -54,6 +58,8 @@ updates:
           - "*"
 
   - package-ecosystem: "devcontainers"
+    commit-message:
+      prefix: build
     open-pull-requests-limit: 20
     directory: "/"
     cooldown:
