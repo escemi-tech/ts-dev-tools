@@ -61,7 +61,7 @@ importers:
         version: 5.0.5(vitest@5.0.5)
       bin-links:
         specifier: ^7.0.0
-        version: 7.0.0
+        version: 7.0.1
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -1152,8 +1152,8 @@ packages:
   bidi-js@1.1.0:
     resolution: {integrity: sha512-fX1Onk0tdVPC7obPWB5EbJ1z7NVhLq4m2xZLq2YXBkxzMXIGRpNMU88n0EPgWseKl12J7zXs7qrDxPK4sRs2fg==}
 
-  bin-links@7.0.0:
-    resolution: {integrity: sha512-kEk4UROE3064ebMhwmW1qx5BFSBWzmqMe0UwUzn5gsbDyXHmqMUSO8MW6sieYNiRJsindpdnjg4U0D9iXUkIxQ==}
+  bin-links@7.0.1:
+    resolution: {integrity: sha512-lgxd7FtxW02eSuafotQOGEQf1iGfDExMz2BRaL+e1tU5xTLx+vvSVA5oHIO6B1tR91LDKcWqYGsktUHdFMtHHQ==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
   bl@4.1.0:
@@ -3268,7 +3268,7 @@ snapshots:
       '@npmcli/query': 5.0.0
       '@npmcli/redact': 5.0.0
       '@npmcli/run-script': 11.0.0
-      bin-links: 7.0.0
+      bin-links: 7.0.1
       cacache: 21.0.1
       common-ancestor-path: 2.0.0
       diff: 8.0.4
@@ -3833,7 +3833,7 @@ snapshots:
     dependencies:
       require-from-string: 2.0.2
 
-  bin-links@7.0.0:
+  bin-links@7.0.1:
     dependencies:
       cmd-shim: 9.0.2
       npm-normalize-package-bin: 6.0.0
