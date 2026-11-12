@@ -14,7 +14,7 @@ permissions: {}
 
 jobs:
   continuous-integration:
-    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@18eb770c5d63c9b9809c367a91c55fb02c138ad4 # 3.0.1
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@a60704c5e9902675a1b4a5141411d95733e80ff5 # 3.0.2
     permissions:
       contents: read
       id-token: write
@@ -24,7 +24,7 @@ jobs:
     with:
       package: |
         {
-          "tests": "ts-dev-tools --help\nts-dev-tools --version\n"
+          "tests": "node \"$PACKAGE_INSTALL_PATH/dist/bin.js\" --help\nnode \"$PACKAGE_INSTALL_PATH/dist/bin.js\" --version\n"
         }
       build: '{"artifact":"packages/*/dist"}'
       test: |
