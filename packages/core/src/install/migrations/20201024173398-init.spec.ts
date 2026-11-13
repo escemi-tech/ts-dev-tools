@@ -58,7 +58,7 @@ describe("Migration 20201024173398-init", () => {
         });
         expect(hooks[1]).toEqual({
           name: "commit-msg",
-          command: "npx --no-install commitlint --edit $1",
+          command: 'npx --no-install commitlint --edit "$1"',
         });
         const prePushCommand = hooks[2]?.command;
         expect(typeof prePushCommand).toBe("function");
