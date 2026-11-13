@@ -65,7 +65,7 @@ export class HooksService {
       );
 
       for (const legacyCommand of managedGitHook.legacyCommands) {
-        GitService.updateGitHook(
+        await GitService.updateGitHook(
           absoluteProjectDir,
           managedGitHook.name,
           legacyCommand,

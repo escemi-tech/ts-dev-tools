@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -10,7 +11,6 @@ import {
   createProjectForTestFile,
   deleteTestProject,
 } from "../tests/test-project";
-import { GitService } from "./GitService";
 import { HooksService } from "./HooksService";
 import { MigrationsService } from "./MigrationsService";
 import { PackageJson } from "./PackageJson";
@@ -80,7 +80,7 @@ describe("MigrationsService", () => {
     });
 
     it("should apply consolidated managed git hooks even when no migration needs to run", async () => {
-      vi.spyOn(GitService, "isGitRepository").mockResolvedValue(true);
+      execFileSync("git", ["init", "--quiet"], { cwd: testProjectDir });
 
       PackageJson.fromDirPath(testProjectDir).merge({
         devDependencies: {
@@ -122,7 +122,7 @@ npx --no-install biome check --error-on-warnings --staged --write --no-errors-on
 
 # Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
 
-npx --no-install commitlint --edit $1`);
+npx --no-install commitlint --edit "$1"`);
 
       expect(existsSync(prePushHookPath)).toBe(true);
       expect(readFileSync(prePushHookPath, "utf-8")).toBe(`#!/bin/sh

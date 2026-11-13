@@ -16,7 +16,7 @@ export const hooks: ManagedGitHook[] = [
   },
   {
     name: "commit-msg",
-    command: "npx --no-install commitlint --edit $1",
+    command: 'npx --no-install commitlint --edit "$1"',
   },
   {
     name: "pre-push",

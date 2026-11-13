@@ -7,7 +7,7 @@ import {
   statSync,
   writeFileSync,
 } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname } from "node:path";
 
 import { PROJECT_NAME, PROJECT_URL } from "../constants";
 import { CmdService } from "./CmdService";
@@ -33,10 +33,8 @@ export class GitService {
     gitHookName: string,
     gitHookCommand: string,
   ): Promise<void> {
-    const gitHookFilePath = GitService.getGitHookFilePath(
-      absoluteProjectDir,
-      gitHookName,
-    );
+    const { path: gitHookFilePath, prefix } =
+      await GitService.getGitHookContext(absoluteProjectDir, gitHookName);
 
     if (existsSync(gitHookFilePath)) {
       const mode = GitService.getFilePermissions(gitHookFilePath);
@@ -55,32 +53,34 @@ export class GitService {
       stream.on("close", () => resolve(undefined));
       stream.on("error", (error) => reject(error));
       stream.write(
-        GitService.GIT_HOOK_TEMPLATE.replace(
-          "%gitHookCommand%",
+        GitService.getManagedGitHookContent(
           gitHookCommand,
+          gitHookName,
+          prefix,
         ),
       );
       stream.end();
     });
   }
 
-  static updateGitHook(
+  static async updateGitHook(
     absoluteProjectDir: string,
     gitHookName: string,
     oldGitHookCommand: string,
     newGitHookCommand: string,
-  ): void {
-    const gitHookFilePath = GitService.getGitHookFilePath(
-      absoluteProjectDir,
-      gitHookName,
-    );
+  ): Promise<void> {
+    const { path: gitHookFilePath, prefix } =
+      await GitService.getGitHookContext(absoluteProjectDir, gitHookName);
     if (!existsSync(gitHookFilePath)) {
       return;
     }
 
     const currentHookContent = readFileSync(gitHookFilePath, "utf-8");
-    const oldManagedHookContent =
-      GitService.getManagedGitHookContent(oldGitHookCommand);
+    const oldManagedHookContent = GitService.getManagedGitHookContent(
+      oldGitHookCommand,
+      gitHookName,
+      prefix,
+    );
 
     if (currentHookContent !== oldManagedHookContent) {
       return;
@@ -88,19 +88,53 @@ export class GitService {
 
     writeFileSync(
       gitHookFilePath,
-      GitService.getManagedGitHookContent(newGitHookCommand),
+      GitService.getManagedGitHookContent(
+        newGitHookCommand,
+        gitHookName,
+        prefix,
+      ),
       { mode: GitService.GIT_HOOK_MODE },
     );
   }
 
-  private static getGitHookFilePath(
+  private static async getGitHookContext(
     absoluteProjectDir: string,
     gitHookName: string,
-  ): string {
-    return join(absoluteProjectDir, ".git", "hooks", gitHookName);
+  ): Promise<{ path: string; prefix: string }> {
+    const output = await CmdService.execCmd(
+      [
+        "git",
+        "rev-parse",
+        "--path-format=absolute",
+        "--git-path",
+        `hooks/${gitHookName}`,
+        "--show-prefix",
+      ],
+      absoluteProjectDir,
+      true,
+    );
+    const [path, prefix = ""] = output.trim().split("\n").filter(Boolean);
+    if (!path) {
+      throw new Error("Git did not return a hooks path");
+    }
+    return { path, prefix };
   }
 
-  private static getManagedGitHookContent(gitHookCommand: string): string {
+  private static getManagedGitHookContent(
+    gitHookCommand: string,
+    gitHookName: string,
+    projectPrefix: string,
+  ): string {
+    if (projectPrefix) {
+      // Git invokes hooks from the repository root. Keep commit-msg's file
+      // argument valid when switching to a nested package directory.
+      const prepareArguments =
+        gitHookName === "commit-msg"
+          ? 'case "$1" in\n  /*) ;;\n  *) set -- "$PWD/$1" ;;\nesac\n\n'
+          : "";
+      const quotedPrefix = `'${projectPrefix.replaceAll("'", "'\\''")}'`;
+      gitHookCommand = `${prepareArguments}cd ${quotedPrefix} || exit\n\n${gitHookCommand}`;
+    }
     return GitService.GIT_HOOK_TEMPLATE.replace(
       "%gitHookCommand%",
       gitHookCommand,

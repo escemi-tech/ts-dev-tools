@@ -1,5 +1,7 @@
+import { execFileSync } from "node:child_process";
 import {
   existsSync,
+  mkdirSync,
   readFileSync,
   rmSync,
   statSync,
@@ -32,6 +34,7 @@ describe("GitService", () => {
 
   beforeEach(async () => {
     testProjectDir = await createProjectForTestFile(__filename, useCache);
+    execFileSync("git", ["init", "--quiet"], { cwd: testProjectDir });
   });
 
   afterEach(async () => {
@@ -47,6 +50,7 @@ describe("GitService", () => {
     });
 
     it("should return false when given absolute Project dir is not a git repository", async () => {
+      rmSync(join(testProjectDir, ".git"), { recursive: true });
       const isGitRepository = await GitService.isGitRepository(testProjectDir);
       await expect(isGitRepository).toBe(false);
     });
@@ -113,8 +117,53 @@ echo ok;`);
     });
   });
 
+  describe("nested projects", () => {
+    it("runs and updates the hook in its project directory", async () => {
+      const projectDir = join(testProjectDir, "web site's files");
+      mkdirSync(projectDir);
+      const hookPath = join(testProjectDir, ".git/hooks/pre-commit");
+      const command = "printf old > hook-result";
+      await GitService.addGitHook(projectDir, "pre-commit", command);
+      execFileSync("sh", [hookPath], { cwd: testProjectDir });
+      expect(readFileSync(join(projectDir, "hook-result"), "utf8")).toBe("old");
+      expect(existsSync(join(projectDir, ".git"))).toBe(false);
+
+      await GitService.updateGitHook(
+        projectDir,
+        "pre-commit",
+        command,
+        "printf new > hook-result",
+      );
+      execFileSync("sh", [hookPath], { cwd: testProjectDir });
+      expect(readFileSync(join(projectDir, "hook-result"), "utf8")).toBe("new");
+    });
+
+    it("preserves a commit message path relative to the repository", async () => {
+      const projectDir = join(testProjectDir, "website");
+      mkdirSync(projectDir);
+      const messagePath = ".git/COMMIT MESSAGE";
+      writeFileSync(
+        join(testProjectDir, messagePath),
+        "fix: nested application",
+      );
+      await GitService.addGitHook(
+        projectDir,
+        "commit-msg",
+        'cat "$1" > checked-message',
+      );
+      execFileSync(
+        "sh",
+        [join(testProjectDir, ".git/hooks/commit-msg"), messagePath],
+        { cwd: testProjectDir },
+      );
+      expect(readFileSync(join(projectDir, "checked-message"), "utf8")).toBe(
+        "fix: nested application",
+      );
+    });
+  });
+
   describe("updateGitHook", () => {
-    it("should update an existing managed git hook", () => {
+    it("should update an existing managed git hook", async () => {
       const gitHookFilePath = join(testProjectDir, ".git/hooks/pre-commit");
       const oldGitHookCommand = "echo old;";
       const newGitHookCommand = "echo new;";
@@ -127,7 +176,7 @@ echo ok;`);
         ),
       );
 
-      GitService.updateGitHook(
+      await GitService.updateGitHook(
         testProjectDir,
         "pre-commit",
         oldGitHookCommand,
@@ -141,13 +190,13 @@ echo ok;`);
 echo new;`);
     });
 
-    it("should not override a custom git hook", () => {
+    it("should not override a custom git hook", async () => {
       const gitHookFilePath = join(testProjectDir, ".git/hooks/pre-commit");
       const customHookContent = "#!/bin/sh\necho custom;\n";
 
       writeFileSync(gitHookFilePath, customHookContent);
 
-      GitService.updateGitHook(
+      await GitService.updateGitHook(
         testProjectDir,
         "pre-commit",
         "echo old;",
@@ -157,10 +206,10 @@ echo new;`);
       expect(readFileSync(gitHookFilePath, "utf-8")).toBe(customHookContent);
     });
 
-    it("should do nothing when git hook does not exist", () => {
+    it("should do nothing when git hook does not exist", async () => {
       const gitHookFilePath = join(testProjectDir, ".git/hooks/pre-commit");
 
-      GitService.updateGitHook(
+      await GitService.updateGitHook(
         testProjectDir,
         "pre-commit",
         "echo old;",

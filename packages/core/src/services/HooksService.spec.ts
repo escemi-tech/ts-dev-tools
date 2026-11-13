@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -110,7 +111,7 @@ describe("HooksService", () => {
     });
 
     it("should update a managed hook from a legacy command", async () => {
-      vi.spyOn(GitService, "isGitRepository").mockResolvedValue(true);
+      execFileSync("git", ["init", "--quiet"], { cwd: testProjectDir });
 
       const gitHookFilePath = join(
         testProjectDir,
