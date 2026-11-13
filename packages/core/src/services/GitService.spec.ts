@@ -1,4 +1,10 @@
-import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { join } from "node:path";
 
 import {
@@ -47,21 +53,30 @@ describe("GitService", () => {
   });
 
   describe("addGitHook", () => {
-    it("should add a new git hook", async () => {
-      const expectedGitCommitHookFile = join(
-        testProjectDir,
-        ".git/hooks/pre-commit",
-      );
+    it.each([true, false])(
+      "should add a new git hook when the hooks directory exists: %s",
+      async (hooksDirectoryExists) => {
+        if (!hooksDirectoryExists) {
+          rmSync(join(testProjectDir, ".git/hooks"), { recursive: true });
+        }
+        const expectedGitCommitHookFile = join(
+          testProjectDir,
+          ".git/hooks/pre-commit",
+        );
 
-      await GitService.addGitHook(testProjectDir, "pre-commit", "echo ok;");
+        await GitService.addGitHook(testProjectDir, "pre-commit", "echo ok;");
 
-      expect(existsSync(expectedGitCommitHookFile)).toBe(true);
-      expect(readFileSync(expectedGitCommitHookFile).toString()).toBe(`#!/bin/sh
+        expect(existsSync(expectedGitCommitHookFile)).toBe(true);
+        expect(statSync(expectedGitCommitHookFile).mode & 0o777).toBe(0o755);
+        expect(
+          readFileSync(expectedGitCommitHookFile).toString(),
+        ).toBe(`#!/bin/sh
 
 # Created by ts-dev-tools (https://escemi-tech.github.io/ts-dev-tools/)
 
 echo ok;`);
-    });
+      },
+    );
 
     it("should not override existing git hook", async () => {
       const expectedGitCommitHookFile = join(

@@ -2,11 +2,12 @@ import {
   chmodSync,
   createWriteStream,
   existsSync,
+  mkdirSync,
   readFileSync,
   statSync,
   writeFileSync,
 } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import { PROJECT_NAME, PROJECT_URL } from "../constants";
 import { CmdService } from "./CmdService";
@@ -44,6 +45,8 @@ export class GitService {
       }
       return;
     }
+
+    mkdirSync(dirname(gitHookFilePath), { recursive: true });
 
     return new Promise((resolve, reject) => {
       const stream = createWriteStream(gitHookFilePath, {
