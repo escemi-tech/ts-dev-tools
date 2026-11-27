@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@testing-library/dom": "^10.4.2",
-    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/jest-dom": "^8.0.0",
     "@testing-library/react": "^16.3.3",
     "@ts-dev-tools/core": "workspace:*",
     "@types/react": "^19.3.0",
